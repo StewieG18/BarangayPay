@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Request a Service | BarangayPay</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="service.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- =========================================
+             SIDEBAR
+             ========================================= -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="brand-logo">
+                    BP
+                </div>
+
+                <div class="brand-text">
+                    <strong>BarangayPay</strong>
+                    <span>Barangay Services</span>
+                </div>
+
+            </div>
+
+
+            <nav class="sidebar-navigation">
+
+                <div class="navigation-section">
+
+                    <span class="navigation-title">
+                        MAIN
+                    </span>
+
+                    <a href="../index.html" class="navigation-item">
+                        <span class="navigation-icon">⌂</span>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="transactions.html" class="navigation-item">
+                        <span class="navigation-icon">▤</span>
+                        <span>My Transactions</span>
+                    </a>
+
+                    <a href="service.html"
+                       class="navigation-item active">
+                        <span class="navigation-icon">＋</span>
+                        <span>Request a Service</span>
+                    </a>
+
+                    <a href="services.html" class="navigation-item">
+                        <span class="navigation-icon">▦</span>
+                        <span>Services</span>
+                    </a>
+
+                    <a href="payments.html" class="navigation-item">
+                        <span class="navigation-icon">₱</span>
+                        <span>Payments</span>
+                    </a>
+
+                </div>
+
+
+                <div class="navigation-section">
+
+                    <span class="navigation-title">
+                        ACCOUNT
+                    </span>
+
+                    <a href="profile.html" class="navigation-item">
+                        <span class="navigation-icon">◯</span>
+                        <span>Profile</span>
+                    </a>
+
+                    <a href="settings.html" class="navigation-item">
+                        <span class="navigation-icon">⚙</span>
+                        <span>Settings</span>
+                    </a>
+
+                </div>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="login.html"
+                   class="navigation-item logout-item">
+
+                    <span class="navigation-icon">↪</span>
+                    <span>Sign Out</span>
+
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =========================================
+             MAIN CONTENT
+             ========================================= -->
+        <main class="main-content">
+
+            <!-- =========================================
+                 TOP HEADER
+                 ========================================= -->
+            <header class="top-header">
+
+                <button
+                    type="button"
+                    class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Open navigation menu"
+                >
+                    ☰
+                </button>
+
+
+                <div class="header-spacer"></div>
+
+
+                <!-- Notifications -->
+                <button
+                    type="button"
+                    class="notification-button"
+                    id="notificationButton"
+                    aria-label="Notifications"
+                >
+                    🔔
+                    <span class="notification-indicator"></span>
+                </button>
+
+
+                <!-- User Menu -->
+                <div class="user-menu" id="userMenu">
+
+                    <button
+                        type="button"
+                        class="user-menu-button"
+                        id="userMenuButton"
+                    >
+
+                        <div class="user-avatar">
+                            R
+                        </div>
+
+                        <div class="user-information">
+                            <strong>Resident</strong>
+                            <span>Account</span>
+                        </div>
+
+                        <span class="user-menu-arrow">
+                            ▼
+                        </span>
+
+                    </button>
+
+
+                    <div class="user-menu-dropdown">
+
+                        <a href="profile.html">
+                            Profile
+                        </a>
+
+                        <a href="settings.html">
+                            Settings
+                        </a>
+
+                        <a href="login.html">
+                            Sign Out
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =========================================
+                 REQUEST SERVICE CONTENT
+                 ========================================= -->
+            <div class="dashboard-content">
+
+                <!-- Page Header -->
+                <section class="page-header">
+
+                    <div>
+
+                        <span class="page-label">
+                            BARANGAY SERVICES
+                        </span>
+
+                        <h1>
+                            Request a Service
+                        </h1>
+
+                        <p>
+                            Submit a request for a barangay service
+                            or document online.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =====================================
+                     STEP INDICATOR
+                     ===================================== -->
+                <section class="request-steps">
+
+                    <div class="request-step active">
+
+                        <div class="step-number">
+                            1
+                        </div>
+
+                        <div>
+                            <strong>Service</strong>
+                            <span>Select a service</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="step-line"></div>
+
+
+                    <div class="request-step">
+
+                        <div class="step-number">
+                            2
+                        </div>
+
+                        <div>
+                            <strong>Information</strong>
+                            <span>Provide your details</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="step-line"></div>
+
+
+                    <div class="request-step">
+
+                        <div class="step-number">
+                            3
+                        </div>
+
+                        <div>
+                            <strong>Requirements</strong>
+                            <span>Submit requirements</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="step-line"></div>
+
+
+                    <div class="request-step">
+
+                        <div class="step-number">
+                            4
+                        </div>
+
+                        <div>
+                            <strong>Review</strong>
+                            <span>Confirm request</span>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =====================================
+                     REQUEST FORM
+                     ===================================== -->
+                <form class="service-request-form" id="serviceRequestForm">
+
+
+                    <!-- =================================
+                         SERVICE SELECTION
+                         ================================= -->
+                    <section class="request-panel">
+
+                        <div class="request-panel-header">
+
+                            <div>
+                                <span class="panel-label">
+                                    STEP 1
+                                </span>
+
+                                <h2>
+                                    Select a Service
+                                </h2>
+
+                                <p>
+                                    Choose the barangay service
+                                    you would like to request.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="service-selection">
+
+                            <label class="service-option">
+
+                                <input
+                                    type="radio"
+                                    name="service"
+                                    value="barangay-clearance"
+                                >
+
+                                <div class="service-option-content">
+
+                                    <div class="service-option-icon">
+                                        BC
+                                    </div>
+
+                                    <div>
+                                        <strong>
+                                            Barangay Clearance
+                                        </strong>
+
+                                        <span>
+                                            Request a barangay clearance
+                                            certificate.
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+
+                            <label class="service-option">
+
+                                <input
+                                    type="radio"
+                                    name="service"
+                                    value="certificate-residency"
+                                >
+
+                                <div class="service-option-content">
+
+                                    <div class="service-option-icon">
+                                        CR
+                                    </div>
+
+                                    <div>
+                                        <strong>
+                                            Certificate of Residency
+                                        </strong>
+
+                                        <span>
+                                            Request a certificate confirming
+                                            your barangay residency.
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+
+                            <label class="service-option">
+
+                                <input
+                                    type="radio"
+                                    name="service"
+                                    value="certificate-indigency"
+                                >
+
+                                <div class="service-option-content">
+
+                                    <div class="service-option-icon">
+                                        CI
+                                    </div>
+
+                                    <div>
+                                        <strong>
+                                            Certificate of Indigency
+                                        </strong>
+
+                                        <span>
+                                            Request a certificate of
+                                            indigency.
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+
+                            <label class="service-option">
+
+                                <input
+                                    type="radio"
+                                    name="service"
+                                    value="business-clearance"
+                                >
+
+                                <div class="service-option-content">
+
+                                    <div class="service-option-icon">
+                                        BB
+                                    </div>
+
+                                    <div>
+                                        <strong>
+                                            Barangay Business Clearance
+                                        </strong>
+
+                                        <span>
+                                            Request a barangay business
+                                            clearance.
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================
+                         APPLICANT INFORMATION
+                         ================================= -->
+                    <section class="request-panel">
+
+                        <div class="request-panel-header">
+
+                            <div>
+                                <span class="panel-label">
+                                    STEP 2
+                                </span>
+
+                                <h2>
+                                    Applicant Information
+                                </h2>
+
+                                <p>
+                                    Provide the information required
+                                    for your request.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="firstName">
+                                    First Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    placeholder="Enter your first name"
+                                    autocomplete="given-name"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="lastName">
+                                    Last Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    placeholder="Enter your last name"
+                                    autocomplete="family-name"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="middleName">
+                                    Middle Name
+                                    <span class="optional">
+                                        Optional
+                                    </span>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="middleName"
+                                    name="middleName"
+                                    placeholder="Enter your middle name"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="contactNumber">
+                                    Contact Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="contactNumber"
+                                    name="contactNumber"
+                                    placeholder="09XX XXX XXXX"
+                                    autocomplete="tel"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group form-group-full">
+
+                                <label for="address">
+                                    Address
+                                </label>
+
+                                <textarea
+                                    id="address"
+                                    name="address"
+                                    rows="3"
+                                    placeholder="Enter your complete address"
+                                    autocomplete="street-address"
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================
+                         REQUEST DETAILS
+                         ================================= -->
+                    <section class="request-panel">
+
+                        <div class="request-panel-header">
+
+                            <div>
+                                <span class="panel-label">
+                                    REQUEST DETAILS
+                                </span>
+
+                                <h2>
+                                    Request Information
+                                </h2>
+
+                                <p>
+                                    Provide additional information
+                                    about your request.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="purpose">
+                                    Purpose
+                                </label>
+
+                                <select
+                                    id="purpose"
+                                    name="purpose"
+                                >
+
+                                    <option value="">
+                                        Select purpose
+                                    </option>
+
+                                    <option value="employment">
+                                        Employment
+                                    </option>
+
+                                    <option value="school">
+                                        School / Education
+                                    </option>
+
+                                    <option value="business">
+                                        Business
+                                    </option>
+
+                                    <option value="government">
+                                        Government Requirement
+                                    </option>
+
+                                    <option value="personal">
+                                        Personal
+                                    </option>
+
+                                    <option value="other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="preferredDate">
+                                    Preferred Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="preferredDate"
+                                    name="preferredDate"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group form-group-full">
+
+                                <label for="requestNotes">
+                                    Additional Information
+                                    <span class="optional">
+                                        Optional
+                                    </span>
+                                </label>
+
+                                <textarea
+                                    id="requestNotes"
+                                    name="requestNotes"
+                                    rows="5"
+                                    placeholder="Enter any additional information related to your request"
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================
+                         REQUIREMENTS
+                         ================================= -->
+                    <section class="request-panel">
+
+                        <div class="request-panel-header">
+
+                            <div>
+                                <span class="panel-label">
+                                    STEP 3
+                                </span>
+
+                                <h2>
+                                    Requirements
+                                </h2>
+
+                                <p>
+                                    Upload the documents required
+                                    for your selected service.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="requirements-notice">
+
+                            <span class="notice-icon">
+                                i
+                            </span>
+
+                            <p>
+                                Required documents may vary depending
+                                on the service selected.
+                            </p>
+
+                        </div>
+
+
+                        <div class="upload-area">
+
+                            <div class="upload-icon">
+                                ↑
+                            </div>
+
+                            <h3>
+                                Upload supporting documents
+                            </h3>
+
+                            <p>
+                                Drag and drop your files here, or
+                                browse from your device.
+                            </p>
+
+                            <label
+                                for="requirements"
+                                class="upload-button"
+                            >
+                                Browse Files
+                            </label>
+
+                            <input
+                                type="file"
+                                id="requirements"
+                                name="requirements"
+                                multiple
+                                hidden
+                            >
+
+                            <span class="upload-note">
+                                Accepted formats: PDF, JPG, JPEG, PNG
+                            </span>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================
+                         REVIEW
+                         ================================= -->
+                    <section class="request-panel">
+
+                        <div class="request-panel-header">
+
+                            <div>
+                                <span class="panel-label">
+                                    STEP 4
+                                </span>
+
+                                <h2>
+                                    Review Your Request
+                                </h2>
+
+                                <p>
+                                    Review your information before
+                                    submitting your request.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="review-notice">
+
+                            <span class="notice-icon">
+                                ✓
+                            </span>
+
+                            <div>
+                                <strong>
+                                    Ready to submit?
+                                </strong>
+
+                                <p>
+                                    Make sure all information and
+                                    requirements are correct before
+                                    submitting.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <label class="confirmation-checkbox">
+
+                            <input
+                                type="checkbox"
+                                id="confirmInformation"
+                                name="confirmInformation"
+                            >
+
+                            <span>
+                                I confirm that the information I provided
+                                is accurate and complete.
+                            </span>
+
+                        </label>
+
+                    </section>
+
+
+                    <!-- =================================
+                         FORM ACTIONS
+                         ================================= -->
+                    <div class="request-actions">
+
+                        <a
+                            href="index.html"
+                            class="secondary-button"
+                        >
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            Submit Request
+                            <span>→</span>
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <!-- =====================================
+                     FOOTER
+                     ===================================== -->
+                <footer class="main-footer">
+
+                    <span>
+                        © 2026 BarangayPay
+                    </span>
+
+                    <span>
+                        Digital Barangay Services
+                    </span>
+
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/script.js"></script>
+    <script src="js/request-service.js"></script>
+
+</body>
+
+</html>
+```
+
+This is intentionally **HTML only** for now. The service cards, form fields, upload area, and review section are structural; the actual submission, file handling, database storage, and payment flow will come later with JavaScript → Laravel → MySQL/PayMongo.

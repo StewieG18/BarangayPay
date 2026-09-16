@@ -1,0 +1,518 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BarangayPay - Web-Based Barangay Transaction and Payment System">
+
+    <title>BarangayPay | Dashboard</title>
+
+    <!-- CSS will be added in the next step -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         APPLICATION CONTAINER
+    ========================== -->
+    <div class="app-container">
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+        <aside class="sidebar" id="sidebar">
+
+            <!-- Brand -->
+            <div class="sidebar-brand">
+                <div class="brand-logo">
+                    BP
+                </div>
+
+                <div class="brand-text">
+                    <h1>BarangayPay</h1>
+                    <span>Barangay Services</span>
+                </div>
+            </div>
+
+
+            <!-- Navigation -->
+            <nav class="sidebar-navigation" aria-label="Main Navigation">
+
+                <div class="navigation-section">
+                    <span class="navigation-title">MAIN</span>
+
+                    <a href="index.html" class="navigation-item active">
+                        <span class="navigation-icon">⌂</span>
+                        <span class="navigation-label">Dashboard</span>
+                    </a>
+
+                    <a href="#" class="navigation-item">
+                        <span class="navigation-icon">▤</span>
+                        <span class="navigation-label">My Transactions</span>
+                    </a>
+
+                    <a href="Service/service.html" class="navigation-item">
+                        <span class="navigation-icon">＋</span>
+                        <span class="navigation-label">Request a Service</span>
+                    </a>
+
+                    <a href="#" class="navigation-item">
+                        <span class="navigation-icon">▦</span>
+                        <span class="navigation-label">Services</span>
+                    </a>
+
+                    <a href="#" class="navigation-item">
+                        <span class="navigation-icon">₱</span>
+                        <span class="navigation-label">Payments</span>
+                    </a>
+                </div>
+
+
+                <div class="navigation-section">
+                    <span class="navigation-title">ACCOUNT</span>
+
+                    <a href="#" class="navigation-item">
+                        <span class="navigation-icon">◯</span>
+                        <span class="navigation-label">Profile</span>
+                    </a>
+
+                    <a href="#" class="navigation-item">
+                        <span class="navigation-icon">⚙</span>
+                        <span class="navigation-label">Settings</span>
+                    </a>
+                </div>
+
+            </nav>
+
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+
+                <a href="#" class="navigation-item logout-item">
+                    <span class="navigation-icon">↪</span>
+                    <span class="navigation-label">Sign Out</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =========================
+             MAIN CONTENT AREA
+        ========================== -->
+        <main class="main-content">
+
+            <!-- =========================
+                 TOP HEADER
+            ========================== -->
+            <header class="top-header">
+
+                <div class="header-left">
+
+                    <button
+                        type="button"
+                        class="menu-toggle"
+                        id="menuToggle"
+                        aria-label="Toggle navigation menu">
+                        ☰
+                    </button>
+
+                    <div class="page-heading">
+                        <span class="page-section">Resident Portal</span>
+                        <h2>Dashboard</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="header-right">
+
+                    <!-- Notifications -->
+                    <button
+                        type="button"
+                        class="header-button notification-button"
+                        aria-label="Notifications">
+
+                        <span class="header-icon">🔔</span>
+
+                        <span
+                            class="notification-indicator"
+                            aria-hidden="true">
+                        </span>
+
+                    </button>
+
+
+                    <!-- User Profile -->
+                    <button
+                        type="button"
+                        class="user-menu"
+                        id="userMenu"
+                        aria-label="Open user menu">
+
+                        <div class="user-avatar">
+                            U
+                        </div>
+
+                        <div class="user-information">
+                            <strong>Resident</strong>
+                            <span>Account</span>
+                        </div>
+
+                        <span class="user-menu-arrow">⌄</span>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- =========================
+                 DASHBOARD CONTENT
+            ========================== -->
+            <div class="dashboard-content">
+
+                <!-- Welcome Section -->
+                <section class="welcome-section">
+
+                    <div class="welcome-text">
+                        <span class="welcome-label">
+                            RESIDENT PORTAL
+                        </span>
+
+                        <h1>
+                            Welcome to BarangayPay
+                        </h1>
+
+                        <p>
+                            Manage your barangay services and transactions
+                            conveniently online.
+                        </p>
+                    </div>
+
+                    <div class="welcome-action">
+
+                        <a href="#Service/service.html" class="primary-button">
+                            <span>＋</span>
+                            Request a Service
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     OVERVIEW CARDS
+                ========================== -->
+                <section class="overview-section">
+
+                    <div class="section-header">
+                        <div>
+                            <span class="section-label">OVERVIEW</span>
+                            <h2>Transaction Summary</h2>
+                        </div>
+                    </div>
+
+
+                    <div class="overview-grid">
+
+                        <!-- Pending -->
+                        <article class="overview-card">
+
+                            <div class="card-icon pending-icon">
+                                ⏱
+                            </div>
+
+                            <div class="card-information">
+                                <span class="card-label">
+                                    Pending Transactions
+                                </span>
+
+                                <strong class="card-value">
+                                    —
+                                </strong>
+                            </div>
+
+                        </article>
+
+
+                        <!-- Processing -->
+                        <article class="overview-card">
+
+                            <div class="card-icon processing-icon">
+                                ◷
+                            </div>
+
+                            <div class="card-information">
+                                <span class="card-label">
+                                    Processing
+                                </span>
+
+                                <strong class="card-value">
+                                    —
+                                </strong>
+                            </div>
+
+                        </article>
+
+
+                        <!-- Completed -->
+                        <article class="overview-card">
+
+                            <div class="card-icon completed-icon">
+                                ✓
+                            </div>
+
+                            <div class="card-information">
+                                <span class="card-label">
+                                    Completed
+                                </span>
+
+                                <strong class="card-value">
+                                    —
+                                </strong>
+                            </div>
+
+                        </article>
+
+
+                        <!-- Payments -->
+                        <article class="overview-card">
+
+                            <div class="card-icon payment-icon">
+                                ₱
+                            </div>
+
+                            <div class="card-information">
+                                <span class="card-label">
+                                    Payments
+                                </span>
+
+                                <strong class="card-value">
+                                    —
+                                </strong>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     MAIN DASHBOARD GRID
+                ========================== -->
+                <div class="dashboard-grid">
+
+
+                    <!-- =========================
+                         RECENT TRANSACTIONS
+                    ========================== -->
+                    <section class="dashboard-panel transactions-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <span class="section-label">
+                                    TRANSACTIONS
+                                </span>
+
+                                <h2>
+                                    Recent Transactions
+                                </h2>
+                            </div>
+
+                            <a href="#" class="text-button">
+                                View All
+                            </a>
+
+                        </div>
+
+
+                        <!-- Empty State -->
+                        <div class="empty-state">
+
+                            <div class="empty-state-icon">
+                                ▣
+                            </div>
+
+                            <h3>
+                                No transactions yet
+                            </h3>
+
+                            <p>
+                                Your submitted barangay service requests
+                                will appear here.
+                            </p>
+
+                            <a href="Service/service.html" class="secondary-button">
+                                Request a Service
+                            </a>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =========================
+                         QUICK ACTIONS
+                    ========================== -->
+                    <section class="dashboard-panel quick-actions-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <span class="section-label">
+                                    SERVICES
+                                </span>
+
+                                <h2>
+                                    Quick Actions
+                                </h2>
+                            </div>
+
+                        </div>
+
+
+                        <div class="quick-actions">
+
+                            <a href="#" class="quick-action">
+
+                                <div class="quick-action-icon">
+                                    ＋
+                                </div>
+
+                                <div class="quick-action-information">
+                                    <strong>
+                                        Request a Service
+                                    </strong>
+
+                                    <span>
+                                        Submit a new request
+                                    </span>
+                                </div>
+
+                                <span class="quick-action-arrow">
+                                    →
+                                </span>
+
+                            </a>
+
+
+                            <a href="#" class="quick-action">
+
+                                <div class="quick-action-icon">
+                                    ▤
+                                </div>
+
+                                <div class="quick-action-information">
+                                    <strong>
+                                        Browse Services
+                                    </strong>
+
+                                    <span>
+                                        View available services
+                                    </span>
+                                </div>
+
+                                <span class="quick-action-arrow">
+                                    →
+                                </span>
+
+                            </a>
+
+
+                            <a href="#" class="quick-action">
+
+                                <div class="quick-action-icon">
+                                    ₱
+                                </div>
+
+                                <div class="quick-action-information">
+                                    <strong>
+                                        Payment History
+                                    </strong>
+
+                                    <span>
+                                        View your payments
+                                    </span>
+                                </div>
+
+                                <span class="quick-action-arrow">
+                                    →
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+                <!-- =========================
+                     INFORMATION NOTICE
+                ========================== -->
+                <section class="information-notice">
+
+                    <div class="notice-icon">
+                        ℹ
+                    </div>
+
+                    <div class="notice-content">
+
+                        <h3>
+                            Barangay Services Online
+                        </h3>
+
+                        <p>
+                            Use BarangayPay to submit requests, monitor
+                            your transaction status, and make applicable
+                            payments securely online.
+                        </p>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- =========================
+                 FOOTER
+            ========================== -->
+            <footer class="main-footer">
+
+                <div class="footer-left">
+                    <strong>BarangayPay</strong>
+                    <span>Web-Based Barangay Transaction System</span>
+                </div>
+
+                <div class="footer-right">
+                    <span>© 2026 BarangayPay</span>
+                </div>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <!-- JavaScript will be added in the next step -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>
+```

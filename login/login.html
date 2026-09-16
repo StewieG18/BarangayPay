@@ -1,0 +1,267 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | BarangayPay</title>
+
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <div class="login-wrapper">
+
+            <!-- =========================================
+                 LEFT BRANDING PANEL
+                 ========================================= -->
+            <section class="branding-panel">
+
+                <div class="branding-content">
+
+                    <div class="government-badge">
+                        <div class="badge-icon">
+                            BP
+                        </div>
+
+                        <div>
+                            <span>OFFICIAL</span>
+                            <strong>BARANGAY PORTAL</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="branding-main">
+
+                        <h1>
+                            Barangay<span>Pay</span>
+                        </h1>
+
+                        <p class="branding-subtitle">
+                            Barangay Services and
+                            Transaction Portal
+                        </p>
+
+                        <p class="branding-description">
+                            Access barangay services, submit requests,
+                            track transactions, and manage your payments
+                            conveniently in one secure platform.
+                        </p>
+
+                    </div>
+
+
+                    <div class="service-highlights">
+
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                ✓
+                            </div>
+
+                            <div>
+                                <strong>Online Services</strong>
+                                <span>Request barangay documents online</span>
+                            </div>
+                        </div>
+
+
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                ✓
+                            </div>
+
+                            <div>
+                                <strong>Transaction Tracking</strong>
+                                <span>Monitor your requests in real time</span>
+                            </div>
+                        </div>
+
+
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                ✓
+                            </div>
+
+                            <div>
+                                <strong>Secure Payments</strong>
+                                <span>Pay applicable fees through PayMongo</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="branding-footer">
+                    <span>BarangayPay</span>
+                    <span>•</span>
+                    <span>Digital Barangay Services</span>
+                </div>
+
+            </section>
+
+
+            <!-- =========================================
+                 RIGHT LOGIN PANEL
+                 ========================================= -->
+            <section class="login-panel">
+
+                <div class="login-content">
+
+                    <!-- Brand -->
+                    <div class="mobile-brand">
+                        <div class="mobile-logo">
+                            BP
+                        </div>
+
+                        <div>
+                            <strong>BarangayPay</strong>
+                            <span>Barangay Services Portal</span>
+                        </div>
+                    </div>
+
+
+                    <!-- Header -->
+                    <div class="login-header">
+
+                        <div class="welcome-label">
+                            ACCOUNT ACCESS
+                        </div>
+
+                        <h2>Welcome back</h2>
+
+                        <p>
+                            Sign in to continue to your
+                            BarangayPay account.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Login Form -->
+<form class="login-form" id="loginForm">
+
+    <!-- Email -->
+    <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="input-wrapper">
+            <span class="input-icon">@</span>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email address"
+                autocomplete="email"
+                required
+            >
+        </div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+        <div class="form-label-row">
+            <label for="password">Password</label>
+            <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+        <div class="input-wrapper">
+            <span class="input-icon">•</span>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+            <button
+                type="button"
+                class="password-toggle"
+                id="passwordToggle"
+            >
+                Show
+            </button>
+        </div>
+    </div>
+
+    <!-- Remember Me -->
+    <div class="form-options">
+        <label class="remember-me">
+            <input type="checkbox" id="remember" name="remember">
+            <span>Remember me</span>
+        </label>
+    </div>
+
+    <!-- Login Message -->
+    <p class="login-message" id="loginMessage" aria-live="polite"></p>
+
+    <!-- Login Button -->
+    <button type="submit" class="login-button">
+        <span>Sign In</span>
+        <span class="button-arrow">→</span>
+    </button>
+</form>
+
+
+
+                    <!-- Registration -->
+                    <div class="register-section">
+
+                        <span>
+                            Don't have a BarangayPay account?
+                        </span>
+
+                        <a href="register.html">
+                            Create an account
+                        </a>
+
+                    </div>
+
+
+                    <!-- Security Notice -->
+                    <div class="security-notice">
+
+                        <div class="security-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Secure Access</strong>
+
+                            <p>
+                                Your account information is protected
+                                and handled securely.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Terms -->
+                    <div class="login-information">
+
+                        By continuing, you agree to the
+                        <a href="#">Terms of Service</a>
+                        and
+                        <a href="#">Privacy Policy</a>.
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script src="login.js"></script>
+
+</body>
+</html>
+```
