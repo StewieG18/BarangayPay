@@ -28,9 +28,13 @@
     --text-primary: #1f2937;
     --text-secondary: #64748b;
     --text-muted: #94a3b8;
+    --text-dark: var(--text-primary);
+    --text-medium: var(--text-secondary);
 
     --border: #e2e8f0;
     --border-light: #edf1f5;
+    --border-color: var(--border);
+    --background-light: var(--background);
 
     --success: #198754;
     --success-light: #e9f7ef;

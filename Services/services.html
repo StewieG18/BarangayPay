@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Services | BarangayPay</title>
+
+    <!-- Main Dashboard Styles -->
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Services Page Styles -->
+    <link rel="stylesheet" href="services.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- =========================================
+             SIDEBAR
+        ========================================== -->
+        <aside class="sidebar" id="sidebar">
+
+            <!-- Brand -->
+            <div class="sidebar-brand">
+                <div class="brand-logo">BP</div>
+
+                <div class="brand-text">
+                    <h1 class="brand-title">BarangayPay</h1>
+                    <span class="brand-subtitle">Barangay Services</span>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-navigation">
+
+                <!-- Main -->
+                <div class="navigation-section">
+                    <span class="navigation-title">MAIN</span>
+
+                    <a href="../index.html" class="navigation-item">
+                        <span class="navigation-icon">⌂</span>
+                        <span class="navigation-label">Dashboard</span>
+                    </a>
+
+                    <a href="#" class="navigation-item">
+                        <span class="navigation-icon">▤</span>
+                        <span class="navigation-label">My Transactions</span>
+                    </a>
+
+                    <a href="../RequestService/service.html" class="navigation-item">
+                        <span class="navigation-icon">＋</span>
+                        <span class="navigation-label">Request a Service</span>
+                    </a>
+
+                    <a href="services.html" class="navigation-item active">
+                        <span class="navigation-icon">▦</span>
+                        <span class="navigation-label">Services</span>
+                    </a>
+
+                    <a href="#" class="navigation-item">
+                        <span class="navigation-icon">₱</span>
+                        <span class="navigation-label">Payments</span>
+                    </a>
+                </div>
+
+
+                <!-- Account -->
+                <div class="navigation-section">
+
+                    <div class="navigation-label">
+                        Account
+                    </div>
+
+                    <a href="#" class="navigation-item">
+                        <span class="navigation-icon">◯</span>
+                        <span>Profile</span>
+                    </a>
+
+                    <a href="#" class="navigation-item">
+                        <span class="navigation-icon">⚙</span>
+                        <span>Settings</span>
+                    </a>
+
+                    <a href="../login/login.html" class="navigation-item logout-item">
+                        <span class="navigation-icon">↪</span>
+                        <span>Sign Out</span>
+                    </a>
+
+                </div>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- =========================================
+             MAIN CONTENT
+        ========================================== -->
+        <main class="main-content">
+
+            <!-- =====================================
+                 TOP HEADER
+            ====================================== -->
+            <header class="top-header">
+
+                <!-- Mobile Menu -->
+                <button
+                    type="button"
+                    class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Open navigation menu"
+                >
+                    ☰
+                </button>
+
+
+                <!-- Header Right -->
+                <div class="header-actions">
+
+                    <!-- Notifications -->
+                    <button
+                        type="button"
+                        class="notification-button"
+                        id="notificationButton"
+                        aria-label="Notifications"
+                    >
+                        🔔
+                        <span
+                            class="notification-indicator"
+                            id="notificationIndicator"
+                        ></span>
+                    </button>
+
+
+                    <!-- User Menu -->
+                    <div class="user-menu" id="userMenu">
+
+                        <button
+                            type="button"
+                            class="user-menu-button"
+                            id="userMenuButton"
+                        >
+
+                            <span class="user-avatar">
+                                R
+                            </span>
+
+                            <span class="user-menu-name">
+                                Resident
+                            </span>
+
+                            <span class="user-menu-arrow">
+                                ▾
+                            </span>
+
+                        </button>
+
+
+                        <!-- Dropdown -->
+                        <div class="user-menu-dropdown">
+
+                            <a href="#">
+                                Profile
+                            </a>
+
+                            <a href="#">
+                                Settings
+                            </a>
+
+                            <a href="../login/login.html">
+                                Sign Out
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =====================================
+                 SERVICES CONTENT
+            ====================================== -->
+            <section class="dashboard-content">
+
+                <!-- Page Header -->
+                <div class="page-header">
+
+                    <div class="page-header-text">
+
+                        <span class="page-eyebrow">
+                            Barangay Services
+                        </span>
+
+                        <h2>
+                            Available Services
+                        </h2>
+
+                        <p>
+                            Browse the available barangay services and submit
+                            your request online.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     SERVICES GRID
+                ================================== -->
+                <div class="services-grid">
+
+
+                    <!-- Barangay Clearance -->
+                    <article class="service-card">
+
+                        <div class="service-card-header">
+
+                            <div class="service-icon">
+                                BC
+                            </div>
+
+                            <span class="service-status">
+                                Available
+                            </span>
+
+                        </div>
+
+
+                        <div class="service-card-body">
+
+                            <h3>
+                                Barangay Clearance
+                            </h3>
+
+                            <p>
+                                Request a barangay clearance for employment,
+                                business, travel, school, and other official
+                                purposes.
+                            </p>
+
+                        </div>
+
+
+                        <div class="service-card-footer">
+
+                            <span class="service-label">
+                                Application
+                            </span>
+
+                            <a
+                                href="../RequestService/service.html?service=barangay-clearance"
+                                class="service-button"
+                            >
+                                Request This Service
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Certificate of Residency -->
+                    <article class="service-card">
+
+                        <div class="service-card-header">
+
+                            <div class="service-icon">
+                                CR
+                            </div>
+
+                            <span class="service-status">
+                                Available
+                            </span>
+
+                        </div>
+
+
+                        <div class="service-card-body">
+
+                            <h3>
+                                Certificate of Residency
+                            </h3>
+
+                            <p>
+                                Request an official certificate confirming
+                                your residency within the barangay.
+                            </p>
+
+                        </div>
+
+
+                        <div class="service-card-footer">
+
+                            <span class="service-label">
+                                Application
+                            </span>
+
+                            <a
+                                href="../RequestService/service.html?service=certificate-residency"
+                                class="service-button"
+                            >
+                                Request This Service
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Certificate of Indigency -->
+                    <article class="service-card">
+
+                        <div class="service-card-header">
+
+                            <div class="service-icon">
+                                CI
+                            </div>
+
+                            <span class="service-status">
+                                Available
+                            </span>
+
+                        </div>
+
+
+                        <div class="service-card-body">
+
+                            <h3>
+                                Certificate of Indigency
+                            </h3>
+
+                            <p>
+                                Apply for a certificate of indigency for
+                                qualified personal, educational, medical,
+                                or government-related purposes.
+                            </p>
+
+                        </div>
+
+
+                        <div class="service-card-footer">
+
+                            <span class="service-label">
+                                Application
+                            </span>
+
+                            <a
+                                href="../RequestService/service.html?service=certificate-indigency"
+                                class="service-button"
+                            >
+                                Request This Service
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Barangay Business Clearance -->
+                    <article class="service-card">
+
+                        <div class="service-card-header">
+
+                            <div class="service-icon">
+                                BB
+                            </div>
+
+                            <span class="service-status">
+                                Available
+                            </span>
+
+                        </div>
+
+
+                        <div class="service-card-body">
+
+                            <h3>
+                                Barangay Business Clearance
+                            </h3>
+
+                            <p>
+                                Submit an application for barangay business
+                                clearance for businesses operating within
+                                the barangay.
+                            </p>
+
+                        </div>
+
+
+                        <div class="service-card-footer">
+
+                            <span class="service-label">
+                                Application
+                            </span>
+
+                            <a
+                                href="../RequestService/service.html?service=business-clearance"
+                                class="service-button"
+                            >
+                                Request This Service
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+
+                <!-- =================================
+                     INFORMATION NOTICE
+                ================================== -->
+                <div class="information-notice">
+
+                    <div class="information-icon">
+                        i
+                    </div>
+
+                    <div class="information-content">
+
+                        <h3>
+                            Before submitting a request
+                        </h3>
+
+                        <p>
+                            Make sure that your personal information and
+                            required documents are complete and accurate.
+                            Additional requirements may depend on the
+                            selected service.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 FOOTER
+            ====================================== -->
+            <footer class="main-footer">
+
+                <p>
+                    © 2026 BarangayPay. Barangay Services Portal.
+                </p>
+
+                <div class="footer-links">
+
+                    <a href="#">
+                        Privacy
+                    </a>
+
+                    <a href="#">
+                        Terms
+                    </a>
+
+                </div>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

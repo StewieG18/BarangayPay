@@ -21,13 +21,13 @@
 }
 
 .page-header h1 {
-    margin: 0 0 7px;
+    margin: 0 0 5px;
 
-    color: var(--text-dark);
+    color: var(--primary-blue);
 
     font-size: 30px;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.15;
 }
 
 .page-header p {

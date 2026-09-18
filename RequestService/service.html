@@ -7,7 +7,7 @@
 
     <title>Request a Service | BarangayPay</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="service.css">
 </head>
 
@@ -37,37 +37,32 @@
             <nav class="sidebar-navigation">
 
                 <div class="navigation-section">
-
-                    <span class="navigation-title">
-                        MAIN
-                    </span>
+                    <span class="navigation-title">MAIN</span>
 
                     <a href="../index.html" class="navigation-item">
                         <span class="navigation-icon">⌂</span>
-                        <span>Dashboard</span>
+                        <span class="navigation-label">Dashboard</span>
                     </a>
 
-                    <a href="transactions.html" class="navigation-item">
+                    <a href="#" class="navigation-item">
                         <span class="navigation-icon">▤</span>
-                        <span>My Transactions</span>
+                        <span class="navigation-label">My Transactions</span>
                     </a>
 
-                    <a href="service.html"
-                       class="navigation-item active">
+                    <a href="service.html" class="navigation-item active">
                         <span class="navigation-icon">＋</span>
-                        <span>Request a Service</span>
+                        <span class="navigation-label">Request a Service</span>
                     </a>
 
-                    <a href="services.html" class="navigation-item">
+                    <a href="../Services/services.html" class="navigation-item">
                         <span class="navigation-icon">▦</span>
-                        <span>Services</span>
+                        <span class="navigation-label">Services</span>
                     </a>
 
-                    <a href="payments.html" class="navigation-item">
+                    <a href="#" class="navigation-item">
                         <span class="navigation-icon">₱</span>
-                        <span>Payments</span>
+                        <span class="navigation-label">Payments</span>
                     </a>
-
                 </div>
 
 
@@ -77,12 +72,12 @@
                         ACCOUNT
                     </span>
 
-                    <a href="profile.html" class="navigation-item">
+                    <a href="#" class="navigation-item">
                         <span class="navigation-icon">◯</span>
                         <span>Profile</span>
                     </a>
 
-                    <a href="settings.html" class="navigation-item">
+                    <a href="#" class="navigation-item">
                         <span class="navigation-icon">⚙</span>
                         <span>Settings</span>
                     </a>
@@ -94,7 +89,7 @@
 
             <div class="sidebar-bottom">
 
-                <a href="login.html"
+                <a href="../login/login.html"
                    class="navigation-item logout-item">
 
                     <span class="navigation-icon">↪</span>
@@ -169,15 +164,15 @@
 
                     <div class="user-menu-dropdown">
 
-                        <a href="profile.html">
+                        <a href="#">
                             Profile
                         </a>
 
-                        <a href="settings.html">
+                        <a href="#">
                             Settings
                         </a>
 
-                        <a href="login.html">
+                        <a href="../login/login.html">
                             Sign Out
                         </a>
 
@@ -820,7 +815,7 @@
                     <div class="request-actions">
 
                         <a
-                            href="index.html"
+                            href="../index.html"
                             class="secondary-button"
                         >
                             Cancel
@@ -860,13 +855,6 @@
 
     </div>
 
-
-    <script src="js/script.js"></script>
-    <script src="js/request-service.js"></script>
-
 </body>
 
 </html>
-```
-
-This is intentionally **HTML only** for now. The service cards, form fields, upload area, and review section are structural; the actual submission, file handling, database storage, and payment flow will come later with JavaScript → Laravel → MySQL/PayMongo.

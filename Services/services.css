@@ -1,0 +1,480 @@
+
+/* =====================================================
+   BARANGAYPAY - SERVICES PAGE
+   ===================================================== */
+
+
+/* =====================================================
+   PAGE HEADER
+   ===================================================== */
+
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 28px;
+}
+
+.page-header-text {
+    max-width: 720px;
+}
+
+.page-eyebrow {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--primary-blue);
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-header h2 {
+    margin: 0 0 8px;
+
+    color: var(--text-dark);
+
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.page-header p {
+    margin: 0;
+
+    color: var(--text-medium);
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   SERVICES GRID
+   ===================================================== */
+
+.services-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+
+    margin-bottom: 28px;
+}
+
+
+/* =====================================================
+   SERVICE CARD
+   ===================================================== */
+
+.service-card {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 280px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+
+    box-shadow: var(--shadow-sm);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #c9dbea;
+
+    box-shadow: 0 8px 24px rgba(8, 59, 104, 0.08);
+}
+
+
+/* =====================================================
+   SERVICE CARD HEADER
+   ===================================================== */
+
+.service-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 22px 22px 16px;
+}
+
+
+/* =====================================================
+   SERVICE ICON
+   ===================================================== */
+
+.service-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 52px;
+    height: 52px;
+
+    background: var(--primary-light);
+
+    border: 1px solid #d4e5f3;
+    border-radius: 10px;
+
+    color: var(--primary-blue);
+
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+
+/* =====================================================
+   SERVICE STATUS
+   ===================================================== */
+
+.service-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 10px;
+
+    background: #eef8f1;
+
+    border: 1px solid #d6ebdc;
+    border-radius: 20px;
+
+    color: #287a42;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* Small status dot */
+
+.service-status::before {
+    content: "";
+
+    width: 6px;
+    height: 6px;
+
+    margin-right: 6px;
+
+    background: #3b9a57;
+
+    border-radius: 50%;
+}
+
+
+/* =====================================================
+   SERVICE CARD BODY
+   ===================================================== */
+
+.service-card-body {
+    flex: 1;
+
+    padding: 0 22px 22px;
+}
+
+.service-card-body h3 {
+    margin: 0 0 10px;
+
+    color: var(--text-dark);
+
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.service-card-body p {
+    margin: 0;
+
+    color: var(--text-medium);
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   SERVICE CARD FOOTER
+   ===================================================== */
+
+.service-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 16px 22px;
+
+    background: #fafbfd;
+
+    border-top: 1px solid var(--border-color);
+}
+
+.service-label {
+    color: var(--text-light);
+
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+
+/* =====================================================
+   REQUEST BUTTON
+   ===================================================== */
+
+.service-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+
+    padding: 0 16px;
+
+    background: var(--primary-blue);
+
+    border: 1px solid var(--primary-blue);
+    border-radius: 6px;
+
+    color: var(--white);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.service-button:hover {
+    background: var(--primary-dark);
+
+    border-color: var(--primary-dark);
+
+    color: var(--white);
+
+    transform: translateY(-1px);
+}
+
+.service-button:focus {
+    outline: none;
+
+    box-shadow: 0 0 0 3px rgba(11, 79, 138, 0.15);
+}
+
+
+/* =====================================================
+   INFORMATION NOTICE
+   ===================================================== */
+
+.information-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    padding: 18px 20px;
+
+    background: var(--primary-light);
+
+    border: 1px solid #d4e5f3;
+    border-radius: 8px;
+
+    margin-bottom: 28px;
+}
+
+
+/* Information icon */
+
+.information-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    width: 30px;
+    height: 30px;
+
+    background: var(--primary-blue);
+
+    border-radius: 50%;
+
+    color: var(--white);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* Information text */
+
+.information-content {
+    flex: 1;
+}
+
+.information-content h3 {
+    margin: 2px 0 5px;
+
+    color: var(--text-dark);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.information-content p {
+    margin: 0;
+
+    color: var(--text-medium);
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+
+@media (max-width: 900px) {
+
+    .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 16px;
+    }
+
+    .service-card {
+        min-height: 290px;
+    }
+
+    .service-card-header {
+        padding: 20px 18px 14px;
+    }
+
+    .service-card-body {
+        padding: 0 18px 20px;
+    }
+
+    .service-card-footer {
+        padding: 14px 18px;
+    }
+
+    .service-button {
+        padding: 0 13px;
+
+        font-size: 11px;
+    }
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    .page-header {
+        margin-bottom: 22px;
+    }
+
+    .page-header h2 {
+        font-size: 26px;
+    }
+
+    .page-header p {
+        font-size: 13px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+    }
+
+    .service-card {
+        min-height: auto;
+    }
+
+    .service-card-body p {
+        max-width: 650px;
+    }
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+   ===================================================== */
+
+@media (max-width: 430px) {
+
+    .page-header h2 {
+        font-size: 24px;
+    }
+
+    .page-header p {
+        font-size: 12px;
+    }
+
+    .service-card-header {
+        padding: 18px 16px 14px;
+    }
+
+    .service-card-body {
+        padding: 0 16px 18px;
+    }
+
+    .service-card-body h3 {
+        font-size: 17px;
+    }
+
+    .service-card-body p {
+        font-size: 12px;
+    }
+
+    .service-card-footer {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 12px;
+
+        padding: 14px 16px;
+    }
+
+    .service-label {
+        display: none;
+    }
+
+    .service-button {
+        width: 100%;
+    }
+
+    .information-notice {
+        padding: 16px;
+
+        gap: 10px;
+    }
+
+    .information-content p {
+        font-size: 11px;
+    }
+}
