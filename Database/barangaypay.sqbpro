@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/Jhouanese/Desktop/BarangayPay/barangaypay.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="5829"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="0" parent="0"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="applicant_info" custom_title="0" dock_id="2" table="4,14:mainapplicant_info"/><table title="applicant_info" custom_title="0" dock_id="1" table="4,14:mainapplicant_info"/><dock_state state="000000ff00000000fd00000001000000020000047b000002e4fc0100000001fc000000000000047b0000012900fffffffa000000000100000002fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011e00fffffffb000000160064006f0063006b00420072006f00770073006500320100000000ffffffff0000012900ffffff000002690000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="barangaypay" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="300"/><column index="2" value="95"/><column index="3" value="231"/><column index="4" value="167"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1*">-- BarangayPay Service Request System Database Schema
+-- SQLite 3
+-- Created: 2026-09-30
+
+-- Users table (for residents and staff)
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    middle_name TEXT,
+    contact_number TEXT,
+    address TEXT,
+    role TEXT CHECK(role IN ('resident', 'staff', 'admin')) DEFAULT 'resident',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Service requests
+CREATE TABLE IF NOT EXISTS requests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    service_type TEXT NOT NULL CHECK(service_type IN (
+        'barangay-clearance',
+        'certificate-residency',
+        'certificate-indigency',
+        'business-clearance'
+    )),
+    status TEXT NOT NULL CHECK(status IN (
+        'pending-review',
+        'approved',
+        'rejected',
+        'payment-required',
+        'paid',
+        'processing',
+        'completed'
+    )) DEFAULT 'pending-review',
+    purpose TEXT NOT NULL,
+    preferred_date DATE NOT NULL,
+    notes TEXT,
+    requires_payment BOOLEAN DEFAULT 0,
+    payment_status TEXT CHECK(payment_status IN ('unpaid', 'paid', NULL)),
+    payment_date TIMESTAMP,
+    rejection_reason TEXT,
+    rejected_at TIMESTAMP,
+    reviewed_by INTEGER,
+    reviewed_at TIMESTAMP,
+    completed_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (reviewed_by) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- Applicant info (detailed form data for each request)
+CREATE TABLE IF NOT EXISTS applicant_info (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    request_id INTEGER UNIQUE NOT NULL,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    middle_name TEXT,
+    contact_number TEXT NOT NULL,
+    address TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (request_id) REFERENCES requests(id) ON DELETE CASCADE
+);
+
+-- Uploaded files
+CREATE TABLE IF NOT EXISTS uploaded_files (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    request_id INTEGER NOT NULL,
+    original_filename TEXT NOT NULL,
+    stored_filename TEXT NOT NULL UNIQUE,
+    file_size INTEGER NOT NULL,
+    mime_type TEXT NOT NULL,
+    file_path TEXT NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (request_id) REFERENCES requests(id) ON DELETE CASCADE
+);
+
+-- Request status history (audit log)
+CREATE TABLE IF NOT EXISTS request_history (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    request_id INTEGER NOT NULL,
+    old_status TEXT,
+    new_status TEXT NOT NULL,
+    changed_by INTEGER,
+    notes TEXT,
+    changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (request_id) REFERENCES requests(id) ON DELETE CASCADE,
+    FOREIGN KEY (changed_by) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- Notifications/messages to residents
+CREATE TABLE IF NOT EXISTS notifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    request_id INTEGER,
+    type TEXT NOT NULL CHECK(type IN ('status-change', 'rejection', 'payment-required', 'ready-for-pickup')),
+    message TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT 0,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    read_at TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (request_id) REFERENCES requests(id) ON DELETE SET NULL
+);
+
+-- Indexes for common queries
+CREATE INDEX IF NOT EXISTS idx_requests_user_id ON requests(user_id);
+CREATE INDEX IF NOT EXISTS idx_requests_status ON requests(status);
+CREATE INDEX IF NOT EXISTS idx_requests_service_type ON requests(service_type);
+CREATE INDEX IF NOT EXISTS idx_requests_created_at ON requests(created_at);
+CREATE INDEX IF NOT EXISTS idx_applicant_request_id ON applicant_info(request_id);
+CREATE INDEX IF NOT EXISTS idx_files_request_id ON uploaded_files(request_id);
+CREATE INDEX IF NOT EXISTS idx_history_request_id ON request_history(request_id);
+CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON notifications(user_id);
+CREATE INDEX IF NOT EXISTS idx_notifications_is_read ON notifications(is_read);
+
+</sql><current_tab id="0"/></tab_sql></sqlb_project>

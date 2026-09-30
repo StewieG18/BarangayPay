@@ -44,7 +44,7 @@
                         <span class="navigation-label">Dashboard</span>
                     </a>
 
-                    <a href="#" class="navigation-item">
+                    <a href="../MyTransactions/transactions.html" class="navigation-item">
                         <span class="navigation-icon">▤</span>
                         <span class="navigation-label">My Transactions</span>
                     </a>
@@ -286,7 +286,9 @@
                 <!-- =====================================
                      REQUEST FORM
                      ===================================== -->
-                <form class="service-request-form" id="serviceRequestForm">
+                <form class="service-request-form" id="serviceRequestForm"
+                      action="submit_request.php" method="post"
+                      enctype="multipart/form-data" novalidate>
 
 
                     <!-- =================================
@@ -477,6 +479,7 @@
                                     type="text"
                                     id="firstName"
                                     name="firstName"
+                                    maxlength="50"
                                     placeholder="Enter your first name"
                                     autocomplete="given-name"
                                 >
@@ -494,6 +497,7 @@
                                     type="text"
                                     id="lastName"
                                     name="lastName"
+                                    maxlength="50"
                                     placeholder="Enter your last name"
                                     autocomplete="family-name"
                                 >
@@ -514,6 +518,7 @@
                                     type="text"
                                     id="middleName"
                                     name="middleName"
+                                    maxlength="50"
                                     placeholder="Enter your middle name"
                                 >
 
@@ -530,6 +535,8 @@
                                     type="tel"
                                     id="contactNumber"
                                     name="contactNumber"
+                                    inputmode="tel"
+                                    maxlength="16"
                                     placeholder="09XX XXX XXXX"
                                     autocomplete="tel"
                                 >
@@ -546,6 +553,7 @@
                                 <textarea
                                     id="address"
                                     name="address"
+                                    maxlength="255"
                                     rows="3"
                                     placeholder="Enter your complete address"
                                     autocomplete="street-address"
@@ -656,6 +664,7 @@
                                 <textarea
                                     id="requestNotes"
                                     name="requestNotes"
+                                    maxlength="500"
                                     rows="5"
                                     placeholder="Enter any additional information related to your request"
                                 ></textarea>
@@ -689,6 +698,11 @@
                                 </p>
                             </div>
 
+                        </div>
+
+                        <div id="serviceRequirements" class="service-requirements-info">
+                            <p><strong>Required documents for your selected service:</strong></p>
+                            <ul id="requirementsList"></ul>
                         </div>
 
 
@@ -732,12 +746,14 @@
                                 type="file"
                                 id="requirements"
                                 name="requirements"
+                                accept=".pdf,.jpg,.jpeg,.png"
                                 multiple
                                 hidden
                             >
 
                             <span class="upload-note">
-                                Accepted formats: PDF, JPG, JPEG, PNG
+                                Accepted formats: PDF, JPG, JPEG, PNG<br>
+                                Maximum 15 MB per file · Up to 5 files
                             </span>
 
                         </div>
@@ -854,6 +870,8 @@
         </main>
 
     </div>
+
+    <script src="service.js"></script>
 
 </body>
 

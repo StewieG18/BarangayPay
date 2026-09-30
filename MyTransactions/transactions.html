@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Transactions | BarangayPay</title>
+
+    <!-- Main Dashboard Styles -->
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Transactions Page Styles -->
+    <link rel="stylesheet" href="../MyTransactions/transactions.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- =========================================
+             SIDEBAR
+        ========================================== -->
+        <aside class="sidebar" id="sidebar">
+
+            <!-- Brand -->
+            <div class="sidebar-brand">
+
+                <div class="brand-logo">
+                    BP
+                </div>
+
+                <div class="brand-text">
+                    <h1>BarangayPay</h1>
+                    <span>Barangay Services</span>
+                </div>
+
+            </div>
+
+
+            <!-- Navigation -->
+            <nav class="sidebar-navigation">
+
+                <!-- Main -->
+                <div class="navigation-section">
+
+                    <div class="navigation-label">
+                        Main
+                    </div>
+
+                    <a href="../index.html" class="navigation-item">
+                        <span class="navigation-icon">⌂</span>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a
+                        href="../MyTransactions/transactions.css"
+                        class="navigation-item active"
+                    >
+                        <span class="navigation-icon">▣</span>
+                        <span>My Transactions</span>
+                    </a>
+
+                    <a
+                        href="../RequestService/service.html"
+                        class="navigation-item"
+                    >
+                        <span class="navigation-icon">＋</span>
+                        <span>Request a Service</span>
+                    </a>
+
+                    <a
+                        href="../Services/services.html"
+                        class="navigation-item"
+                    >
+                        <span class="navigation-icon">☷</span>
+                        <span>Services</span>
+                    </a>
+
+                    <a
+                        href="payments.html"
+                        class="navigation-item"
+                    >
+                        <span class="navigation-icon">₱</span>
+                        <span>Payments</span>
+                    </a>
+
+                </div>
+
+
+                <!-- Account -->
+                <div class="navigation-section">
+
+                    <div class="navigation-label">
+                        Account
+                    </div>
+
+                    <a
+                        href="profile.html"
+                        class="navigation-item"
+                    >
+                        <span class="navigation-icon">◯</span>
+                        <span>Profile</span>
+                    </a>
+
+                    <a
+                        href="settings.html"
+                        class="navigation-item"
+                    >
+                        <span class="navigation-icon">⚙</span>
+                        <span>Settings</span>
+                    </a>
+
+                    <a
+                        href="login.html"
+                        class="navigation-item logout-item"
+                    >
+                        <span class="navigation-icon">↪</span>
+                        <span>Sign Out</span>
+                    </a>
+
+                </div>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- =========================================
+             MAIN CONTENT
+        ========================================== -->
+        <main class="main-content">
+
+
+            <!-- =====================================
+                 TOP HEADER
+            ====================================== -->
+            <header class="top-header">
+
+                <!-- Mobile Menu -->
+                <button
+                    type="button"
+                    class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Open navigation menu"
+                >
+                    ☰
+                </button>
+
+
+                <!-- Header Actions -->
+                <div class="header-actions">
+
+                    <!-- Notifications -->
+                    <button
+                        type="button"
+                        class="notification-button"
+                        id="notificationButton"
+                        aria-label="Notifications"
+                    >
+                        🔔
+
+                        <span
+                            class="notification-indicator"
+                            id="notificationIndicator"
+                        ></span>
+                    </button>
+
+
+                    <!-- User Menu -->
+                    <div
+                        class="user-menu"
+                        id="userMenu"
+                    >
+
+                        <button
+                            type="button"
+                            class="user-menu-button"
+                            id="userMenuButton"
+                        >
+
+                            <span class="user-avatar">
+                                R
+                            </span>
+
+                            <span class="user-menu-name">
+                                Resident
+                            </span>
+
+                            <span class="user-menu-arrow">
+                                ▾
+                            </span>
+
+                        </button>
+
+
+                        <!-- User Dropdown -->
+                        <div class="user-menu-dropdown">
+
+                            <a href="profile.html">
+                                Profile
+                            </a>
+
+                            <a href="settings.html">
+                                Settings
+                            </a>
+
+                            <a href="login.html">
+                                Sign Out
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =====================================
+                 TRANSACTIONS CONTENT
+            ====================================== -->
+            <section class="dashboard-content">
+
+
+                <!-- Page Header -->
+                <div class="page-header">
+
+                    <div class="page-header-text">
+
+                        <span class="page-eyebrow">
+                            Transaction History
+                        </span>
+
+                        <h2>
+                            My Transactions
+                        </h2>
+
+                        <p>
+                            View and track your barangay service requests
+                            and transaction status.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     TRANSACTION FILTERS
+                ================================== -->
+                <div class="transaction-toolbar">
+
+                    <div class="transaction-search">
+
+                        <label
+                            for="transactionSearch"
+                            class="visually-hidden"
+                        >
+                            Search transactions
+                        </label>
+
+                        <input
+                            type="search"
+                            id="transactionSearch"
+                            name="transactionSearch"
+                            placeholder="Search transaction number or service..."
+                        >
+
+                    </div>
+
+
+                    <div class="transaction-filter">
+
+                        <label
+                            for="statusFilter"
+                            class="visually-hidden"
+                        >
+                            Filter by status
+                        </label>
+
+                        <select
+                            id="statusFilter"
+                            name="statusFilter"
+                        >
+                            <option value="all">
+                                All Status
+                            </option>
+
+                            <option value="pending">
+                                Pending Review
+                            </option>
+
+                            <option value="rejected">
+                                Rejected
+                            </option>
+
+                            <option value="payment">
+                                Payment Required
+                            </option>
+
+                            <option value="paid">
+                                Paid
+                            </option>
+
+                            <option value="processing">
+                                Processing
+                            </option>
+
+                            <option value="ready">
+                                Ready for Release
+                            </option>
+
+                            <option value="completed">
+                                Completed
+                            </option>
+
+                            <option value="cancelled">
+                                Cancelled
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     TRANSACTION TABLE
+                ================================== -->
+                <div class="transactions-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>
+                                Transaction Records
+                            </h3>
+
+                            <p>
+                                Your submitted service requests will
+                                appear here.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="transaction-table-wrapper">
+
+                        <table class="transaction-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Transaction No.
+                                    </th>
+
+                                    <th>
+                                        Service
+                                    </th>
+
+                                    <th>
+                                        Date Submitted
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="transactionTableBody">
+
+                                <!--
+                                    Transactions will be loaded
+                                    here later using Laravel/MySQL.
+
+                                    No dummy records are added
+                                    during the UI stage.
+                                -->
+
+                            </tbody>
+
+                        </table>
+
+
+                        <!-- Empty State -->
+                        <div
+                            class="transaction-empty-state"
+                            id="transactionEmptyState"
+                        >
+
+                            <div class="empty-state-icon">
+                                ▣
+                            </div>
+
+                            <h3>
+                                No transactions yet
+                            </h3>
+
+                            <p>
+                                Your submitted service requests
+                                will appear here once you make
+                                a request.
+                            </p>
+
+                            <a
+                                href="request-service.html"
+                                class="primary-button"
+                            >
+                                Request a Service
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     TRANSACTION STATUS INFORMATION
+                ================================== -->
+                <div class="information-notice">
+
+                    <div class="information-icon">
+                        i
+                    </div>
+
+                    <div class="information-content">
+
+                        <h3>
+                            About transaction statuses
+                        </h3>
+
+                        <p>
+                            Your transaction status will be updated
+                            as the barangay processes your request.
+                            You can open a transaction to view its
+                            details and available actions.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =====================================
+                 FOOTER
+            ====================================== -->
+            <footer class="main-footer">
+
+                <p>
+                    © 2026 BarangayPay. Barangay Services Portal.
+                </p>
+
+                <div class="footer-links">
+
+                    <a href="#">
+                        Privacy
+                    </a>
+
+                    <a href="#">
+                        Terms
+                    </a>
+
+                </div>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- Main UI JavaScript -->
+    <script src="js/script.js"></script>
+
+    <!-- Transactions JavaScript -->
+    <script src="js/transactions.js"></script>
+
+</body>
+</html>
