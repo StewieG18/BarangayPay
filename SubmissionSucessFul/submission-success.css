@@ -1,0 +1,201 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+.success-container {
+    width: 100%;
+    max-width: 550px;
+
+    background-color: #ffffff;
+
+    padding: 45px 40px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Success Icon */
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #28a745;
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 45px;
+    font-weight: bold;
+}
+
+/* Heading */
+
+h1 {
+    color: #1f2937;
+
+    font-size: 28px;
+
+    margin-bottom: 15px;
+}
+
+/* Main Message */
+
+.message {
+    color: #555;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+
+    margin-bottom: 30px;
+}
+
+.message strong {
+    color: #d99a00;
+}
+
+/* Request Information */
+
+.request-info {
+    background-color: #f8f9fa;
+
+    border: 1px solid #e1e5e8;
+
+    border-radius: 10px;
+
+    padding: 20px;
+
+    margin-bottom: 25px;
+}
+
+.info-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 0;
+
+    color: #555;
+}
+
+.info-row:first-child {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.info-row strong {
+    color: #222;
+}
+
+.info-row .pending {
+    color: #d99a00;
+}
+
+/* Notice */
+
+.notice {
+    color: #777;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin-bottom: 30px;
+}
+
+/* Buttons */
+
+.actions {
+    display: flex;
+
+    gap: 12px;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+
+    padding: 12px 20px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition: 0.2s ease;
+}
+
+.btn.primary {
+    background-color: #007bff;
+
+    color: white;
+}
+
+.btn.primary:hover {
+    background-color: #0069d9;
+}
+
+.btn.secondary {
+    background-color: #e9ecef;
+
+    color: #333;
+}
+
+.btn.secondary:hover {
+    background-color: #dfe3e8;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .success-container {
+        padding: 35px 25px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .info-row {
+        font-size: 14px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

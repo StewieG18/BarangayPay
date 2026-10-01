@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resident Profile | BarangayPay</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../Profile/profile.css">
+</head>
+<body>
+    <div class="profile-app">
+        <aside class="profile-sidebar">
+            <a class="profile-brand" href="../index.html">
+                <span class="profile-brand-logo">BP</span>
+                <span><strong>BarangayPay</strong><small>Barangay Services</small></span>
+            </a>
+
+            <nav class="profile-nav" aria-label="Main navigation">
+                <span class="profile-nav-heading">MAIN</span>
+                <a href="../index.html"><span>⌂</span> Dashboard</a>
+                <a href="../MyTransactions/transactions.html"><span>▤</span> My Requests</a>
+                <a href="../RequestService/service.html"><span>＋</span> Request a Service</a>
+                <a href="../Services/services.html"><span>▦</span> Services</a>
+
+                <span class="profile-nav-heading">ACCOUNT</span>
+                <a class="selected" href="profile.html" aria-current="page"><span>◯</span> Profile</a>
+                <a href="../login/login.html"><span>↪</span> Log Out</a>
+            </nav>
+
+            <div class="profile-sidebar-footer">Digital Barangay Services</div>
+        </aside>
+
+        <main class="profile-main">
+            <header class="profile-topbar">
+                <span class="profile-topbar-label">Resident Account</span>
+                <a href="../MyTransactions/transactions.html">My Requests <span aria-hidden="true">→</span></a>
+            </header>
+
+            <div class="profile-content">
+                <div class="profile-page-heading">
+                    <div>
+                        <span class="profile-eyebrow">ACCOUNT</span>
+                        <h1>My Profile</h1>
+                        <p>View and manage your resident account information.</p>
+                    </div>
+                </div>
+
+                <section class="profile-card profile-summary" aria-label="Resident profile summary">
+                    <div class="profile-avatar" aria-hidden="true">JC</div>
+                    <div class="profile-summary-details">
+                        <h2 data-profile-key="fullName">Jhouanese Condor</h2>
+                        <p>Resident ID: <strong>BP-2026-0001</strong></p>
+                    </div>
+                    <span class="profile-status"><span aria-hidden="true">●</span> Active</span>
+                </section>
+
+                <section class="profile-card">
+                    <div class="profile-section-heading">
+                        <div>
+                            <h2>Personal Information</h2>
+                            <p>Your personal and contact details.</p>
+                        </div>
+                    </div>
+                    <div class="profile-details-grid">
+                        <div class="profile-detail">
+                            <span>Full Name</span>
+                            <strong data-profile-key="fullName">Jhouanese Condor</strong>
+                        </div>
+                        <div class="profile-detail">
+                            <span>Date of Birth</span>
+                            <strong>March 15, 2002</strong>
+                        </div>
+                        <div class="profile-detail">
+                            <span>Sex</span>
+                            <strong>Female</strong>
+                        </div>
+                        <div class="profile-detail">
+                            <span>Contact Number</span>
+                            <strong data-profile-key="contact">0917 123 4567</strong>
+                        </div>
+                        <div class="profile-detail profile-detail-wide">
+                            <span>Email Address</span>
+                            <strong data-profile-key="email">jhouanese.condor@example.com</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="profile-card">
+                    <div class="profile-section-heading">
+                        <div>
+                            <h2>Address</h2>
+                            <p>Your registered residential address.</p>
+                        </div>
+                    </div>
+                    <div class="profile-details-grid">
+                        <div class="profile-detail">
+                            <span>House / Street</span>
+                            <strong data-profile-key="street">123 Mabini Street</strong>
+                        </div>
+                        <div class="profile-detail">
+                            <span>Barangay</span>
+                            <strong>Barangay San Isidro</strong>
+                        </div>
+                        <div class="profile-detail">
+                            <span>City / Municipality</span>
+                            <strong>Quezon City</strong>
+                        </div>
+                        <div class="profile-detail">
+                            <span>Province</span>
+                            <strong>Metro Manila</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="profile-requests-section" aria-labelledby="request-stats-heading">
+                    <div class="profile-section-heading">
+                        <div>
+                            <h2 id="request-stats-heading">My Requests</h2>
+                            <p>A summary of your service requests.</p>
+                        </div>
+                        <a class="profile-text-link" href="../MyTransactions/transactions.html">View requests →</a>
+                    </div>
+
+                    <div class="profile-stat-grid">
+                        <article class="profile-stat-card">
+                            <span class="profile-stat-icon total-icon" aria-hidden="true">▤</span>
+                            <div><span>Total Requests</span><strong>8</strong></div>
+                        </article>
+                        <article class="profile-stat-card">
+                            <span class="profile-stat-icon pending-icon" aria-hidden="true">◷</span>
+                            <div><span>Pending</span><strong>2</strong></div>
+                        </article>
+                        <article class="profile-stat-card">
+                            <span class="profile-stat-icon approved-icon" aria-hidden="true">✓</span>
+                            <div><span>Approved</span><strong>5</strong></div>
+                        </article>
+                        <article class="profile-stat-card">
+                            <span class="profile-stat-icon rejected-icon" aria-hidden="true">×</span>
+                            <div><span>Rejected</span><strong>1</strong></div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="profile-card profile-actions">
+                    <div class="profile-section-heading">
+                        <div>
+                            <h2>Account Actions</h2>
+                            <p>Manage your profile and account access.</p>
+                        </div>
+                    </div>
+                    <div class="profile-action-buttons">
+                        <button class="profile-button profile-button-primary" id="editProfileButton" type="button">
+                            Edit Profile
+                        </button>
+                        <button class="profile-button profile-button-secondary" id="changePasswordButton" type="button">
+                            Change Password
+                        </button>
+                        <a class="profile-button profile-button-danger" href="../login/login.html">Log Out</a>
+                    </div>
+                    <p class="profile-edit-message" id="profileEditMessage" aria-live="polite"></p>
+                </section>
+
+                <footer class="profile-footer">© 2026 BarangayPay <span>Digital Barangay Services</span></footer>
+            </div>
+        </main>
+    </div>
+    <script src="profile.js"></script>
+</body>
+</html>

@@ -268,4 +268,54 @@ form.querySelectorAll('input[name="service"]').forEach(radio => {
             btn.disabled = false;
         }
     });
+
+        // ...existing code...
+    
+    (() => {
+        const form = document.getElementById('serviceRequestForm');
+        const steps = [...document.querySelectorAll('.request-steps .request-step')];
+        const lines = [...document.querySelectorAll('.request-steps .step-line')];
+    
+        if (!form || steps.length !== 4) return;
+    
+        const checks = [
+            () => Boolean(form.querySelector('[name="service"]:checked')),
+            () => ['firstName', 'lastName', 'contactNumber', 'address', 'purpose']
+                .every(id => form.querySelector(`#${id}`)?.value.trim()),
+            () => (form.querySelector('#requirements')?.files.length ?? 0) > 0,
+            () => Boolean(form.querySelector('#confirmInformation')?.checked)
+        ];
+    
+        const updateSteps = () => {
+            const completed = checks.map(check => check());
+            const current = completed.findIndex(done => !done);
+    
+            steps.forEach((step, index) => {
+                const isComplete = completed[index];
+                const number = step.querySelector('.step-number');
+    
+                step.classList.toggle('completed', isComplete);
+                step.classList.toggle('active', index === current);
+    
+                if (number) number.textContent = isComplete ? '✓' : String(index + 1);
+    
+                if (isComplete) {
+                    step.setAttribute('aria-label', `Step ${index + 1} completed`);
+                } else {
+                    step.removeAttribute('aria-label');
+                }
+            });
+    
+            lines.forEach((line, index) => {
+                line.classList.toggle('completed', completed[index]);
+            });
+        };
+    
+        form.addEventListener('input', updateSteps);
+        form.addEventListener('change', updateSteps);
+        updateSteps();
+    })();
+    
+    // ...existing code...
+
 })();

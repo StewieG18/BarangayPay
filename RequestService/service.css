@@ -933,3 +933,17 @@
     margin-bottom: 6px;
     line-height: 1.5;
 }
+
+.request-step .step-number,
+.step-line {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.request-step.completed .step-number {
+    color: #fff;
+    background-color: #16a34a;
+}
+
+.step-line.completed {
+    background-color: #16a34a;
+}
