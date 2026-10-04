@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Staff Dashboard | BarangayPay</title>
+
+    <link rel="stylesheet" href="staff.css">
+
+</head>
+
+
+<body>
+
+    <div class="staff-app">
+
+
+        <!-- =========================================
+             SIDEBAR
+             ========================================= -->
+
+        <aside class="staff-sidebar" id="staffSidebar">
+
+
+            <!-- BRAND -->
+
+            <div class="staff-brand">
+
+                <div class="staff-brand-logo">
+                    BP
+                </div>
+
+                <div class="staff-brand-text">
+
+                    <strong>
+                        BarangayPay
+                    </strong>
+
+                    <span>
+                        Staff Portal
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="staff-navigation">
+
+
+                <!-- MAIN -->
+
+                <div class="staff-navigation-section">
+
+                    <span class="staff-navigation-title">
+                        MAIN
+                    </span>
+
+
+                    <a
+                        href="../StaffPage/staff.html"
+                        class="staff-navigation-item active"
+                    >
+
+                        <span class="staff-navigation-icon">
+                            ▦
+                        </span>
+
+                        <span>
+                            Dashboard
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="../StaffRequests/requests.html"
+                        class="staff-navigation-item"
+                    >
+
+                        <span class="staff-navigation-icon">
+                            ▤
+                        </span>
+
+                        <span>
+                            Service Requests
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+                <!-- MANAGEMENT -->
+
+                <div class="staff-navigation-section">
+
+                    <span class="staff-navigation-title">
+                        MANAGEMENT
+                    </span>
+
+
+                    <a
+                        href="../StaffDocuments/documents.html"
+                        class="staff-navigation-item"
+                    >
+
+                        <span class="staff-navigation-icon">
+                            ▧
+                        </span>
+
+                        <span>
+                            Documents
+                        </span>
+
+                    </a>
+
+
+                </div>
+
+
+                <!-- ACCOUNT -->
+
+                <div class="staff-navigation-section">
+
+                    <span class="staff-navigation-title">
+                        ACCOUNT
+                    </span>
+
+
+                    <a
+                        href="../StaffSettings/settings.html"
+                        class="staff-navigation-item"
+                    >
+
+                        <span class="staff-navigation-icon">
+                            ⚙
+                        </span>
+
+                        <span>
+                            Settings
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </nav>
+
+
+            <!-- SIDEBAR BOTTOM -->
+
+            <div class="staff-sidebar-bottom">
+
+                <a
+                    href="../login/login.html"
+                    class="staff-navigation-item staff-logout"
+                >
+
+                    <span class="staff-navigation-icon">
+                        ↪
+                    </span>
+
+                    <span>
+                        Sign Out
+                    </span>
+
+                </a>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =========================================
+             MAIN CONTENT
+             ========================================= -->
+
+        <main class="staff-main">
+
+
+            <!-- =========================================
+                 TOP HEADER
+                 ========================================= -->
+
+            <header class="staff-header">
+
+
+                <button
+                    type="button"
+                    class="staff-menu-toggle"
+                    id="staffMenuToggle"
+                    aria-label="Open navigation menu"
+                >
+                    ☰
+                </button>
+
+
+                <div class="staff-header-spacer"></div>
+
+
+                <!-- NOTIFICATIONS -->
+
+                <button
+                    type="button"
+                    class="staff-notification-button"
+                    id="staffNotificationButton"
+                    aria-label="Notifications"
+                >
+
+                    🔔
+
+                    <span class="staff-notification-indicator"></span>
+
+                </button>
+
+
+                <!-- STAFF PROFILE -->
+
+                <div
+                    class="staff-user-menu"
+                    id="staffUserMenu"
+                >
+
+                    <button
+                        type="button"
+                        class="staff-user-button"
+                        id="staffUserButton"
+                    >
+
+                        <div class="staff-avatar">
+                            S
+                        </div>
+
+
+                        <div class="staff-user-information">
+
+                            <strong>
+                                Barangay Staff
+                            </strong>
+
+                            <span>
+                                Staff Account
+                            </span>
+
+                        </div>
+
+
+                        <span class="staff-user-arrow">
+                            ▼
+                        </span>
+
+                    </button>
+
+
+                    <div class="staff-user-dropdown">
+
+                        <a href="staff-profile.html">
+                            Profile
+                        </a>
+
+                        <a href="staff-settings.html">
+                            Settings
+                        </a>
+
+                        <a href="../login/login.html">
+                            Sign Out
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- =========================================
+                 DASHBOARD CONTENT
+                 ========================================= -->
+
+            <div class="staff-content">
+
+
+                <!-- PAGE HEADER -->
+
+                <section class="staff-page-header">
+
+                    <div>
+
+                        <span class="staff-page-label">
+                            STAFF PORTAL
+                        </span>
+
+                        <h1>
+                            Dashboard
+                        </h1>
+
+                        <p>
+                            Monitor and manage barangay services,
+                            requests, and resident transactions.
+                        </p>
+
+                    </div>
+
+
+                    <div class="staff-date">
+
+                        <span>
+                            Today
+                        </span>
+
+                        <strong id="currentDate">
+                            October 4, 2026
+                        </strong>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =====================================
+                     SUMMARY CARDS
+                     ===================================== -->
+
+                <section class="staff-summary-grid">
+
+
+                    <!-- PENDING -->
+
+                    <article class="staff-summary-card">
+
+                        <div class="summary-card-top">
+
+                            <span class="summary-card-label">
+                                Pending Requests
+                            </span>
+
+                            <span class="summary-card-icon">
+                                ◷
+                            </span>
+
+                        </div>
+
+
+                        <strong class="summary-card-value">
+                            12
+                        </strong>
+
+
+                        <span class="summary-card-description">
+                            Requests awaiting review
+                        </span>
+
+                    </article>
+
+
+
+                    <!-- PROCESSING -->
+
+                    <article class="staff-summary-card">
+
+                        <div class="summary-card-top">
+
+                            <span class="summary-card-label">
+                                Processing
+                            </span>
+
+                            <span class="summary-card-icon">
+                                ◌
+                            </span>
+
+                        </div>
+
+
+                        <strong class="summary-card-value">
+                            8
+                        </strong>
+
+
+                        <span class="summary-card-description">
+                            Requests currently being processed
+                        </span>
+
+                    </article>
+
+
+
+                    <!-- COMPLETED -->
+
+                    <article class="staff-summary-card">
+
+                        <div class="summary-card-top">
+
+                            <span class="summary-card-label">
+                                Completed
+                            </span>
+
+                            <span class="summary-card-icon">
+                                ✓
+                            </span>
+
+                        </div>
+
+
+                        <strong class="summary-card-value">
+                            47
+                        </strong>
+
+
+                        <span class="summary-card-description">
+                            Requests completed this month
+                        </span>
+
+                    </article>
+
+
+
+                    <!-- RESIDENTS -->
+
+                    <article class="staff-summary-card">
+
+                        <div class="summary-card-top">
+
+                            <span class="summary-card-label">
+                                Total Residents
+                            </span>
+
+                            <span class="summary-card-icon">
+                                ◉
+                            </span>
+
+                        </div>
+
+
+                        <strong class="summary-card-value">
+                            1,284
+                        </strong>
+
+
+                        <span class="summary-card-description">
+                            Registered residents
+                        </span>
+
+                    </article>
+
+                </section>
+
+
+
+                <!-- =====================================
+                     CONTENT GRID
+                     ===================================== -->
+
+                <section class="staff-dashboard-grid">
+
+
+                    <!-- =================================
+                         RECENT REQUESTS
+                         ================================= -->
+
+                    <div class="staff-panel staff-requests-panel">
+
+
+                        <div class="staff-panel-header">
+
+                            <div>
+
+                                <span class="staff-panel-label">
+                                    SERVICE REQUESTS
+                                </span>
+
+                                <h2>
+                                    Recent Requests
+                                </h2>
+
+                            </div>
+
+
+                            <a
+                                href="requests.html"
+                                class="staff-view-all"
+                            >
+                                View All
+                            </a>
+
+                        </div>
+
+
+
+                        <div class="staff-table-wrapper">
+
+                            <table class="staff-request-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Request ID
+                                        </th>
+
+                                        <th>
+                                            Resident
+                                        </th>
+
+                                        <th>
+                                            Service
+                                        </th>
+
+                                        <th>
+                                            Date
+                                        </th>
+
+                                        <th>
+                                            Status
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+
+                                    <!-- REQUEST 1 -->
+
+                                    <tr>
+
+                                        <td>
+                                            <strong>
+                                                BP-2026-00124
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            Juan Dela Cruz
+                                        </td>
+
+                                        <td>
+                                            Barangay Clearance
+                                        </td>
+
+                                        <td>
+                                            Oct 4, 2026
+                                        </td>
+
+                                        <td>
+
+                                            <span class="request-status pending">
+                                                Pending
+                                            </span>
+
+                                        </td>
+
+                                    </tr>
+
+
+
+                                    <!-- REQUEST 2 -->
+
+                                    <tr>
+
+                                        <td>
+                                            <strong>
+                                                BP-2026-00123
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            Maria Santos
+                                        </td>
+
+                                        <td>
+                                            Certificate of Residency
+                                        </td>
+
+                                        <td>
+                                            Oct 4, 2026
+                                        </td>
+
+                                        <td>
+
+                                            <span class="request-status processing">
+                                                Processing
+                                            </span>
+
+                                        </td>
+
+                                    </tr>
+
+
+
+                                    <!-- REQUEST 3 -->
+
+                                    <tr>
+
+                                        <td>
+                                            <strong>
+                                                BP-2026-00122
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            Pedro Reyes
+                                        </td>
+
+                                        <td>
+                                            Certificate of Indigency
+                                        </td>
+
+                                        <td>
+                                            Oct 3, 2026
+                                        </td>
+
+                                        <td>
+
+                                            <span class="request-status completed">
+                                                Completed
+                                            </span>
+
+                                        </td>
+
+                                    </tr>
+
+
+
+                                    <!-- REQUEST 4 -->
+
+                                    <tr>
+
+                                        <td>
+                                            <strong>
+                                                BP-2026-00121
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            Ana Garcia
+                                        </td>
+
+                                        <td>
+                                            Business Clearance
+                                        </td>
+
+                                        <td>
+                                            Oct 3, 2026
+                                        </td>
+
+                                        <td>
+
+                                            <span class="request-status pending">
+                                                Pending
+                                            </span>
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         QUICK ACTIONS
+                         ================================= -->
+
+                    <div class="staff-panel staff-actions-panel">
+
+
+                        <div class="staff-panel-header">
+
+                            <div>
+
+                                <span class="staff-panel-label">
+                                    QUICK ACTIONS
+                                </span>
+
+                                <h2>
+                                    Staff Actions
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="staff-quick-actions">
+
+
+                            <a
+                                href="requests.html"
+                                class="staff-action-button"
+                            >
+
+                                <span class="staff-action-icon">
+                                    ▤
+                                </span>
+
+                                <div>
+
+                                    <strong>
+                                        Review Requests
+                                    </strong>
+
+                                    <span>
+                                        Review pending service requests
+                                    </span>
+
+                                </div>
+
+                            </a>
+
+
+
+                            <a
+                                href="residents.html"
+                                class="staff-action-button"
+                            >
+
+                                <span class="staff-action-icon">
+                                    ◯
+                                </span>
+
+                                <div>
+
+                                    <strong>
+                                        Manage Residents
+                                    </strong>
+
+                                    <span>
+                                        View resident accounts
+                                    </span>
+
+                                </div>
+
+                            </a>
+
+
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =====================================
+                     FOOTER
+                     ===================================== -->
+
+                <footer class="staff-footer">
+
+                    <span>
+                        © 2026 BarangayPay
+                    </span>
+
+                    <span>
+                        Barangay Staff Portal
+                    </span>
+
+                </footer>
+
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+         ========================================= -->
+
+    <script>
+
+        /* =========================================
+           MOBILE SIDEBAR
+           ========================================= */
+
+        const staffMenuToggle =
+            document.getElementById("staffMenuToggle");
+
+        const staffSidebar =
+            document.getElementById("staffSidebar");
+
+
+        if (staffMenuToggle && staffSidebar) {
+
+            staffMenuToggle.addEventListener(
+                "click",
+                function () {
+
+                    staffSidebar.classList.toggle("open");
+
+                }
+            );
+
+        }
+
+
+
+        /* =========================================
+           STAFF USER MENU
+           ========================================= */
+
+        const staffUserButton =
+            document.getElementById("staffUserButton");
+
+        const staffUserMenu =
+            document.getElementById("staffUserMenu");
+
+
+        if (staffUserButton && staffUserMenu) {
+
+            staffUserButton.addEventListener(
+                "click",
+                function (event) {
+
+                    event.stopPropagation();
+
+                    staffUserMenu.classList.toggle("open");
+
+                }
+            );
+
+
+            document.addEventListener(
+                "click",
+                function () {
+
+                    staffUserMenu.classList.remove("open");
+
+                }
+            );
+
+        }
+
+
+
+        /* =========================================
+           CURRENT DATE
+           ========================================= */
+
+        const currentDate =
+            document.getElementById("currentDate");
+
+
+        if (currentDate) {
+
+            const today = new Date();
+
+            currentDate.textContent =
+                today.toLocaleDateString(
+                    "en-US",
+                    {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric"
+                    }
+                );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

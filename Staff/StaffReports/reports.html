@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | BarangayPay Staff</title>
+
+    <link rel="stylesheet" href="reports.css">
+</head>
+
+<body>
+
+<div class="staff-app">
+
+    <!-- SIDEBAR -->
+    <aside class="staff-sidebar" id="staffSidebar">
+
+        <div class="staff-brand">
+
+            <div class="staff-brand-logo">
+                BP
+            </div>
+
+            <div>
+                <h1>BarangayPay</h1>
+                <span>Staff Portal</span>
+            </div>
+
+        </div>
+
+
+        <nav class="staff-navigation">
+
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    MAIN
+                </span>
+
+                <a href="../StaffPage/" class="staff-nav-link">
+                    <span class="nav-icon">▦</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="../StaffRequests/requests.html" class="staff-nav-link">
+                    <span class="nav-icon">▤</span>
+                    <span>Service Requests</span>
+                </a>
+
+            </div>
+
+
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    MANAGEMENT
+                </span>
+
+                <a href="../StaffDocuments/documents.html" class="staff-nav-link">
+                    <span class="nav-icon">▧</span>
+                    <span>Documents</span>
+                </a>
+
+            </div>
+
+
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    ACCOUNT
+                </span>
+
+                <a href="../StaffSettings/" class="staff-nav-link">
+                    <span class="nav-icon">⚙</span>
+                    <span>Settings</span>
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <div class="staff-sidebar-bottom">
+
+            <a href="../login/login.html" class="staff-signout">
+
+                <span class="nav-icon">↪</span>
+
+                <span>
+                    Sign Out
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="staff-main">
+
+
+        <!-- HEADER -->
+        <header class="staff-header">
+
+            <button
+                class="staff-menu-toggle"
+                id="staffMenuToggle"
+            >
+                ☰
+            </button>
+
+            <div class="staff-header-spacer"></div>
+
+
+            <button class="notification-button">
+
+                ♢
+
+                <span class="notification-dot"></span>
+
+            </button>
+
+
+            <div class="staff-user-menu">
+
+                <button
+                    class="staff-user-button"
+                    id="staffUserButton"
+                >
+
+                    <div class="staff-avatar">
+                        S
+                    </div>
+
+                    <div class="staff-user-info">
+
+                        <strong>
+                            Barangay Staff
+                        </strong>
+
+                        <span>
+                            Staff Account
+                        </span>
+
+                    </div>
+
+                    <span class="dropdown-arrow">
+                        ⌄
+                    </span>
+
+                </button>
+
+
+                <div
+                    class="staff-user-dropdown"
+                    id="staffUserDropdown"
+                >
+
+                    <a href="staff-profile.html">
+                        My Profile
+                    </a>
+
+                    <a href="staff-settings.html">
+                        Settings
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+
+                    <a href="../login/login.html">
+                        Sign Out
+                    </a>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- CONTENT -->
+        <section class="staff-content">
+
+
+            <!-- PAGE HEADER -->
+            <div class="staff-page-header">
+
+                <div>
+
+                    <span class="page-eyebrow">
+                        REPORTING & ANALYTICS
+                    </span>
+
+                    <h2>
+                        Reports
+                    </h2>
+
+                    <p>
+                        Generate and review reports about barangay services, payments, documents, and residents.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- REPORT FILTER -->
+            <div class="report-filter-panel">
+
+                <div class="filter-group">
+
+                    <label for="reportType">
+                        Report Type
+                    </label>
+
+                    <select id="reportType">
+
+                        <option value="service">
+                            Service Requests
+                        </option>
+
+                        <option value="payment">
+                            Payments
+                        </option>
+
+                        <option value="document">
+                            Documents
+                        </option>
+
+                        <option value="resident">
+                            Residents
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label for="dateFrom">
+                        From
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dateFrom"
+                        value="2026-10-01"
+                    >
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label for="dateTo">
+                        To
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dateTo"
+                        value="2026-10-04"
+                    >
+
+                </div>
+
+
+                <button
+                    class="generate-report-button"
+                    id="generateReport"
+                >
+                    Generate Report
+                </button>
+
+            </div>
+
+
+
+            <!-- SUMMARY -->
+            <div class="report-summary">
+
+
+                <div class="report-card">
+
+                    <div class="report-card-icon">
+                        ▤
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Requests
+                        </span>
+
+                        <strong>
+                            71
+                        </strong>
+
+                        <small>
+                            This period
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <div class="report-card-icon">
+                        ₱
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Payments
+                        </span>
+
+                        <strong>
+                            ₱24,850
+                        </strong>
+
+                        <small>
+                            This period
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <div class="report-card-icon">
+                        ▧
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Documents Issued
+                        </span>
+
+                        <strong>
+                            47
+                        </strong>
+
+                        <small>
+                            This period
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <div class="report-card-icon">
+                        ♙
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Active Residents
+                        </span>
+
+                        <strong>
+                            1,241
+                        </strong>
+
+                        <small>
+                            Current total
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- REPORT GRID -->
+            <div class="reports-grid">
+
+
+                <!-- SERVICE REPORT -->
+                <div class="report-panel service-report">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Service Requests
+                            </h3>
+
+                            <p>
+                                Requests submitted by service type.
+                            </p>
+
+                        </div>
+
+                        <button class="export-button">
+                            Export
+                        </button>
+
+                    </div>
+
+
+                    <div class="service-bars">
+
+
+                        <div class="service-bar-row">
+
+                            <div class="bar-label">
+
+                                <span>
+                                    Barangay Clearance
+                                </span>
+
+                                <strong>
+                                    28
+                                </strong>
+
+                            </div>
+
+                            <div class="bar-track">
+
+                                <div
+                                    class="bar-fill"
+                                    style="width: 78%;"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="service-bar-row">
+
+                            <div class="bar-label">
+
+                                <span>
+                                    Certificate of Residency
+                                </span>
+
+                                <strong>
+                                    19
+                                </strong>
+
+                            </div>
+
+                            <div class="bar-track">
+
+                                <div
+                                    class="bar-fill"
+                                    style="width: 54%;"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="service-bar-row">
+
+                            <div class="bar-label">
+
+                                <span>
+                                    Certificate of Indigency
+                                </span>
+
+                                <strong>
+                                    14
+                                </strong>
+
+                            </div>
+
+                            <div class="bar-track">
+
+                                <div
+                                    class="bar-fill"
+                                    style="width: 40%;"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="service-bar-row">
+
+                            <div class="bar-label">
+
+                                <span>
+                                    Business Clearance
+                                </span>
+
+                                <strong>
+                                    10
+                                </strong>
+
+                            </div>
+
+                            <div class="bar-track">
+
+                                <div
+                                    class="bar-fill"
+                                    style="width: 29%;"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- REQUEST STATUS -->
+                <div class="report-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Request Status
+                            </h3>
+
+                            <p>
+                                Current request distribution.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="status-report">
+
+
+                        <div class="status-row">
+
+                            <div class="status-indicator pending">
+                            </div>
+
+                            <span>
+                                Pending
+                            </span>
+
+                            <strong>
+                                12
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-row">
+
+                            <div class="status-indicator processing">
+                            </div>
+
+                            <span>
+                                Processing
+                            </span>
+
+                            <strong>
+                                8
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-row">
+
+                            <div class="status-indicator completed">
+                            </div>
+
+                            <span>
+                                Completed
+                            </span>
+
+                            <strong>
+                                47
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-row">
+
+                            <div class="status-indicator rejected">
+                            </div>
+
+                            <span>
+                                Rejected
+                            </span>
+
+                            <strong>
+                                4
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PAYMENT REPORT -->
+                <div class="report-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Payment Summary
+                            </h3>
+
+                            <p>
+                                Payment activity for the selected period.
+                            </p>
+
+                        </div>
+
+                        <button class="export-button">
+                            Export
+                        </button>
+
+                    </div>
+
+
+                    <div class="payment-summary">
+
+
+                        <div class="payment-row">
+
+                            <span>
+                                Paid Transactions
+                            </span>
+
+                            <strong>
+                                63
+                            </strong>
+
+                        </div>
+
+
+                        <div class="payment-row">
+
+                            <span>
+                                Unpaid Transactions
+                            </span>
+
+                            <strong>
+                                8
+                            </strong>
+
+                        </div>
+
+
+                        <div class="payment-row">
+
+                            <span>
+                                Total Collected
+                            </span>
+
+                            <strong>
+                                ₱24,850.00
+                            </strong>
+
+                        </div>
+
+
+                        <div class="payment-row">
+
+                            <span>
+                                Average Transaction
+                            </span>
+
+                            <strong>
+                                ₱350.00
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DOCUMENT REPORT -->
+                <div class="report-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Documents
+                            </h3>
+
+                            <p>
+                                Document generation and release activity.
+                            </p>
+
+                        </div>
+
+                        <button class="export-button">
+                            Export
+                        </button>
+
+                    </div>
+
+
+                    <div class="document-report">
+
+
+                        <div class="document-report-row">
+
+                            <span>
+                                Generated
+                            </span>
+
+                            <strong>
+                                47
+                            </strong>
+
+                        </div>
+
+
+                        <div class="document-report-row">
+
+                            <span>
+                                Ready for Release
+                            </span>
+
+                            <strong>
+                                14
+                            </strong>
+
+                        </div>
+
+
+                        <div class="document-report-row">
+
+                            <span>
+                                Released
+                            </span>
+
+                            <strong>
+                                126
+                            </strong>
+
+                        </div>
+
+
+                        <div class="document-report-row">
+
+                            <span>
+                                Archived
+                            </span>
+
+                            <strong>
+                                8
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RECENT REPORT ACTIVITY -->
+            <div class="report-panel recent-reports">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Recent Reports
+                        </h3>
+
+                        <p>
+                            Reports generated by staff accounts.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="recent-reports-table-wrapper">
+
+                    <table class="recent-reports-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Report
+                                </th>
+
+                                <th>
+                                    Date Range
+                                </th>
+
+                                <th>
+                                    Generated By
+                                </th>
+
+                                <th>
+                                    Date Generated
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+                                    Service Requests Report
+                                </td>
+
+                                <td>
+                                    Oct 1 – Oct 4, 2026
+                                </td>
+
+                                <td>
+                                    Barangay Staff
+                                </td>
+
+                                <td>
+                                    Oct 4, 2026
+                                </td>
+
+                                <td>
+                                    <button class="view-report-button">
+                                        View
+                                    </button>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Payment Summary Report
+                                </td>
+
+                                <td>
+                                    Sep 1 – Sep 30, 2026
+                                </td>
+
+                                <td>
+                                    Barangay Staff
+                                </td>
+
+                                <td>
+                                    Oct 1, 2026
+                                </td>
+
+                                <td>
+                                    <button class="view-report-button">
+                                        View
+                                    </button>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Resident Activity Report
+                                </td>
+
+                                <td>
+                                    Sep 1 – Sep 30, 2026
+                                </td>
+
+                                <td>
+                                    Barangay Staff
+                                </td>
+
+                                <td>
+                                    Oct 1, 2026
+                                </td>
+
+                                <td>
+                                    <button class="view-report-button">
+                                        View
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+        <footer class="staff-footer">
+
+            <span>
+                © 2026 BarangayPay
+            </span>
+
+            <span>
+                Barangay Staff Portal
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+    /* MOBILE SIDEBAR */
+
+    const staffMenuToggle =
+        document.getElementById("staffMenuToggle");
+
+    const staffSidebar =
+        document.getElementById("staffSidebar");
+
+
+    staffMenuToggle.addEventListener(
+        "click",
+        function () {
+
+            staffSidebar.classList.toggle("open");
+
+        }
+    );
+
+
+
+    /* USER DROPDOWN */
+
+    const staffUserButton =
+        document.getElementById("staffUserButton");
+
+    const staffUserDropdown =
+        document.getElementById("staffUserDropdown");
+
+
+    staffUserButton.addEventListener(
+        "click",
+        function (event) {
+
+            event.stopPropagation();
+
+            staffUserDropdown.classList.toggle("show");
+
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        function () {
+
+            staffUserDropdown.classList.remove("show");
+
+        }
+    );
+
+
+
+    /* GENERATE REPORT */
+
+    const generateReport =
+        document.getElementById("generateReport");
+
+
+    generateReport.addEventListener(
+        "click",
+        function () {
+
+            const reportType =
+                document.getElementById("reportType").value;
+
+            const dateFrom =
+                document.getElementById("dateFrom").value;
+
+            const dateTo =
+                document.getElementById("dateTo").value;
+
+
+            if (!dateFrom || !dateTo) {
+
+                alert(
+                    "Please select a date range."
+                );
+
+                return;
+
+            }
+
+
+            if (dateFrom > dateTo) {
+
+                alert(
+                    "The starting date cannot be later than the ending date."
+                );
+
+                return;
+
+            }
+
+
+            alert(
+                "The " +
+                reportType +
+                " report will be generated for the selected date range."
+            );
+
+        }
+    );
+
+
+
+    /* EXPORT BUTTONS */
+
+    document
+        .querySelectorAll(".export-button")
+        .forEach(function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    alert(
+                        "Report export will be connected here."
+                    );
+
+                }
+            );
+
+        });
+
+
+
+    /* VIEW REPORT */
+
+    document
+        .querySelectorAll(".view-report-button")
+        .forEach(function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    alert(
+                        "The selected report will open here."
+                    );
+
+                }
+            );
+
+        });
+
+</script>
+
+</body>
+</html>

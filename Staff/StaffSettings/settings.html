@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | BarangayPay Staff</title>
+
+    <link rel="stylesheet" href="settings.css">
+</head>
+
+<body>
+
+<div class="staff-app">
+
+    <!-- SIDEBAR -->
+    <aside class="staff-sidebar" id="staffSidebar">
+
+        <div class="staff-brand">
+
+            <div class="staff-brand-logo">
+                BP
+            </div>
+
+            <div>
+                <h1>BarangayPay</h1>
+                <span>Staff Portal</span>
+            </div>
+
+        </div>
+
+
+        <nav class="staff-navigation">
+
+            <!-- MAIN -->
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    MAIN
+                </span>
+
+                <a href="../StaffPage/staff.html" class="staff-nav-link">
+                    <span class="nav-icon">▦</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="../StaffRequests/requests.html" class="staff-nav-link">
+                    <span class="nav-icon">▤</span>
+                    <span>Service Requests</span>
+                </a>
+
+            </div>
+
+
+            <!-- MANAGEMENT -->
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    MANAGEMENT
+                </span>
+
+                <a href="../StaffDocuments/documents.html" class="staff-nav-link">
+                    <span class="nav-icon">▧</span>
+                    <span>Documents</span>
+                </a>
+
+            </div>
+
+
+            <!-- ACCOUNT -->
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    ACCOUNT
+                </span>
+
+                <a
+                    href="../StaffSettings/settings.html"
+                    class="staff-nav-link active"
+                >
+                    <span class="nav-icon">⚙</span>
+                    <span>Settings</span>
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <div class="staff-sidebar-bottom">
+
+            <a
+                href="../login/login.html"
+                class="staff-signout"
+            >
+
+                <span class="nav-icon">↪</span>
+
+                <span>
+                    Sign Out
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="staff-main">
+
+
+        <!-- HEADER -->
+        <header class="staff-header">
+
+            <button
+                class="staff-menu-toggle"
+                id="staffMenuToggle"
+            >
+                ☰
+            </button>
+
+            <div class="staff-header-spacer"></div>
+
+
+            <button class="notification-button">
+
+                ♢
+
+                <span class="notification-dot"></span>
+
+            </button>
+
+
+            <div class="staff-user-menu">
+
+                <button
+                    class="staff-user-button"
+                    id="staffUserButton"
+                >
+
+                    <div class="staff-avatar">
+                        S
+                    </div>
+
+                    <div class="staff-user-info">
+
+                        <strong>
+                            Barangay Staff
+                        </strong>
+
+                        <span>
+                            Staff Account
+                        </span>
+
+                    </div>
+
+                    <span class="dropdown-arrow">
+                        ⌄
+                    </span>
+
+                </button>
+
+
+                <div
+                    class="staff-user-dropdown"
+                    id="staffUserDropdown"
+                >
+
+                    <a href="staff-profile.html">
+                        My Profile
+                    </a>
+
+                    <a href="staff-settings.html">
+                        Settings
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+
+                    <a href="../login/login.html">
+                        Sign Out
+                    </a>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- CONTENT -->
+        <section class="staff-content">
+
+
+            <!-- PAGE HEADER -->
+            <div class="staff-page-header">
+
+                <div>
+
+                    <span class="page-eyebrow">
+                        ACCOUNT
+                    </span>
+
+                    <h2>
+                        Settings
+                    </h2>
+
+                    <p>
+                        Manage your staff account, security, and notification preferences.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="settings-layout">
+
+
+                <!-- SETTINGS NAVIGATION -->
+                <aside class="settings-navigation">
+
+                    <button
+                        class="settings-nav-button active"
+                        data-section="account"
+                    >
+                        <span>♙</span>
+                        Account
+                    </button>
+
+
+                    <button
+                        class="settings-nav-button"
+                        data-section="security"
+                    >
+                        <span>▣</span>
+                        Security
+                    </button>
+
+
+                    <button
+                        class="settings-nav-button"
+                        data-section="notifications"
+                    >
+                        <span>♢</span>
+                        Notifications
+                    </button>
+
+
+                    <button
+                        class="settings-nav-button"
+                        data-section="system"
+                    >
+                        <span>⚙</span>
+                        System Preferences
+                    </button>
+
+                </aside>
+
+
+
+                <!-- SETTINGS CONTENT -->
+                <div class="settings-content">
+
+
+                    <!-- ACCOUNT -->
+                    <div
+                        class="settings-section active"
+                        id="account"
+                    >
+
+                        <div class="settings-section-header">
+
+                            <h3>
+                                Account Information
+                            </h3>
+
+                            <p>
+                                Update your staff account information.
+                            </p>
+
+                        </div>
+
+
+                        <form id="accountForm">
+
+                            <div class="profile-header">
+
+                                <div class="large-avatar">
+                                    S
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Barangay Staff
+                                    </strong>
+
+                                    <span>
+                                        Staff Account
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-grid">
+
+                                <div class="form-group">
+
+                                    <label for="firstName">
+                                        First Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="firstName"
+                                        value="Barangay"
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="lastName">
+                                        Last Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="lastName"
+                                        value="Staff"
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="email">
+                                        Email Address
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        value="staff@barangaypay.gov.ph"
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="mobile">
+                                        Mobile Number
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="mobile"
+                                        value="09XX XXX XXXX"
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group full-width">
+
+                                    <label for="position">
+                                        Position
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="position"
+                                        value="Barangay Staff"
+                                        disabled
+                                    >
+
+                                    <small>
+                                        Your position is managed by the system administrator.
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-actions">
+
+                                <button
+                                    type="button"
+                                    class="secondary-button"
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="primary-button"
+                                >
+                                    Save Changes
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+
+                    <!-- SECURITY -->
+                    <div
+                        class="settings-section"
+                        id="security"
+                    >
+
+                        <div class="settings-section-header">
+
+                            <h3>
+                                Security
+                            </h3>
+
+                            <p>
+                                Manage your password and account security.
+                            </p>
+
+                        </div>
+
+
+                        <form id="passwordForm">
+
+                            <div class="form-group">
+
+                                <label for="currentPassword">
+                                    Current Password
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="currentPassword"
+                                    placeholder="Enter current password"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="newPassword">
+                                    New Password
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="newPassword"
+                                    placeholder="Enter new password"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="confirmPassword">
+                                    Confirm New Password
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    placeholder="Confirm new password"
+                                >
+
+                            </div>
+
+
+                            <div class="password-requirements">
+
+                                <strong>
+                                    Password requirements
+                                </strong>
+
+                                <ul>
+
+                                    <li>
+                                        At least 8 characters
+                                    </li>
+
+                                    <li>
+                                        At least one uppercase letter
+                                    </li>
+
+                                    <li>
+                                        At least one number
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+
+                            <div class="form-actions">
+
+                                <button
+                                    type="submit"
+                                    class="primary-button"
+                                >
+                                    Update Password
+                                </button>
+
+                            </div>
+
+                        </form>
+
+
+                        <div class="security-divider"></div>
+
+
+                        <div class="security-item">
+
+                            <div>
+
+                                <strong>
+                                    Two-Factor Authentication
+                                </strong>
+
+                                <span>
+                                    Add an additional layer of security to your account.
+                                </span>
+
+                            </div>
+
+
+                            <label class="toggle">
+
+                                <input
+                                    type="checkbox"
+                                    id="twoFactor"
+                                >
+
+                                <span class="toggle-slider"></span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- NOTIFICATIONS -->
+                    <div
+                        class="settings-section"
+                        id="notifications"
+                    >
+
+                        <div class="settings-section-header">
+
+                            <h3>
+                                Notifications
+                            </h3>
+
+                            <p>
+                                Choose which notifications you want to receive.
+                            </p>
+
+                        </div>
+
+
+                        <div class="notification-setting">
+
+                            <div>
+
+                                <strong>
+                                    New Service Requests
+                                </strong>
+
+                                <span>
+                                    Notify me when a resident submits a new service request.
+                                </span>
+
+                            </div>
+
+
+                            <label class="toggle">
+
+                                <input
+                                    type="checkbox"
+                                    checked
+                                >
+
+                                <span class="toggle-slider"></span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="notification-setting">
+
+                            <div>
+
+                                <strong>
+                                    Payment Notifications
+                                </strong>
+
+                                <span>
+                                    Notify me when a payment is completed.
+                                </span>
+
+                            </div>
+
+
+                            <label class="toggle">
+
+                                <input
+                                    type="checkbox"
+                                    checked
+                                >
+
+                                <span class="toggle-slider"></span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="notification-setting">
+
+                            <div>
+
+                                <strong>
+                                    Document Notifications
+                                </strong>
+
+                                <span>
+                                    Notify me when documents require processing or release.
+                                </span>
+
+                            </div>
+
+
+                            <label class="toggle">
+
+                                <input
+                                    type="checkbox"
+                                    checked
+                                >
+
+                                <span class="toggle-slider"></span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="notification-setting">
+
+                            <div>
+
+                                <strong>
+                                    Email Notifications
+                                </strong>
+
+                                <span>
+                                    Receive important system notifications through email.
+                                </span>
+
+                            </div>
+
+
+                            <label class="toggle">
+
+                                <input
+                                    type="checkbox"
+                                    checked
+                                >
+
+                                <span class="toggle-slider"></span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-actions">
+
+                            <button
+                                type="button"
+                                class="primary-button"
+                                id="saveNotifications"
+                            >
+                                Save Preferences
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SYSTEM -->
+                    <div
+                        class="settings-section"
+                        id="system"
+                    >
+
+                        <div class="settings-section-header">
+
+                            <h3>
+                                System Preferences
+                            </h3>
+
+                            <p>
+                                Customize your BarangayPay staff portal experience.
+                            </p>
+
+                        </div>
+
+
+                        <div class="system-setting">
+
+                            <div>
+
+                                <strong>
+                                    Language
+                                </strong>
+
+                                <span>
+                                    Select the language used throughout the portal.
+                                </span>
+
+                            </div>
+
+
+                            <select>
+
+                                <option>
+                                    English
+                                </option>
+
+                                <option>
+                                    Filipino
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="system-setting">
+
+                            <div>
+
+                                <strong>
+                                    Date Format
+                                </strong>
+
+                                <span>
+                                    Choose how dates are displayed.
+                                </span>
+
+                            </div>
+
+
+                            <select>
+
+                                <option>
+                                    MMM DD, YYYY
+                                </option>
+
+                                <option>
+                                    DD/MM/YYYY
+                                </option>
+
+                                <option>
+                                    MM/DD/YYYY
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="system-setting">
+
+                            <div>
+
+                                <strong>
+                                    Records Per Page
+                                </strong>
+
+                                <span>
+                                    Number of records displayed in tables.
+                                </span>
+
+                            </div>
+
+
+                            <select>
+
+                                <option>
+                                    10
+                                </option>
+
+                                <option selected>
+                                    25
+                                </option>
+
+                                <option>
+                                    50
+                                </option>
+
+                                <option>
+                                    100
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-actions">
+
+                            <button
+                                type="button"
+                                class="primary-button"
+                                id="saveSystem"
+                            >
+                                Save Preferences
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+        <footer class="staff-footer">
+
+            <span>
+                © 2026 BarangayPay
+            </span>
+
+            <span>
+                Barangay Staff Portal
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+    /* MOBILE SIDEBAR */
+
+    const staffMenuToggle =
+        document.getElementById("staffMenuToggle");
+
+    const staffSidebar =
+        document.getElementById("staffSidebar");
+
+
+    staffMenuToggle.addEventListener(
+        "click",
+        function () {
+
+            staffSidebar.classList.toggle("open");
+
+        }
+    );
+
+
+
+    /* USER DROPDOWN */
+
+    const staffUserButton =
+        document.getElementById("staffUserButton");
+
+    const staffUserDropdown =
+        document.getElementById("staffUserDropdown");
+
+
+    staffUserButton.addEventListener(
+        "click",
+        function (event) {
+
+            event.stopPropagation();
+
+            staffUserDropdown.classList.toggle("show");
+
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        function () {
+
+            staffUserDropdown.classList.remove("show");
+
+        }
+    );
+
+
+
+    /* SETTINGS NAVIGATION */
+
+    const settingsButtons =
+        document.querySelectorAll(
+            ".settings-nav-button"
+        );
+
+    const settingsSections =
+        document.querySelectorAll(
+            ".settings-section"
+        );
+
+
+    settingsButtons.forEach(
+        function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const sectionId =
+                        button.dataset.section;
+
+
+                    settingsButtons.forEach(
+                        function (item) {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    settingsSections.forEach(
+                        function (section) {
+
+                            section.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    button.classList.add("active");
+
+
+                    document
+                        .getElementById(sectionId)
+                        .classList.add("active");
+
+                }
+            );
+
+        }
+    );
+
+
+
+    /* ACCOUNT FORM */
+
+    document
+        .getElementById("accountForm")
+        .addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                alert(
+                    "Account information saved successfully."
+                );
+
+            }
+        );
+
+
+
+    /* PASSWORD */
+
+    document
+        .getElementById("passwordForm")
+        .addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const newPassword =
+                    document.getElementById(
+                        "newPassword"
+                    ).value;
+
+                const confirmPassword =
+                    document.getElementById(
+                        "confirmPassword"
+                    ).value;
+
+
+                if (
+                    newPassword !==
+                    confirmPassword
+                ) {
+
+                    alert(
+                        "New passwords do not match."
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    newPassword.length < 8
+                ) {
+
+                    alert(
+                        "Password must contain at least 8 characters."
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    "Password updated successfully."
+                );
+
+            }
+        );
+
+
+
+    /* NOTIFICATIONS */
+
+    document
+        .getElementById("saveNotifications")
+        .addEventListener(
+            "click",
+            function () {
+
+                alert(
+                    "Notification preferences saved successfully."
+                );
+
+            }
+        );
+
+
+
+    /* SYSTEM */
+
+    document
+        .getElementById("saveSystem")
+        .addEventListener(
+            "click",
+            function () {
+
+                alert(
+                    "System preferences saved successfully."
+                );
+
+            }
+        );
+
+
+
+    /* TWO FACTOR */
+
+    document
+        .getElementById("twoFactor")
+        .addEventListener(
+            "change",
+            function () {
+
+                if (this.checked) {
+
+                    alert(
+                        "Two-factor authentication will be configured here."
+                    );
+
+                }
+
+            }
+        );
+
+</script>
+
+</body>
+</html>

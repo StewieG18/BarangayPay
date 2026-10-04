@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Documents | BarangayPay Staff</title>
+
+    <link rel="stylesheet" href="documents.css">
+</head>
+
+<!-- DOCUMENT MODAL -->
+<div class="document-modal" id="documentModal">
+
+    <div class="document-modal-overlay" id="documentModalOverlay"></div>
+
+    <div class="document-modal-content">
+
+        <div class="document-modal-header">
+
+            <div>
+                <span class="modal-eyebrow">
+                    DOCUMENT DETAILS
+                </span>
+
+                <h3 id="modalDocumentTitle">
+                    Document Details
+                </h3>
+            </div>
+
+            <button
+                class="modal-close"
+                id="modalClose"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="document-modal-body">
+
+            <!-- DOCUMENT INFORMATION -->
+            <div class="modal-section">
+
+                <h4>Document Information</h4>
+
+                <div class="modal-info-grid">
+
+                    <div class="modal-info-item">
+                        <span>Document ID</span>
+                        <strong id="modalDocumentId">—</strong>
+                    </div>
+
+                    <div class="modal-info-item">
+                        <span>Request ID</span>
+                        <strong id="modalRequestId">—</strong>
+                    </div>
+
+                    <div class="modal-info-item">
+                        <span>Document Type</span>
+                        <strong id="modalDocumentType">—</strong>
+                    </div>
+
+                    <div class="modal-info-item">
+                        <span>Date Generated</span>
+                        <strong id="modalDateGenerated">—</strong>
+                    </div>
+
+                    <div class="modal-info-item">
+                        <span>Status</span>
+                        <strong id="modalStatus">—</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESIDENT INFORMATION -->
+            <div class="modal-section">
+
+                <h4>Resident Information</h4>
+
+                <div class="modal-info-grid">
+
+                    <div class="modal-info-item">
+                        <span>Full Name</span>
+                        <strong id="modalResident">—</strong>
+                    </div>
+
+                    <div class="modal-info-item">
+                        <span>Resident ID</span>
+                        <strong id="modalResidentId">—</strong>
+                    </div>
+
+                    <div class="modal-info-item">
+                        <span>Address</span>
+                        <strong>Barangay Poblacion</strong>
+                    </div>
+
+                    <div class="modal-info-item">
+                        <span>Contact Number</span>
+                        <strong>09XX XXX XXXX</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- UPLOADED FILES -->
+<div class="modal-section">
+
+    <div class="section-heading-row">
+
+        <div>
+            <h4>Uploaded Files</h4>
+
+            <p class="section-description">
+                Files submitted by the resident for this service request.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="uploaded-files" id="uploadedFiles">
+
+        <!-- FILE 1 -->
+        <div class="uploaded-file">
+
+            <div class="file-icon">
+                PDF
+            </div>
+
+            <div class="file-information">
+
+                <strong>
+                    Valid_ID.pdf
+                </strong>
+
+                <span>
+                    PDF Document · 1.2 MB
+                </span>
+
+            </div>
+
+            <a
+                href="../uploads/Valid_ID.pdf"
+                target="_blank"
+                class="file-view-button"
+            >
+                Open
+            </a>
+
+        </div>
+
+
+        <!-- FILE 2 -->
+        <div class="uploaded-file">
+
+            <div class="file-icon image-file">
+                JPG
+            </div>
+
+            <div class="file-information">
+
+                <strong>
+                    Proof_of_Address.jpg
+                </strong>
+
+                <span>
+                    JPG Image · 2.4 MB
+                </span>
+
+            </div>
+
+            <a
+                href="../uploads/Proof_of_Address.jpg"
+                target="_blank"
+                class="file-view-button"
+            >
+                Open
+            </a>
+
+        </div>
+
+
+        <!-- FILE 3 -->
+        <div class="uploaded-file">
+
+            <div class="file-icon">
+                PDF
+            </div>
+
+            <div class="file-information">
+
+                <strong>
+                    Supporting_Document.pdf
+                </strong>
+
+                <span>
+                    PDF Document · 860 KB
+                </span>
+
+            </div>
+
+            <a
+                href="../uploads/Supporting_Document.pdf"
+                target="_blank"
+                class="file-view-button"
+            >
+                Open
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+            <!-- DOCUMENT PREVIEW -->
+            <div class="modal-section">
+
+                <h4>Document Preview</h4>
+
+                <div class="document-preview">
+
+                    <div class="preview-header">
+
+                        <strong>
+                            REPUBLIC OF THE PHILIPPINES
+                        </strong>
+
+                        <span>
+                            BARANGAY OFFICE
+                        </span>
+
+                    </div>
+
+                    <div class="preview-line"></div>
+
+                    <h5 id="previewDocumentType">
+                        BARANGAY CLEARANCE
+                    </h5>
+
+                    <p>
+                        This document certifies that the
+                        resident indicated above is a registered
+                        resident of this barangay.
+                    </p>
+
+                    <div class="preview-signature">
+                        Barangay Official
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MODAL FOOTER -->
+        <div class="document-modal-footer">
+
+            <button
+                class="modal-secondary-button"
+                id="modalCancel"
+            >
+                Close
+            </button>
+
+            <button
+                class="modal-process-button"
+                id="modalProcess"
+            >
+                Process Document
+            </button>
+
+        </div>
+
+    </div>
+
+</div>  
+
+
+
+<body>
+
+<div class="staff-app">
+
+    <!-- SIDEBAR -->
+    <aside class="staff-sidebar" id="staffSidebar">
+
+        <div class="staff-brand">
+
+            <div class="staff-brand-logo">
+                BP
+            </div>
+
+            <div>
+                <h1>BarangayPay</h1>
+                <span>Staff Portal</span>
+            </div>
+
+        </div>
+
+
+        <nav class="staff-navigation">
+
+            <!-- MAIN -->
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    MAIN
+                </span>
+
+                <a href="../StaffPage/staff.html" class="staff-nav-link">
+                    <span class="nav-icon">▦</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="../StaffRequests/requests.html" class="staff-nav-link">
+                    <span class="nav-icon">▤</span>
+                    <span>Service Requests</span>
+                </a>
+
+            </div>
+
+
+            <!-- MANAGEMENT -->
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    MANAGEMENT
+                </span>
+
+                <a href="../StaffDocuments/documents.html" class="staff-nav-link active">
+                    <span class="nav-icon">▧</span>
+                    <span>Documents</span>
+                </a>
+
+            </div>
+
+
+            <!-- ACCOUNT -->
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    ACCOUNT
+                </span>
+
+                <a href="../StaffSettings/settings.html" class="staff-nav-link">
+                    <span class="nav-icon">⚙</span>
+                    <span>Settings</span>
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <!-- SIGN OUT -->
+        <div class="staff-sidebar-bottom">
+
+            <a href="../login/login.html" class="staff-signout">
+
+                <span class="nav-icon">↪</span>
+
+                <span>
+                    Sign Out
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="staff-main">
+
+
+        <!-- HEADER -->
+        <header class="staff-header">
+
+            <button
+                class="staff-menu-toggle"
+                id="staffMenuToggle"
+            >
+                ☰
+            </button>
+
+
+            <div class="staff-header-spacer"></div>
+
+
+            <!-- NOTIFICATION -->
+            <button class="notification-button">
+
+                ♢
+
+                <span class="notification-dot"></span>
+
+            </button>
+
+
+            <!-- USER -->
+            <div class="staff-user-menu">
+
+                <button
+                    class="staff-user-button"
+                    id="staffUserButton"
+                >
+
+                    <div class="staff-avatar">
+                        S
+                    </div>
+
+                    <div class="staff-user-info">
+
+                        <strong>
+                            Barangay Staff
+                        </strong>
+
+                        <span>
+                            Staff Account
+                        </span>
+
+                    </div>
+
+                    <span class="dropdown-arrow">
+                        ⌄
+                    </span>
+
+                </button>
+
+
+                <div
+                    class="staff-user-dropdown"
+                    id="staffUserDropdown"
+                >
+
+                    <a href="staff-profile.html">
+                        My Profile
+                    </a>
+
+                    <a href="staff-settings.html">
+                        Settings
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+
+                    <a href="../login/login.html">
+                        Sign Out
+                    </a>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- CONTENT -->
+        <section class="staff-content">
+
+
+            <!-- PAGE HEADER -->
+            <div class="staff-page-header">
+
+                <div>
+
+                    <span class="page-eyebrow">
+                        DOCUMENT MANAGEMENT
+                    </span>
+
+                    <h2>
+                        Documents
+                    </h2>
+
+                    <p>
+                        Manage, review, and release documents associated with resident service requests.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="generate-button"
+                    id="generateButton"
+                >
+                    + Generate Document
+                </button>
+
+            </div>
+
+
+
+            <!-- SUMMARY CARDS -->
+            <div class="document-summary">
+
+
+                <div class="document-summary-card">
+
+                    <span>
+                        Total Documents
+                    </span>
+
+                    <strong>
+                        156
+                    </strong>
+
+                </div>
+
+
+                <div class="document-summary-card pending-card">
+
+                    <span>
+                        Pending Generation
+                    </span>
+
+                    <strong>
+                        8
+                    </strong>
+
+                </div>
+
+
+                <div class="document-summary-card ready-card">
+
+                    <span>
+                        Ready for Release
+                    </span>
+
+                    <strong>
+                        14
+                    </strong>
+
+                </div>
+
+
+                <div class="document-summary-card released-card">
+
+                    <span>
+                        Released
+                    </span>
+
+                    <strong>
+                        126
+                    </strong>
+
+                </div>
+
+
+                <div class="document-summary-card archived-card">
+
+                    <span>
+                        Archived
+                    </span>
+
+                    <strong>
+                        8
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DOCUMENT PANEL -->
+            <div class="documents-panel">
+
+
+                <!-- TOOLBAR -->
+                <div class="documents-toolbar">
+
+
+                    <div class="document-search">
+
+                        <span>
+                            ⌕
+                        </span>
+
+                        <input
+                            type="text"
+                            id="documentSearch"
+                            placeholder="Search document ID, resident, or request ID..."
+                        >
+
+                    </div>
+
+
+                    <div class="document-filters">
+
+                        <select id="typeFilter">
+
+                            <option value="all">
+                                All Document Types
+                            </option>
+
+                            <option value="Barangay Clearance">
+                                Barangay Clearance
+                            </option>
+
+                            <option value="Certificate of Residency">
+                                Certificate of Residency
+                            </option>
+
+                            <option value="Certificate of Indigency">
+                                Certificate of Indigency
+                            </option>
+
+                            <option value="Business Clearance">
+                                Business Clearance
+                            </option>
+
+                        </select>
+
+
+                        <select id="statusFilter">
+
+                            <option value="all">
+                                All Status
+                            </option>
+
+                            <option value="Pending Generation">
+                                Pending Generation
+                            </option>
+
+                            <option value="Ready for Release">
+                                Ready for Release
+                            </option>
+
+                            <option value="Released">
+                                Released
+                            </option>
+
+                            <option value="Archived">
+                                Archived
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TABLE -->
+                <div class="table-wrapper">
+
+                    <table class="documents-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Document ID
+                                </th>
+
+                                <th>
+                                    Resident
+                                </th>
+
+                                <th>
+                                    Document Type
+                                </th>
+
+                                <th>
+                                    Request ID
+                                </th>
+
+                                <th>
+                                    Date Generated
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="documentsTableBody">
+
+
+                            <!-- DOCUMENT 1 -->
+                            <tr
+                                data-type="Barangay Clearance"
+                                data-status="Ready for Release"
+                            >
+
+                                <td>
+                                    <strong class="document-id">
+                                        DOC-2026-00124
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <div class="resident-cell">
+
+                                        <div class="resident-avatar">
+                                            JD
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Juan Dela Cruz
+                                            </strong>
+
+                                            <span>
+                                                RES-00124
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Barangay Clearance
+                                </td>
+
+
+                                <td>
+                                    BP-2026-00124
+                                </td>
+
+
+                                <td>
+                                    Oct 4, 2026
+                                </td>
+
+
+                                <td>
+
+                                    <span class="document-status ready">
+                                        Ready for Release
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- DOCUMENT 2 -->
+                            <tr
+                                data-type="Certificate of Residency"
+                                data-status="Released"
+                            >
+
+                                <td>
+                                    <strong class="document-id">
+                                        DOC-2026-00123
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <div class="resident-cell">
+
+                                        <div class="resident-avatar">
+                                            MS
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Maria Santos
+                                            </strong>
+
+                                            <span>
+                                                RES-00123
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Certificate of Residency
+                                </td>
+
+
+                                <td>
+                                    BP-2026-00123
+                                </td>
+
+
+                                <td>
+                                    Oct 4, 2026
+                                </td>
+
+
+                                <td>
+
+                                    <span class="document-status released">
+                                        Released
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- DOCUMENT 3 -->
+                            <tr
+                                data-type="Certificate of Indigency"
+                                data-status="Released"
+                            >
+
+                                <td>
+                                    <strong class="document-id">
+                                        DOC-2026-00122
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <div class="resident-cell">
+
+                                        <div class="resident-avatar">
+                                            PR
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Pedro Reyes
+                                            </strong>
+
+                                            <span>
+                                                RES-00122
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Certificate of Indigency
+                                </td>
+
+
+                                <td>
+                                    BP-2026-00122
+                                </td>
+
+
+                                <td>
+                                    Oct 3, 2026
+                                </td>
+
+
+                                <td>
+
+                                    <span class="document-status released">
+                                        Released
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- DOCUMENT 4 -->
+                            <tr
+                                data-type="Business Clearance"
+                                data-status="Pending Generation"
+                            >
+
+                                <td>
+                                    <strong class="document-id">
+                                        DOC-2026-00121
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <div class="resident-cell">
+
+                                        <div class="resident-avatar">
+                                            AG
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Ana Garcia
+                                            </strong>
+
+                                            <span>
+                                                RES-00121
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Business Clearance
+                                </td>
+
+
+                                <td>
+                                    BP-2026-00121
+                                </td>
+
+
+                                <td>
+                                    —
+                                </td>
+
+
+                                <td>
+
+                                    <span class="document-status pending">
+                                        Pending Generation
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="process-button"
+                                    >
+                                        Process
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- DOCUMENT 5 -->
+                            <tr
+                                data-type="Barangay Clearance"
+                                data-status="Released"
+                            >
+
+                                <td>
+                                    <strong class="document-id">
+                                        DOC-2026-00120
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <div class="resident-cell">
+
+                                        <div class="resident-avatar">
+                                            RM
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Ramon Mendoza
+                                            </strong>
+
+                                            <span>
+                                                RES-00120
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Barangay Clearance
+                                </td>
+
+
+                                <td>
+                                    BP-2026-00120
+                                </td>
+
+
+                                <td>
+                                    Oct 2, 2026
+                                </td>
+
+
+                                <td>
+
+                                    <span class="document-status released">
+                                        Released
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- DOCUMENT 6 -->
+                            <tr
+                                data-type="Certificate of Residency"
+                                data-status="Archived"
+                            >
+
+                                <td>
+                                    <strong class="document-id">
+                                        DOC-2026-00119
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <div class="resident-cell">
+
+                                        <div class="resident-avatar">
+                                            LC
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Liza Cruz
+                                            </strong>
+
+                                            <span>
+                                                RES-00119
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    Certificate of Residency
+                                </td>
+
+
+                                <td>
+                                    BP-2026-00119
+                                </td>
+
+
+                                <td>
+                                    Sep 28, 2026
+                                </td>
+
+
+                                <td>
+
+                                    <span class="document-status archived">
+                                        Archived
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="#"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+
+                    <div
+                        class="no-results"
+                        id="noResults"
+                    >
+                        No documents found.
+                    </div>
+
+                </div>
+
+
+
+                <!-- PAGINATION -->
+                <div class="documents-pagination">
+
+                    <span>
+                        Showing 1–6 of 156 documents
+                    </span>
+
+
+                    <div class="pagination-buttons">
+
+                        <button disabled>
+                            ‹
+                        </button>
+
+                        <button class="active">
+                            1
+                        </button>
+
+                        <button>
+                            2
+                        </button>
+
+                        <button>
+                            3
+                        </button>
+
+                        <span>
+                            ...
+                        </span>
+
+                        <button>
+                            26
+                        </button>
+
+                        <button>
+                            ›
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+        <footer class="staff-footer">
+
+            <span>
+                © 2026 BarangayPay
+            </span>
+
+            <span>
+                Barangay Staff Portal
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+    /* =========================
+       DOCUMENT MODAL
+    ========================= */
+
+    const documentModal =
+        document.getElementById("documentModal");
+
+    const documentModalOverlay =
+        document.getElementById("documentModalOverlay");
+
+    const modalClose =
+        document.getElementById("modalClose");
+
+    const modalCancel =
+        document.getElementById("modalCancel");
+
+    const modalProcess =
+        document.getElementById("modalProcess");
+
+
+    const modalDocumentId =
+        document.getElementById("modalDocumentId");
+
+    const modalRequestId =
+        document.getElementById("modalRequestId");
+
+    const modalDocumentType =
+        document.getElementById("modalDocumentType");
+
+    const modalDateGenerated =
+        document.getElementById("modalDateGenerated");
+
+    const modalStatus =
+        document.getElementById("modalStatus");
+
+    const modalResident =
+        document.getElementById("modalResident");
+
+    const modalResidentId =
+        document.getElementById("modalResidentId");
+
+    const previewDocumentType =
+        document.getElementById("previewDocumentType");
+
+
+    let selectedRow = null;
+
+
+    /* OPEN DOCUMENT */
+
+    function openDocument(row) {
+
+        selectedRow = row;
+
+
+        const cells = row.querySelectorAll("td");
+
+
+        const documentId =
+            cells[0].innerText.trim();
+
+        const residentName =
+            cells[1].querySelector("strong").innerText.trim();
+
+        const residentId =
+            cells[1].querySelector("span").innerText.trim();
+
+        const documentType =
+            cells[2].innerText.trim();
+
+        const requestId =
+            cells[3].innerText.trim();
+
+        const dateGenerated =
+            cells[4].innerText.trim();
+
+        const status =
+            row.dataset.status;
+
+
+        modalDocumentId.innerText =
+            documentId;
+
+        modalRequestId.innerText =
+            requestId;
+
+        modalDocumentType.innerText =
+            documentType;
+
+        modalDateGenerated.innerText =
+            dateGenerated;
+
+        modalStatus.innerText =
+            status;
+
+        modalResident.innerText =
+            residentName;
+
+        modalResidentId.innerText =
+            residentId;
+
+        previewDocumentType.innerText =
+            documentType.toUpperCase();
+
+
+        /*
+            Only pending documents
+            should show Process.
+        */
+
+        if (status === "Pending Generation") {
+
+            modalProcess.style.display =
+                "inline-flex";
+
+            modalProcess.innerText =
+                "Process Document";
+
+        } else if (status === "Ready for Release") {
+
+            modalProcess.style.display =
+                "inline-flex";
+
+            modalProcess.innerText =
+                "Mark as Released";
+
+        } else {
+
+            modalProcess.style.display =
+                "none";
+
+        }
+
+
+        documentModal.classList.add("show");
+
+        document.body.classList.add("modal-open");
+
+    }
+
+
+    /* CLOSE DOCUMENT */
+
+    function closeDocument() {
+
+        documentModal.classList.remove("show");
+
+        document.body.classList.remove("modal-open");
+
+        selectedRow = null;
+
+    }
+
+
+    modalClose.addEventListener(
+        "click",
+        closeDocument
+    );
+
+
+    modalCancel.addEventListener(
+        "click",
+        closeDocument
+    );
+
+
+    documentModalOverlay.addEventListener(
+        "click",
+        closeDocument
+    );
+
+
+    /* ESCAPE KEY */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                documentModal.classList.contains("show")
+            ) {
+
+                closeDocument();
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       VIEW BUTTONS
+    ========================= */
+
+    document.querySelectorAll(
+        ".view-button"
+    ).forEach(function (button) {
+
+        button.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                const row =
+                    button.closest("tr");
+
+                openDocument(row);
+
+            }
+        );
+
+    });
+
+
+    /* =========================
+       PROCESS BUTTONS
+    ========================= */
+
+    document.querySelectorAll(
+        ".process-button"
+    ).forEach(function (button) {
+
+        button.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                const row =
+                    button.closest("tr");
+
+                openDocument(row);
+
+            }
+        );
+
+    });
+
+
+    /* =========================
+       PROCESS DOCUMENT
+    ========================= */
+
+    modalProcess.addEventListener(
+        "click",
+        function () {
+
+            if (!selectedRow) {
+                return;
+            }
+
+
+            const currentStatus =
+                selectedRow.dataset.status;
+
+
+            if (
+                currentStatus ===
+                "Pending Generation"
+            ) {
+
+                const confirmed =
+                    confirm(
+                        "Generate this document?"
+                    );
+
+
+                if (!confirmed) {
+                    return;
+                }
+
+
+                /*
+                    Update document status
+                */
+
+                selectedRow.dataset.status =
+                    "Ready for Release";
+
+
+                const statusBadge =
+                    selectedRow.querySelector(
+                        ".document-status"
+                    );
+
+
+                statusBadge.className =
+                    "document-status ready";
+
+                statusBadge.innerText =
+                    "Ready for Release";
+
+
+                /*
+                    Change action button
+                */
+
+                const actionButton =
+                    selectedRow.querySelector(
+                        ".process-button"
+                    );
+
+
+                if (actionButton) {
+
+                    actionButton.className =
+                        "view-button";
+
+                    actionButton.innerText =
+                        "View";
+
+                }
+
+
+                /*
+                    Update date
+                */
+
+                const cells =
+                    selectedRow.querySelectorAll("td");
+
+                cells[4].innerText =
+                    "Oct 4, 2026";
+
+
+                /*
+                    Update modal
+                */
+
+                modalStatus.innerText =
+                    "Ready for Release";
+
+                modalDateGenerated.innerText =
+                    "Oct 4, 2026";
+
+
+                modalProcess.innerText =
+                    "Mark as Released";
+
+
+                alert(
+                    "Document generated successfully."
+                );
+
+
+            } else if (
+                currentStatus ===
+                "Ready for Release"
+            ) {
+
+                const confirmed =
+                    confirm(
+                        "Mark this document as released?"
+                    );
+
+
+                if (!confirmed) {
+                    return;
+                }
+
+
+                selectedRow.dataset.status =
+                    "Released";
+
+
+                const statusBadge =
+                    selectedRow.querySelector(
+                        ".document-status"
+                    );
+
+
+                statusBadge.className =
+                    "document-status released";
+
+                statusBadge.innerText =
+                    "Released";
+
+
+                modalStatus.innerText =
+                    "Released";
+
+
+                modalProcess.style.display =
+                    "none";
+
+
+                alert(
+                    "Document marked as released."
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       GENERATE DOCUMENT BUTTON
+    ========================= */
+
+    document
+        .getElementById("generateButton")
+        .addEventListener(
+            "click",
+            function () {
+
+                alert(
+                    "The document generation form will be connected here."
+                );
+
+            }
+        );
+
+</script>
+
+
+</body>
+</html>
