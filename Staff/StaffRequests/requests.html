@@ -18,18 +18,15 @@
 
         <div class="staff-brand">
             <div class="staff-brand-logo">BP</div>
-
             <div>
                 <h1>BarangayPay</h1>
                 <span>Staff Portal</span>
             </div>
         </div>
 
-
         <nav class="staff-navigation">
 
             <div class="nav-section">
-
                 <span class="nav-section-title">MAIN</span>
 
                 <a href="../StaffPage/staff.html" class="staff-nav-link">
@@ -37,137 +34,83 @@
                     <span>Dashboard</span>
                 </a>
 
-                <a href="../StaffRequests/requests.html"
-                   class="staff-nav-link active">
+                <a href="../StaffRequests/requests.html" class="staff-nav-link active">
                     <span class="nav-icon">▤</span>
                     <span>Service Requests</span>
                 </a>
-
             </div>
 
-
             <div class="nav-section">
-
                 <span class="nav-section-title">MANAGEMENT</span>
 
-                <a href="../StaffDocuments/documents.html"
-                   class="staff-nav-link">
-
+                <a href="../StaffDocuments/documents.html" class="staff-nav-link">
                     <span class="nav-icon">▧</span>
                     <span>Documents</span>
-
                 </a>
-
             </div>
 
-
             <div class="nav-section">
-
                 <span class="nav-section-title">ACCOUNT</span>
 
-                <a href="../StaffSettings/settings.html"
-                   class="staff-nav-link">
-
+                <a href="../StaffSettings/settings.html" class="staff-nav-link">
                     <span class="nav-icon">⚙</span>
                     <span>Settings</span>
-
                 </a>
-
             </div>
 
         </nav>
 
-
         <div class="staff-sidebar-bottom">
-
             <a href="../login/login.html" class="staff-signout">
-
                 <span class="nav-icon">↪</span>
                 <span>Sign Out</span>
-
             </a>
-
         </div>
 
     </aside>
 
 
-
     <!-- MAIN -->
     <main class="staff-main">
-
 
         <!-- HEADER -->
         <header class="staff-header">
 
-            <button
-                class="staff-menu-toggle"
-                id="staffMenuToggle">
-
-                ☰
-
-            </button>
-
+            <button class="staff-menu-toggle" id="staffMenuToggle">☰</button>
 
             <div class="staff-header-spacer"></div>
 
+            <button
+                    type="button"
+                    class="staff-notification-button"
+                    id="staffNotificationButton"
+                    aria-label="Notifications"
+                >
 
-            <button class="notification-button">
+                    🔔
 
-                ♢
-
-                <span class="notification-dot"></span>
-
-            </button>
-
-
-            <div
-                class="staff-user-menu"
-                id="staffUserMenu">
-
-                <button
-                    class="staff-user-button"
-                    id="staffUserButton">
-
-                    <div class="staff-avatar">
-                        S
-                    </div>
-
-                    <div class="staff-user-info">
-
-                        <strong>Barangay Staff</strong>
-
-                        <span>
-                            Staff Account
-                        </span>
-
-                    </div>
-
-                    <span class="dropdown-arrow">
-                        ⌄
-                    </span>
+                    <span class="staff-notification-indicator"></span>
 
                 </button>
 
+            <div class="staff-user-menu" id="staffUserMenu">
 
-                <div
-                    class="staff-user-dropdown"
-                    id="staffUserDropdown">
+                <button class="staff-user-button" id="staffUserButton">
+                    <div class="staff-avatar">S</div>
 
-                    <a href="staff-profile.html">
-                        My Profile
-                    </a>
+                    <div class="staff-user-info">
+                        <strong>Barangay Staff</strong>
+                        <span>Staff Account</span>
+                    </div>
 
-                    <a href="../StaffSettings/settings.html">
-                        Settings
-                    </a>
+                    <span class="dropdown-arrow">⌄</span>
+                </button>
 
+                <div class="staff-user-dropdown" id="staffUserDropdown">
+                    <a href="staff-profile.html">My Profile</a>
+                    <a href="../StaffSettings/settings.html">Settings</a>
                     <div class="dropdown-divider"></div>
-
-                    <a href="../login/login.html">
-                        Sign Out
-                    </a>
-
+                    <a href="../login/login.html">Sign Out</a>
                 </div>
 
             </div>
@@ -175,179 +118,81 @@
         </header>
 
 
-
         <!-- CONTENT -->
         <section class="staff-content">
 
-
             <!-- PAGE HEADER -->
             <div class="staff-page-header">
-
                 <div>
-
-                    <span class="page-eyebrow">
-                        STAFF PORTAL
-                    </span>
-
-                    <h2>
-                        Service Requests
-                    </h2>
-
-                    <p>
-                        Review, process, and manage service requests submitted by residents.
-                    </p>
-
+                    <span class="page-eyebrow">STAFF PORTAL</span>
+                    <h2>Service Requests</h2>
+                    <p>Review, process, and manage service requests submitted by residents.</p>
                 </div>
-
             </div>
-
 
 
             <!-- SUMMARY -->
             <div class="request-summary">
 
-
                 <div class="request-summary-card">
-
-                    <span class="summary-label">
-                        All Requests
-                    </span>
-
-                    <strong>
-                        71
-                    </strong>
-
+                    <span class="summary-label">All Requests</span>
+                    <strong>71</strong>
                 </div>
-
 
                 <div class="request-summary-card pending-card">
-
-                    <span class="summary-label">
-                        Pending
-                    </span>
-
-                    <strong>
-                        12
-                    </strong>
-
+                    <span class="summary-label">Pending</span>
+                    <strong>12</strong>
                 </div>
-
 
                 <div class="request-summary-card processing-card">
-
-                    <span class="summary-label">
-                        Processing
-                    </span>
-
-                    <strong>
-                        8
-                    </strong>
-
+                    <span class="summary-label">Processing</span>
+                    <strong>8</strong>
                 </div>
-
 
                 <div class="request-summary-card completed-card">
-
-                    <span class="summary-label">
-                        Completed
-                    </span>
-
-                    <strong>
-                        47
-                    </strong>
-
+                    <span class="summary-label">Completed</span>
+                    <strong>47</strong>
                 </div>
 
-
                 <div class="request-summary-card rejected-card">
-
-                    <span class="summary-label">
-                        Rejected
-                    </span>
-
-                    <strong>
-                        4
-                    </strong>
-
+                    <span class="summary-label">Rejected</span>
+                    <strong>4</strong>
                 </div>
 
             </div>
 
 
-
             <!-- REQUEST PANEL -->
             <div class="requests-panel">
-
 
                 <!-- TOOLBAR -->
                 <div class="requests-toolbar">
 
-
                     <div class="request-search">
-
-                        <span>
-                            ⌕
-                        </span>
-
+                        <span>⌕</span>
                         <input
                             type="text"
                             id="requestSearch"
                             placeholder="Search request ID, resident, or service..."
                         >
-
                     </div>
-
 
                     <div class="request-filters">
 
-
                         <select id="serviceFilter">
-
-                            <option value="all">
-                                All Services
-                            </option>
-
-                            <option value="Barangay Clearance">
-                                Barangay Clearance
-                            </option>
-
-                            <option value="Certificate of Residency">
-                                Certificate of Residency
-                            </option>
-
-                            <option value="Certificate of Indigency">
-                                Certificate of Indigency
-                            </option>
-
-                            <option value="Business Clearance">
-                                Business Clearance
-                            </option>
-
+                            <option value="all">All Services</option>
+                            <option value="Barangay Clearance">Barangay Clearance</option>
+                            <option value="Certificate of Residency">Certificate of Residency</option>
+                            <option value="Certificate of Indigency">Certificate of Indigency</option>
+                            <option value="Business Clearance">Business Clearance</option>
                         </select>
 
-
                         <select id="statusFilter">
-
-                            <option value="all">
-                                All Status
-                            </option>
-
-                            <option value="Pending">
-                                Pending
-                            </option>
-
-                            <option value="Processing">
-                                Processing
-                            </option>
-
-                            <option value="Completed">
-                                Completed
-                            </option>
-
-                            <option value="Rejected">
-                                Rejected
-                            </option>
-
+                            <option value="all">All Status</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Rejected">Rejected</option>
                         </select>
 
                     </div>
@@ -355,55 +200,26 @@
                 </div>
 
 
-
                 <!-- TABLE -->
                 <div class="table-wrapper">
-
 
                     <table class="requests-table">
 
                         <thead>
-
                             <tr>
-
-                                <th>
-                                    Request ID
-                                </th>
-
-                                <th>
-                                    Resident
-                                </th>
-
-                                <th>
-                                    Service
-                                </th>
-
-                                <th>
-                                    Date Submitted
-                                </th>
-
-                                <th>
-                                    Payment
-                                </th>
-
-                                <th>
-                                    Status
-                                </th>
-
-                                <th>
-                                    Action
-                                </th>
-
+                                <th>Request ID</th>
+                                <th>Resident</th>
+                                <th>Service</th>
+                                <th>Date Submitted</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
-
                         </thead>
-
 
                         <tbody id="requestsTableBody">
 
-
                             <!-- REQUEST 1 -->
-
                             <tr
                                 data-service="Barangay Clearance"
                                 data-status="Pending"
@@ -413,102 +229,33 @@
                                 data-date="Oct 4, 2026"
                                 data-payment="Paid"
                             >
+                                <td><strong>BP-2026-00124</strong></td>
 
                                 <td>
-                                    <strong>
-                                        BP-2026-00124
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
                                     <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            JD
-                                        </div>
-
+                                        <div class="resident-avatar">JD</div>
                                         <div>
-
-                                            <strong>
-                                                Juan Dela Cruz
-                                            </strong>
-
-                                            <span>
-                                                juan.delacruz@email.com
-                                            </span>
-
+                                            <strong>Juan Dela Cruz</strong>
+                                            <span>juan.delacruz@email.com</span>
                                         </div>
-
                                     </div>
-
                                 </td>
 
+                                <td>Barangay Clearance</td>
+                                <td>Oct 4, 2026</td>
+
+                                <td><span class="payment-status paid">Paid</span></td>
+                                <td><span class="request-status pending">Pending</span></td>
 
                                 <td>
-                                    Barangay Clearance
-                                </td>
-
-
-                                <td>
-                                    Oct 4, 2026
-                                </td>
-
-
-                                <td>
-
-                                    <span class="payment-status paid">
-                                        Paid
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <span class="request-status pending">
-                                        Pending
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
                                     <div class="request-actions">
-
-                                        <button
-                                            type="button"
-                                            class="view-button"
-                                        >
-                                            View
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            class="process-button"
-                                        >
-                                            Process
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            class="reject-button"
-                                        >
-                                            Reject
-                                        </button>
-
+                                        <button type="button" class="view-button">View</button>
                                     </div>
-
                                 </td>
-
                             </tr>
 
 
-
                             <!-- REQUEST 2 -->
-
                             <tr
                                 data-service="Certificate of Residency"
                                 data-status="Processing"
@@ -518,102 +265,33 @@
                                 data-date="Oct 4, 2026"
                                 data-payment="Paid"
                             >
+                                <td><strong>BP-2026-00123</strong></td>
 
                                 <td>
-                                    <strong>
-                                        BP-2026-00123
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
                                     <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            MS
-                                        </div>
-
+                                        <div class="resident-avatar">MS</div>
                                         <div>
-
-                                            <strong>
-                                                Maria Santos
-                                            </strong>
-
-                                            <span>
-                                                maria.santos@email.com
-                                            </span>
-
+                                            <strong>Maria Santos</strong>
+                                            <span>maria.santos@email.com</span>
                                         </div>
-
                                     </div>
-
                                 </td>
 
+                                <td>Certificate of Residency</td>
+                                <td>Oct 4, 2026</td>
+
+                                <td><span class="payment-status paid">Paid</span></td>
+                                <td><span class="request-status processing">Processing</span></td>
 
                                 <td>
-                                    Certificate of Residency
-                                </td>
-
-
-                                <td>
-                                    Oct 4, 2026
-                                </td>
-
-
-                                <td>
-
-                                    <span class="payment-status paid">
-                                        Paid
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <span class="request-status processing">
-                                        Processing
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
                                     <div class="request-actions">
-
-                                        <button
-                                            type="button"
-                                            class="view-button"
-                                        >
-                                            View
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            class="process-button"
-                                        >
-                                            Continue
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            class="reject-button"
-                                        >
-                                            Reject
-                                        </button>
-
+                                        <button type="button" class="view-button">View</button>
                                     </div>
-
                                 </td>
-
                             </tr>
 
 
-
                             <!-- REQUEST 3 -->
-
                             <tr
                                 data-service="Certificate of Indigency"
                                 data-status="Completed"
@@ -623,88 +301,33 @@
                                 data-date="Oct 3, 2026"
                                 data-payment="Paid"
                             >
+                                <td><strong>BP-2026-00122</strong></td>
 
                                 <td>
-                                    <strong>
-                                        BP-2026-00122
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
                                     <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            PR
-                                        </div>
-
+                                        <div class="resident-avatar">PR</div>
                                         <div>
-
-                                            <strong>
-                                                Pedro Reyes
-                                            </strong>
-
-                                            <span>
-                                                pedro.reyes@email.com
-                                            </span>
-
+                                            <strong>Pedro Reyes</strong>
+                                            <span>pedro.reyes@email.com</span>
                                         </div>
-
                                     </div>
-
                                 </td>
 
+                                <td>Certificate of Indigency</td>
+                                <td>Oct 3, 2026</td>
+
+                                <td><span class="payment-status paid">Paid</span></td>
+                                <td><span class="request-status completed">Completed</span></td>
 
                                 <td>
-                                    Certificate of Indigency
-                                </td>
-
-
-                                <td>
-                                    Oct 3, 2026
-                                </td>
-
-
-                                <td>
-
-                                    <span class="payment-status paid">
-                                        Paid
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <span class="request-status completed">
-                                        Completed
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
                                     <div class="request-actions">
-
-                                        <button
-                                            type="button"
-                                            class="view-button"
-                                        >
-                                            View
-                                        </button>
-
+                                        <button type="button" class="view-button">View</button>
                                     </div>
-
                                 </td>
-
                             </tr>
 
 
-
                             <!-- REQUEST 4 -->
-
                             <tr
                                 data-service="Business Clearance"
                                 data-status="Pending"
@@ -714,102 +337,33 @@
                                 data-date="Oct 3, 2026"
                                 data-payment="Unpaid"
                             >
+                                <td><strong>BP-2026-00121</strong></td>
 
                                 <td>
-                                    <strong>
-                                        BP-2026-00121
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
                                     <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            AG
-                                        </div>
-
+                                        <div class="resident-avatar">AG</div>
                                         <div>
-
-                                            <strong>
-                                                Ana Garcia
-                                            </strong>
-
-                                            <span>
-                                                ana.garcia@email.com
-                                            </span>
-
+                                            <strong>Ana Garcia</strong>
+                                            <span>ana.garcia@email.com</span>
                                         </div>
-
                                     </div>
-
                                 </td>
 
+                                <td>Business Clearance</td>
+                                <td>Oct 3, 2026</td>
+
+                                <td><span class="payment-status unpaid">Unpaid</span></td>
+                                <td><span class="request-status pending">Pending</span></td>
 
                                 <td>
-                                    Business Clearance
-                                </td>
-
-
-                                <td>
-                                    Oct 3, 2026
-                                </td>
-
-
-                                <td>
-
-                                    <span class="payment-status unpaid">
-                                        Unpaid
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <span class="request-status pending">
-                                        Pending
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
                                     <div class="request-actions">
-
-                                        <button
-                                            type="button"
-                                            class="view-button"
-                                        >
-                                            View
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            class="process-button"
-                                        >
-                                            Process
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            class="reject-button"
-                                        >
-                                            Reject
-                                        </button>
-
+                                        <button type="button" class="view-button">View</button>
                                     </div>
-
                                 </td>
-
                             </tr>
 
 
-
                             <!-- REQUEST 5 -->
-
                             <tr
                                 data-service="Barangay Clearance"
                                 data-status="Completed"
@@ -819,88 +373,33 @@
                                 data-date="Oct 2, 2026"
                                 data-payment="Paid"
                             >
+                                <td><strong>BP-2026-00120</strong></td>
 
                                 <td>
-                                    <strong>
-                                        BP-2026-00120
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
                                     <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            RM
-                                        </div>
-
+                                        <div class="resident-avatar">RM</div>
                                         <div>
-
-                                            <strong>
-                                                Ramon Mendoza
-                                            </strong>
-
-                                            <span>
-                                                ramon.mendoza@email.com
-                                            </span>
-
+                                            <strong>Ramon Mendoza</strong>
+                                            <span>ramon.mendoza@email.com</span>
                                         </div>
-
                                     </div>
-
                                 </td>
 
+                                <td>Barangay Clearance</td>
+                                <td>Oct 2, 2026</td>
+
+                                <td><span class="payment-status paid">Paid</span></td>
+                                <td><span class="request-status completed">Completed</span></td>
 
                                 <td>
-                                    Barangay Clearance
-                                </td>
-
-
-                                <td>
-                                    Oct 2, 2026
-                                </td>
-
-
-                                <td>
-
-                                    <span class="payment-status paid">
-                                        Paid
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <span class="request-status completed">
-                                        Completed
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
                                     <div class="request-actions">
-
-                                        <button
-                                            type="button"
-                                            class="view-button"
-                                        >
-                                            View
-                                        </button>
-
+                                        <button type="button" class="view-button">View</button>
                                     </div>
-
                                 </td>
-
                             </tr>
 
 
-
                             <!-- REQUEST 6 -->
-
                             <tr
                                 data-service="Certificate of Residency"
                                 data-status="Rejected"
@@ -910,138 +409,55 @@
                                 data-date="Oct 2, 2026"
                                 data-payment="Paid"
                             >
+                                <td><strong>BP-2026-00119</strong></td>
 
                                 <td>
-                                    <strong>
-                                        BP-2026-00119
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
                                     <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            LC
-                                        </div>
-
+                                        <div class="resident-avatar">LC</div>
                                         <div>
-
-                                            <strong>
-                                                Liza Cruz
-                                            </strong>
-
-                                            <span>
-                                                liza.cruz@email.com
-                                            </span>
-
+                                            <strong>Liza Cruz</strong>
+                                            <span>liza.cruz@email.com</span>
                                         </div>
-
                                     </div>
-
                                 </td>
 
+                                <td>Certificate of Residency</td>
+                                <td>Oct 2, 2026</td>
+
+                                <td><span class="payment-status paid">Paid</span></td>
+                                <td><span class="request-status rejected">Rejected</span></td>
 
                                 <td>
-                                    Certificate of Residency
-                                </td>
-
-
-                                <td>
-                                    Oct 2, 2026
-                                </td>
-
-
-                                <td>
-
-                                    <span class="payment-status paid">
-                                        Paid
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <span class="request-status rejected">
-                                        Rejected
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
                                     <div class="request-actions">
-
-                                        <button
-                                            type="button"
-                                            class="view-button"
-                                        >
-                                            View
-                                        </button>
-
+                                        <button type="button" class="view-button">View</button>
                                     </div>
-
                                 </td>
-
                             </tr>
 
                         </tbody>
 
                     </table>
 
-
-                    <div
-                        class="no-results"
-                        id="noResults"
-                    >
+                    <div class="no-results" id="noResults">
                         No service requests found.
                     </div>
 
                 </div>
 
 
-
                 <!-- PAGINATION -->
                 <div class="requests-pagination">
 
-                    <span class="pagination-info">
-                        Showing 1–6 of 71 requests
-                    </span>
-
+                    <span class="pagination-info">Showing 1–6 of 71 requests</span>
 
                     <div class="pagination-buttons">
-
-                        <button disabled>
-                            ‹
-                        </button>
-
-                        <button class="active">
-                            1
-                        </button>
-
-                        <button>
-                            2
-                        </button>
-
-                        <button>
-                            3
-                        </button>
-
-                        <span>
-                            ...
-                        </span>
-
-                        <button>
-                            12
-                        </button>
-
-                        <button>
-                            ›
-                        </button>
-
+                        <button disabled>‹</button>
+                        <button class="active">1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <span>...</span>
+                        <button>12</button>
+                        <button>›</button>
                     </div>
 
                 </div>
@@ -1051,18 +467,10 @@
         </section>
 
 
-
         <!-- FOOTER -->
         <footer class="staff-footer">
-
-            <span>
-                © 2026 BarangayPay
-            </span>
-
-            <span>
-                Barangay Staff Portal
-            </span>
-
+            <span>© 2026 BarangayPay</span>
+            <span>Barangay Staff Portal</span>
         </footer>
 
     </main>
@@ -1072,297 +480,142 @@
 
 
 <!-- ========================================================= -->
-<!-- PROCESS REQUEST MODAL -->
+<!-- DOCUMENT DETAILS MODAL -->
 <!-- ========================================================= -->
 
-<div
-    class="request-modal"
-    id="requestModal"
->
+<div class="modal-overlay" id="requestModal">
 
+    <div class="request-modal">
 
-    <div
-        class="request-modal-overlay"
-        id="requestModalOverlay"
-    ></div>
-
-
-    <div class="request-modal-content">
-
-
-        <!-- MODAL HEADER -->
-        <div class="request-modal-header">
-
+        <!-- HEADER -->
+        <div class="modal-header">
             <div>
-
-                <span class="page-eyebrow">
-                    REQUEST PROCESSING
-                </span>
-
-                <h3 id="modalRequestTitle">
-                    BP-2026-00124
-                </h3>
-
+                <span class="page-eyebrow">DOCUMENT DETAILS</span>
+                <h2>Document Details</h2>
             </div>
-
-
-            <button
-                type="button"
-                class="modal-close"
-                id="modalClose"
-            >
-                ×
-            </button>
-
+            <button type="button" class="modal-close" id="modalClose">×</button>
         </div>
 
+        <!-- BODY -->
+        <div class="modal-body">
 
-
-        <!-- MODAL BODY -->
-        <div class="request-modal-body">
-
+            <div class="modal-request-heading">
+                <div>
+                    <h3 id="modalService">Barangay Clearance</h3>
+                    <p id="modalRequestId">BP-2026-00124</p>
+                </div>
+                <span class="request-status pending" id="modalStatus">Pending</span>
+            </div>
 
             <!-- REQUEST INFORMATION -->
-            <div class="processing-section">
+            <div class="modal-section">
+                <h3>Request Information</h3>
 
-                <h4>
-                    Request Information
-                </h4>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span>Resident</span>
+                        <strong id="modalResident">Juan Dela Cruz</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Email</span>
+                        <strong id="modalEmail">juan.delacruz@email.com</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Date Submitted</span>
+                        <strong id="modalDate">Oct 4, 2026</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Payment</span>
+                        <strong id="modalPayment">Paid</strong>
+                    </div>
+                </div>
+            </div>
 
+            <!-- UPLOADED FILES -->
+            <div class="modal-section">
+                <h3>Uploaded Files</h3>
+                <p class="section-hint">Files submitted by the resident for this service request.</p>
 
-                <div class="processing-grid">
+                <div class="document-list">
 
-
-                    <div>
-
-                        <span>
-                            Request ID
-                        </span>
-
-                        <strong id="modalRequestId">
-                            BP-2026-00124
-                        </strong>
-
+                    <div class="document-item">
+                        <div class="document-info">
+                            <div class="document-icon">PDF</div>
+                            <div>
+                                <strong>Valid_ID.pdf</strong>
+                                <span>PDF Document · 1.2 MB</span>
+                            </div>
+                        </div>
+                        <div class="document-actions">
+                            <button type="button" class="document-btn">Open</button>
+                        </div>
                     </div>
 
-
-                    <div>
-
-                        <span>
-                            Service
-                        </span>
-
-                        <strong id="modalService">
-                            Barangay Clearance
-                        </strong>
-
+                    <div class="document-item">
+                        <div class="document-info">
+                            <div class="document-icon">JPG</div>
+                            <div>
+                                <strong>Proof_of_Address.jpg</strong>
+                                <span>JPG Image · 2.4 MB</span>
+                            </div>
+                        </div>
+                        <div class="document-actions">
+                            <button type="button" class="document-btn">Open</button>
+                        </div>
                     </div>
 
-
-                    <div>
-
-                        <span>
-                            Date Submitted
-                        </span>
-
-                        <strong id="modalDate">
-                            Oct 4, 2026
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            Payment
-                        </span>
-
-                        <strong id="modalPayment">
-                            Paid
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            Status
-                        </span>
-
-                        <strong id="modalStatus">
-                            Pending
-                        </strong>
-
+                    <div class="document-item">
+                        <div class="document-info">
+                            <div class="document-icon">PDF</div>
+                            <div>
+                                <strong>Supporting_Document.pdf</strong>
+                                <span>PDF Document · 860 KB</span>
+                            </div>
+                        </div>
+                        <div class="document-actions">
+                            <button type="button" class="document-btn">Open</button>
+                        </div>
                     </div>
 
                 </div>
-
             </div>
 
+            <!-- DOCUMENT PREVIEW -->
+            <div class="modal-section">
+                <h3>Document Preview</h3>
 
-
-            <!-- RESIDENT INFORMATION -->
-            <div class="processing-section">
-
-                <h4>
-                    Resident Information
-                </h4>
-
-
-                <div class="resident-processing">
-
-                    <div class="resident-avatar large">
-                        JD
-                    </div>
-
-
-                    <div>
-
-                        <strong id="modalResident">
-                            Juan Dela Cruz
-                        </strong>
-
-                        <span id="modalEmail">
-                            juan.delacruz@email.com
-                        </span>
-
-                    </div>
-
+                <div class="document-preview">
+                    <strong class="preview-country">REPUBLIC OF THE PHILIPPINES</strong>
+                    <small>BARANGAY OFFICE</small>
+                    <hr>
+                    <h5 id="modalPreviewTitle">BARANGAY CLEARANCE</h5>
+                    <p>
+                        This document certifies that
+                        <strong id="modalPreviewResident">the resident</strong>
+                        is a registered resident of this barangay.
+                    </p>
                 </div>
-
             </div>
-
-
-
-            <!-- UPLOADED DOCUMENTS -->
-            <div class="processing-section">
-
-                <h4>
-                    Uploaded Supporting Documents
-                </h4>
-
-
-                <div class="uploaded-files">
-
-
-                    <div class="uploaded-file">
-
-                        <div class="file-icon">
-                            PDF
-                        </div>
-
-
-                        <div class="file-info">
-
-                            <strong>
-                                Valid-ID.pdf
-                            </strong>
-
-                            <span>
-                                PDF • 1.2 MB
-                            </span>
-
-                        </div>
-
-
-                        <div class="file-actions">
-
-                            <button type="button">
-                                View
-                            </button>
-
-                            <button type="button">
-                                Download
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="uploaded-file">
-
-                        <div class="file-icon">
-                            PDF
-                        </div>
-
-
-                        <div class="file-info">
-
-                            <strong>
-                                Proof-of-Residency.pdf
-                            </strong>
-
-                            <span>
-                                PDF • 856 KB
-                            </span>
-
-                        </div>
-
-
-                        <div class="file-actions">
-
-                            <button type="button">
-                                View
-                            </button>
-
-                            <button type="button">
-                                Download
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
 
             <!-- STAFF NOTES -->
-            <div class="processing-section">
-
-                <h4>
-                    Staff Notes
-                </h4>
-
-
+            <div class="modal-section">
+                <h3>Staff Notes</h3>
                 <textarea
+                    class="staff-notes"
                     id="staffNotes"
                     placeholder="Enter notes about this request..."
                 ></textarea>
-
             </div>
 
         </div>
 
-
-
-        <!-- MODAL FOOTER -->
-        <div class="request-modal-footer">
-
-
-            <button
-                type="button"
-                class="modal-reject-button"
-                id="modalRejectButton"
-            >
-                Reject Request
-            </button>
-
-
-            <button
-                type="button"
-                class="modal-process-button"
-                id="modalProcessButton"
-            >
-                Accept & Process
-            </button>
-
+        <!-- FOOTER: Close → Accept → Reject -->
+        <div class="modal-footer">
+            <div class="modal-actions">
+                <button type="button" class="modal-secondary" id="modalCloseButton">Close</button>
+                <button type="button" class="modal-primary" id="modalProcessButton">Accept</button>
+                <button type="button" class="modal-reject" id="modalRejectButton">Reject</button>
+            </div>
         </div>
 
     </div>
@@ -1377,396 +630,230 @@
 /* MOBILE SIDEBAR */
 /* ========================================================= */
 
-const staffMenuToggle =
-    document.getElementById("staffMenuToggle");
-
-const staffSidebar =
-    document.getElementById("staffSidebar");
-
+const staffMenuToggle = document.getElementById("staffMenuToggle");
+const staffSidebar = document.getElementById("staffSidebar");
 
 staffMenuToggle.addEventListener("click", function () {
-
     staffSidebar.classList.toggle("open");
-
 });
-
 
 
 /* ========================================================= */
 /* USER DROPDOWN */
 /* ========================================================= */
 
-const staffUserButton =
-    document.getElementById("staffUserButton");
-
-const staffUserDropdown =
-    document.getElementById("staffUserDropdown");
-
+const staffUserButton = document.getElementById("staffUserButton");
+const staffUserDropdown = document.getElementById("staffUserDropdown");
 
 staffUserButton.addEventListener("click", function (event) {
-
     event.stopPropagation();
-
     staffUserDropdown.classList.toggle("show");
-
 });
-
 
 document.addEventListener("click", function () {
-
     staffUserDropdown.classList.remove("show");
-
 });
-
 
 
 /* ========================================================= */
 /* SEARCH + FILTER */
 /* ========================================================= */
 
-const requestSearch =
-    document.getElementById("requestSearch");
-
-const serviceFilter =
-    document.getElementById("serviceFilter");
-
-const statusFilter =
-    document.getElementById("statusFilter");
-
-const requestTableBody =
-    document.getElementById("requestsTableBody");
-
-const noResults =
-    document.getElementById("noResults");
-
+const requestSearch = document.getElementById("requestSearch");
+const serviceFilter = document.getElementById("serviceFilter");
+const statusFilter = document.getElementById("statusFilter");
+const requestTableBody = document.getElementById("requestsTableBody");
+const noResults = document.getElementById("noResults");
 
 function filterRequests() {
 
-    const searchValue =
-        requestSearch.value.toLowerCase();
+    const searchValue = requestSearch.value.toLowerCase();
+    const selectedService = serviceFilter.value;
+    const selectedStatus = statusFilter.value;
 
-    const selectedService =
-        serviceFilter.value;
-
-    const selectedStatus =
-        statusFilter.value;
-
-    const requestRows =
-        requestTableBody.querySelectorAll("tr");
+    const requestRows = requestTableBody.querySelectorAll("tr");
 
     let visibleRows = 0;
 
-
     requestRows.forEach(function (row) {
 
-        const rowText =
-            row.textContent.toLowerCase();
+        const rowText = row.textContent.toLowerCase();
+        const rowService = row.dataset.service;
+        const rowStatus = row.dataset.status;
 
-        const rowService =
-            row.dataset.service;
-
-        const rowStatus =
-            row.dataset.status;
-
-
-        const matchesSearch =
-            rowText.includes(searchValue);
-
+        const matchesSearch = rowText.includes(searchValue);
 
         const matchesService =
-            selectedService === "all" ||
-            rowService === selectedService;
-
+            selectedService === "all" || rowService === selectedService;
 
         const matchesStatus =
-            selectedStatus === "all" ||
-            rowStatus === selectedStatus;
+            selectedStatus === "all" || rowStatus === selectedStatus;
 
-
-        if (
-            matchesSearch &&
-            matchesService &&
-            matchesStatus
-        ) {
-
+        if (matchesSearch && matchesService && matchesStatus) {
             row.style.display = "";
-
             visibleRows++;
-
         } else {
-
             row.style.display = "none";
-
         }
 
     });
 
-
-    noResults.style.display =
-        visibleRows === 0
-            ? "block"
-            : "none";
+    noResults.style.display = visibleRows === 0 ? "block" : "none";
 
 }
 
-
-requestSearch.addEventListener(
-    "input",
-    filterRequests
-);
-
-
-serviceFilter.addEventListener(
-    "change",
-    filterRequests
-);
-
-
-statusFilter.addEventListener(
-    "change",
-    filterRequests
-);
-
+requestSearch.addEventListener("input", filterRequests);
+serviceFilter.addEventListener("change", filterRequests);
+statusFilter.addEventListener("change", filterRequests);
 
 
 /* ========================================================= */
-/* REQUEST MODAL */
+/* REQUEST MODAL ELEMENTS */
 /* ========================================================= */
 
-const requestModal =
-    document.getElementById("requestModal");
+const requestModal = document.getElementById("requestModal");
+const modalClose = document.getElementById("modalClose");
+const modalCloseButton = document.getElementById("modalCloseButton");
 
-const modalOverlay =
-    document.getElementById("requestModalOverlay");
+const modalRequestId = document.getElementById("modalRequestId");
+const modalResident = document.getElementById("modalResident");
+const modalEmail = document.getElementById("modalEmail");
+const modalService = document.getElementById("modalService");
+const modalDate = document.getElementById("modalDate");
+const modalPayment = document.getElementById("modalPayment");
+const modalStatus = document.getElementById("modalStatus");
 
-const modalClose =
-    document.getElementById("modalClose");
+const modalPreviewTitle = document.getElementById("modalPreviewTitle");
+const modalPreviewResident = document.getElementById("modalPreviewResident");
+const staffNotes = document.getElementById("staffNotes");
 
-
-const modalRequestTitle =
-    document.getElementById("modalRequestTitle");
-
-const modalRequestId =
-    document.getElementById("modalRequestId");
-
-const modalResident =
-    document.getElementById("modalResident");
-
-const modalEmail =
-    document.getElementById("modalEmail");
-
-const modalService =
-    document.getElementById("modalService");
-
-const modalDate =
-    document.getElementById("modalDate");
-
-const modalPayment =
-    document.getElementById("modalPayment");
-
-const modalStatus =
-    document.getElementById("modalStatus");
-
-
-const modalProcessButton =
-    document.getElementById("modalProcessButton");
-
-const modalRejectButton =
-    document.getElementById("modalRejectButton");
-
+const modalProcessButton = document.getElementById("modalProcessButton");
+const modalRejectButton = document.getElementById("modalRejectButton");
 
 let selectedRequestRow = null;
 
 
+function setModalStatus(status) {
+    modalStatus.textContent = status;
+    modalStatus.className = "request-status " + status.toLowerCase();
+}
 
-/* OPEN MODAL */
+
+/* ========================================================= */
+/* OPEN / CLOSE MODAL */
+/* ========================================================= */
 
 function openRequestModal(row) {
 
     selectedRequestRow = row;
 
+    modalRequestId.textContent = row.dataset.requestId;
+    modalResident.textContent = row.dataset.resident;
+    modalEmail.textContent = row.dataset.email;
+    modalService.textContent = row.dataset.service;
+    modalDate.textContent = row.dataset.date;
 
-    modalRequestTitle.textContent =
-        row.dataset.requestId;
+    modalPayment.textContent = row.dataset.payment;
+    modalPayment.classList.toggle("paid-text", row.dataset.payment === "Paid");
 
-    modalRequestId.textContent =
-        row.dataset.requestId;
+    setModalStatus(row.dataset.status);
 
-    modalResident.textContent =
-        row.dataset.resident;
+    modalPreviewTitle.textContent = row.dataset.service.toUpperCase();
+    modalPreviewResident.textContent = row.dataset.resident;
 
-    modalEmail.textContent =
-        row.dataset.email;
+    staffNotes.value = "";
 
-    modalService.textContent =
-        row.dataset.service;
+    const isOpenRequest =
+        row.dataset.status === "Pending" ||
+        row.dataset.status === "Processing";
 
-    modalDate.textContent =
-        row.dataset.date;
+    /* Completed / Rejected → only Close is shown */
+    modalProcessButton.style.display = isOpenRequest ? "" : "none";
+    modalRejectButton.style.display = isOpenRequest ? "" : "none";
 
-    modalPayment.textContent =
-        row.dataset.payment;
-
-    modalStatus.textContent =
-        row.dataset.status;
-
-
-    if (row.dataset.status === "Processing") {
-
-        modalProcessButton.textContent =
-            "Complete Request";
-
-    } else {
-
-        modalProcessButton.textContent =
-            "Accept & Process";
-
-    }
-
+    modalProcessButton.textContent =
+        row.dataset.status === "Processing" ? "Complete" : "Accept";
 
     requestModal.classList.add("show");
-
-    document.body.style.overflow =
-        "hidden";
+    document.body.classList.add("modal-open");
 
 }
-
-
-
-/* CLOSE MODAL */
 
 function closeRequestModal() {
 
     requestModal.classList.remove("show");
-
-    document.body.style.overflow =
-        "";
-
+    document.body.classList.remove("modal-open");
     selectedRequestRow = null;
 
 }
 
+modalClose.addEventListener("click", closeRequestModal);
+modalCloseButton.addEventListener("click", closeRequestModal);
 
-modalClose.addEventListener(
-    "click",
-    closeRequestModal
-);
+/* click on the dark backdrop (not the modal itself) closes it */
+requestModal.addEventListener("click", function (event) {
+    if (event.target === requestModal) {
+        closeRequestModal();
+    }
+});
 
-
-modalOverlay.addEventListener(
-    "click",
-    closeRequestModal
-);
-
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && requestModal.classList.contains("show")) {
+        closeRequestModal();
+    }
+});
 
 
 /* ========================================================= */
-/* VIEW BUTTONS */
+/* VIEW + PROCESS BUTTONS (both open the modal) */
 /* ========================================================= */
 
 document.addEventListener("click", function (event) {
 
     if (
-        event.target.classList.contains(
-            "view-button"
-        )
+        event.target.classList.contains("view-button") ||
+        event.target.classList.contains("process-button")
     ) {
 
-        const row =
-            event.target.closest("tr");
+        const row = event.target.closest("tr");
 
-        openRequestModal(row);
+        if (row) {
+            openRequestModal(row);
+        }
 
     }
 
 });
 
 
-
 /* ========================================================= */
-/* PROCESS BUTTONS */
-/* ========================================================= */
-
-document.addEventListener("click", function (event) {
-
-    if (
-        event.target.classList.contains(
-            "process-button"
-        )
-    ) {
-
-        const row =
-            event.target.closest("tr");
-
-        openRequestModal(row);
-
-    }
-
-});
-
-
-
-/* ========================================================= */
-/* REJECT BUTTONS */
+/* REJECT BUTTONS (table) */
 /* ========================================================= */
 
 document.addEventListener("click", function (event) {
 
-    if (
-        event.target.classList.contains(
-            "reject-button"
-        )
-    ) {
+    if (event.target.classList.contains("reject-button")) {
 
-        const row =
-            event.target.closest("tr");
+        const row = event.target.closest("tr");
+        const requestId = row.dataset.requestId;
 
-        const requestId =
-            row.dataset.requestId;
-
-
-        const confirmReject =
-            confirm(
-                "Are you sure you want to reject " +
-                requestId +
-                "?"
-            );
-
+        const confirmReject = confirm(
+            "Are you sure you want to reject " + requestId + "?"
+        );
 
         if (!confirmReject) {
             return;
         }
 
+        row.dataset.status = "Rejected";
 
-        row.dataset.status =
-            "Rejected";
+        const statusElement = row.querySelector(".request-status");
 
+        statusElement.textContent = "Rejected";
+        statusElement.className = "request-status rejected";
 
-        const statusElement =
-            row.querySelector(
-                ".request-status"
-            );
-
-
-        statusElement.textContent =
-            "Rejected";
-
-
-        statusElement.className =
-            "request-status rejected";
-
-
-        row.querySelector(
-            ".request-actions"
-        ).innerHTML = `
-
-            <button
-                type="button"
-                class="view-button"
-            >
-                View
-            </button>
-
+        row.querySelector(".request-actions").innerHTML = `
+            <button type="button" class="view-button">View</button>
         `;
 
     }
@@ -1774,205 +861,116 @@ document.addEventListener("click", function (event) {
 });
 
 
-
 /* ========================================================= */
-/* ACCEPT / PROCESS */
+/* ACCEPT / COMPLETE (modal) */
 /* ========================================================= */
 
-modalProcessButton.addEventListener(
-    "click",
-    function () {
+modalProcessButton.addEventListener("click", function () {
 
-        if (!selectedRequestRow) {
-            return;
-        }
-
-
-        const currentStatus =
-            selectedRequestRow.dataset.status;
-
-
-        /* PENDING → PROCESSING */
-
-        if (currentStatus === "Pending") {
-
-            selectedRequestRow.dataset.status =
-                "Processing";
-
-
-            const statusElement =
-                selectedRequestRow.querySelector(
-                    ".request-status"
-                );
-
-
-            statusElement.textContent =
-                "Processing";
-
-
-            statusElement.className =
-                "request-status processing";
-
-
-            const processButton =
-                selectedRequestRow.querySelector(
-                    ".process-button"
-                );
-
-
-            if (processButton) {
-
-                processButton.textContent =
-                    "Continue";
-
-            }
-
-
-            modalStatus.textContent =
-                "Processing";
-
-
-            modalProcessButton.textContent =
-                "Complete Request";
-
-
-            alert(
-                "Request " +
-                selectedRequestRow.dataset.requestId +
-                " is now being processed."
-            );
-
-
-            return;
-
-        }
-
-
-        /* PROCESSING → COMPLETED */
-
-        if (currentStatus === "Processing") {
-
-            selectedRequestRow.dataset.status =
-                "Completed";
-
-
-            const statusElement =
-                selectedRequestRow.querySelector(
-                    ".request-status"
-                );
-
-
-            statusElement.textContent =
-                "Completed";
-
-
-            statusElement.className =
-                "request-status completed";
-
-
-            selectedRequestRow.querySelector(
-                ".request-actions"
-            ).innerHTML = `
-
-                <button
-                    type="button"
-                    class="view-button"
-                >
-                    View
-                </button>
-
-            `;
-
-
-            alert(
-                "Request " +
-                selectedRequestRow.dataset.requestId +
-                " has been completed."
-            );
-
-
-            closeRequestModal();
-
-        }
-
+    if (!selectedRequestRow) {
+        return;
     }
-);
 
+    const currentStatus = selectedRequestRow.dataset.status;
 
+    /* PENDING → PROCESSING */
 
-/* ========================================================= */
-/* MODAL REJECT */
-/* ========================================================= */
+    if (currentStatus === "Pending") {
 
-modalRejectButton.addEventListener(
-    "click",
-    function () {
-
-        if (!selectedRequestRow) {
-            return;
-        }
-
-
-        const requestId =
-            selectedRequestRow.dataset.requestId;
-
-
-        const confirmReject =
-            confirm(
-                "Are you sure you want to reject " +
-                requestId +
-                "?"
-            );
-
-
-        if (!confirmReject) {
-            return;
-        }
-
-
-        selectedRequestRow.dataset.status =
-            "Rejected";
-
+        selectedRequestRow.dataset.status = "Processing";
 
         const statusElement =
-            selectedRequestRow.querySelector(
-                ".request-status"
-            );
+            selectedRequestRow.querySelector(".request-status");
 
+        statusElement.textContent = "Processing";
+        statusElement.className = "request-status processing";
 
-        statusElement.textContent =
-            "Rejected";
+        const processButton =
+            selectedRequestRow.querySelector(".process-button");
 
+        if (processButton) {
+            processButton.textContent = "Continue";
+        }
 
-        statusElement.className =
-            "request-status rejected";
-
-
-        selectedRequestRow.querySelector(
-            ".request-actions"
-        ).innerHTML = `
-
-            <button
-                type="button"
-                class="view-button"
-            >
-                View
-            </button>
-
-        `;
-
+        setModalStatus("Processing");
+        modalProcessButton.textContent = "Complete";
 
         alert(
             "Request " +
-            requestId +
-            " has been rejected."
+            selectedRequestRow.dataset.requestId +
+            " is now being processed."
         );
 
+        return;
+
+    }
+
+    /* PROCESSING → COMPLETED */
+
+    if (currentStatus === "Processing") {
+
+        selectedRequestRow.dataset.status = "Completed";
+
+        const statusElement =
+            selectedRequestRow.querySelector(".request-status");
+
+        statusElement.textContent = "Completed";
+        statusElement.className = "request-status completed";
+
+        selectedRequestRow.querySelector(".request-actions").innerHTML = `
+            <button type="button" class="view-button">View</button>
+        `;
+
+        alert(
+            "Request " +
+            selectedRequestRow.dataset.requestId +
+            " has been completed."
+        );
 
         closeRequestModal();
 
     }
-);
+
+});
+
+
+/* ========================================================= */
+/* REJECT (modal) */
+/* ========================================================= */
+
+modalRejectButton.addEventListener("click", function () {
+
+    if (!selectedRequestRow) {
+        return;
+    }
+
+    const requestId = selectedRequestRow.dataset.requestId;
+
+    const confirmReject = confirm(
+        "Are you sure you want to reject " + requestId + "?"
+    );
+
+    if (!confirmReject) {
+        return;
+    }
+
+    selectedRequestRow.dataset.status = "Rejected";
+
+    const statusElement =
+        selectedRequestRow.querySelector(".request-status");
+
+    statusElement.textContent = "Rejected";
+    statusElement.className = "request-status rejected";
+
+    selectedRequestRow.querySelector(".request-actions").innerHTML = `
+        <button type="button" class="view-button">View</button>
+    `;
+
+    alert("Request " + requestId + " has been rejected.");
+
+    closeRequestModal();
+
+});
 
 </script>
 
