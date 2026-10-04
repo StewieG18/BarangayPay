@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account - BarangayPay</title>
+
+    <link rel="stylesheet" href="create-account.css">
+</head>
+
+<body>
+
+    <div class="register-page">
+
+        <!-- HEADER -->
+        <header class="register-header">
+
+            <div class="register-brand">
+
+                <div class="brand-logo">
+                    BP
+                </div>
+
+                <div class="brand-text">
+                    <h1>BarangayPay</h1>
+                    <span>Barangay Services Portal</span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="register-content">
+
+            <div class="register-card">
+
+                <!-- FORM HEADER -->
+                <div class="form-header">
+
+                    <span class="section-label">
+                        Account Registration
+                    </span>
+
+                    <h2>Create Account</h2>
+
+                    <p>
+                        Create your BarangayPay account to access
+                        barangay services and transactions online.
+                    </p>
+
+                </div>
+
+
+                <!-- REGISTRATION FORM -->
+                <form id="registerForm">
+
+                    <!-- FULL NAME -->
+                    <div class="form-group">
+
+                        <label for="fullName">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL + MOBILE -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="mobile">
+                                Mobile Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="mobile"
+                                name="mobile"
+                                placeholder="09XXXXXXXXX"
+                                maxlength="11"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DATE OF BIRTH + SEX -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="birthdate">
+                                Date of Birth
+                            </label>
+
+                            <input
+                                type="date"
+                                id="birthdate"
+                                name="birthdate"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="sex">
+                                Sex
+                            </label>
+
+                            <select
+                                id="sex"
+                                name="sex"
+                                required
+                            >
+                                <option value="" disabled selected>
+                                    Select sex
+                                </option>
+
+                                <option value="male">
+                                    Male
+                                </option>
+
+                                <option value="female">
+                                    Female
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ADDRESS SECTION -->
+                    <div class="address-section">
+
+                        <span class="address-label">
+                            Address
+                        </span>
+
+
+                        <!-- HOUSE / STREET -->
+                        <div class="form-group">
+
+                            <label for="houseStreet">
+                                House / Street
+                            </label>
+
+                            <input
+                                type="text"
+                                id="houseStreet"
+                                name="houseStreet"
+                                placeholder="House number, street name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- BARANGAY + CITY -->
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="barangay">
+                                    Barangay
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="barangay"
+                                    name="barangay"
+                                    placeholder="Enter barangay"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="city">
+                                    City
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="city"
+                                    name="city"
+                                    placeholder="Enter city"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PROVINCE -->
+                        <div class="form-group">
+
+                            <label for="province">
+                                Province
+                            </label>
+
+                            <input
+                                type="text"
+                                id="province"
+                                name="province"
+                                placeholder="Enter province"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="password">
+                                    Password
+                                </label>
+
+                                <div class="password-wrapper">
+
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        placeholder="Create a strong password"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="toggle-password"
+                                        onclick="togglePassword('password', this)"
+                                    >
+                                        Show
+                                    </button>
+
+                                </div>
+
+                                <!-- PASSWORD STRENGTH -->
+                                <div class="password-strength">
+
+                                    <div class="strength-bar">
+                                        <div
+                                            id="strengthBar"
+                                            class="strength-bar-fill"
+                                        ></div>
+                                    </div>
+
+                                    <span id="strengthText">
+                                        Password strength
+                                    </span>
+
+                                </div>
+
+                                <!-- PASSWORD REQUIREMENTS -->
+                                <div class="password-requirements">
+
+                                    <p id="lengthRequirement">
+                                        <span>○</span> At least 8 characters
+                                    </p>
+
+                                    <p id="uppercaseRequirement">
+                                        <span>○</span> One uppercase letter
+                                    </p>
+
+                                    <p id="lowercaseRequirement">
+                                        <span>○</span> One lowercase letter
+                                    </p>
+
+                                    <p id="numberRequirement">
+                                        <span>○</span> One number
+                                    </p>
+
+                                    <p id="specialRequirement">
+                                        <span>○</span> One special character
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- CONFIRM PASSWORD -->
+                            <div class="form-group">
+
+                                <label for="confirmPassword">
+                                    Confirm Password
+                                </label>
+
+                                <div class="password-wrapper">
+
+                                    <input
+                                        type="password"
+                                        id="confirmPassword"
+                                        name="confirmPassword"
+                                        placeholder="Confirm password"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="toggle-password"
+                                        onclick="togglePassword('confirmPassword', this)"
+                                    >
+                                        Show
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    <!-- TERMS -->
+                    <div class="terms-group">
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            name="terms"
+                            required
+                        >
+
+                        <label for="terms">
+
+                            I agree to the
+                            <a href="#">Terms and Conditions</a>
+                            and
+                            <a href="#">Privacy Policy</a>.
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- ERROR MESSAGE -->
+                    <p
+                        id="errorMessage"
+                        class="error-message"
+                    ></p>
+
+
+                    <!-- CREATE ACCOUNT -->
+                    <button
+                        type="submit"
+                        class="create-account-btn"
+                    >
+                        Create Account
+                    </button>
+
+                </form>
+
+
+                <!-- LOGIN -->
+                <div class="login-link">
+
+                    <p>
+                        Already have an account?
+                        <a href="login.html">
+                            Log in
+                        </a>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </main>
+
+
+        <!-- FOOTER -->
+        <footer class="register-footer">
+
+            <span>
+                © 2026 BarangayPay. All rights reserved.
+            </span>
+
+        </footer>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+    /* =====================================================
+       SHOW / HIDE PASSWORD
+    ===================================================== */
+
+    function togglePassword(inputId, button) {
+
+        const input = document.getElementById(inputId);
+
+        if (input.type === "password") {
+
+            input.type = "text";
+            button.textContent = "Hide";
+
+        } else {
+
+            input.type = "password";
+            button.textContent = "Show";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PASSWORD STRENGTH
+    ===================================================== */
+
+    const passwordInput =
+        document.getElementById("password");
+
+    const strengthBar =
+        document.getElementById("strengthBar");
+
+    const strengthText =
+        document.getElementById("strengthText");
+
+
+    passwordInput.addEventListener("input", function () {
+
+        const password = passwordInput.value;
+
+        const hasLength = password.length >= 8;
+
+        const hasUppercase = /[A-Z]/.test(password);
+
+        const hasLowercase = /[a-z]/.test(password);
+
+        const hasNumber = /[0-9]/.test(password);
+
+        const hasSpecial = /[^A-Za-z0-9]/.test(password);
+
+
+        /* Update requirements */
+
+        updateRequirement(
+            "lengthRequirement",
+            hasLength
+        );
+
+        updateRequirement(
+            "uppercaseRequirement",
+            hasUppercase
+        );
+
+        updateRequirement(
+            "lowercaseRequirement",
+            hasLowercase
+        );
+
+        updateRequirement(
+            "numberRequirement",
+            hasNumber
+        );
+
+        updateRequirement(
+            "specialRequirement",
+            hasSpecial
+        );
+
+
+        /* Calculate strength */
+
+        let strength = 0;
+
+        if (hasLength) strength++;
+        if (hasUppercase) strength++;
+        if (hasLowercase) strength++;
+        if (hasNumber) strength++;
+        if (hasSpecial) strength++;
+
+
+        /* Update strength display */
+
+        if (password.length === 0) {
+
+            strengthBar.style.width = "0%";
+            strengthText.textContent = "Password strength";
+
+        }
+
+        else if (strength <= 2) {
+
+            strengthBar.style.width = "40%";
+            strengthText.textContent = "Weak password";
+
+        }
+
+        else if (strength <= 4) {
+
+            strengthBar.style.width = "70%";
+            strengthText.textContent = "Good password";
+
+        }
+
+        else {
+
+            strengthBar.style.width = "100%";
+            strengthText.textContent = "Strong password";
+
+        }
+
+    });
+
+
+    /* =====================================================
+       REQUIREMENT CHECKER
+    ===================================================== */
+
+    function updateRequirement(id, valid) {
+
+        const requirement =
+            document.getElementById(id);
+
+        const icon =
+            requirement.querySelector("span");
+
+
+        if (valid) {
+
+            requirement.classList.add("valid");
+
+            icon.textContent = "✓";
+
+        } else {
+
+            requirement.classList.remove("valid");
+
+            icon.textContent = "○";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       FORM SUBMISSION
+    ===================================================== */
+
+    document
+        .getElementById("registerForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            const password =
+                document.getElementById("password").value;
+
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+            const errorMessage =
+                document.getElementById("errorMessage");
+
+
+            /* Password requirements */
+
+            const strongPassword =
+                password.length >= 8 &&
+                /[A-Z]/.test(password) &&
+                /[a-z]/.test(password) &&
+                /[0-9]/.test(password) &&
+                /[^A-Za-z0-9]/.test(password);
+
+
+            if (!strongPassword) {
+
+                errorMessage.textContent =
+                    "Please create a strong password that meets all requirements.";
+
+                return;
+
+            }
+
+
+            /* Confirm password */
+
+            if (password !== confirmPassword) {
+
+                errorMessage.textContent =
+                    "Passwords do not match.";
+
+                return;
+
+            }
+
+
+            /* Success */
+
+            errorMessage.textContent = "";
+
+            alert("Account created successfully!");
+
+        });
+
+</script>
+
+</body>
+</html>

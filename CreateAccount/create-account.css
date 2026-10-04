@@ -1,0 +1,674 @@
+/* =========================================================
+   BARANGAYPAY
+   Create Account Page
+   Government-Style Design
+========================================================= */
+
+
+/* =========================================================
+   1. RESET & BASE
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-blue: #0b4f8a;
+    --primary-dark: #083b68;
+    --primary-light: #eaf3fb;
+
+    --white: #ffffff;
+    --background: #f5f7fa;
+    --surface: #ffffff;
+
+    --text-primary: #1f2937;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+
+    --border: #e2e8f0;
+    --border-light: #edf1f5;
+
+    --danger: #dc3545;
+    --danger-light: #fff0f1;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #062d50 0%,
+            #0b4f8a 55%,
+            #1269a7 100%
+        );
+
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   2. PAGE CONTAINER
+========================================================= */
+
+.register-page {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   3. TOP HEADER
+========================================================= */
+
+.register-header {
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 40px;
+
+    background: var(--white);
+
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.register-brand {
+    display: flex;
+    align-items: center;
+}
+
+.brand-logo {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 11px;
+
+    background: var(--primary-blue);
+    color: var(--white);
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-text h1 {
+    color: var(--primary-dark);
+
+    font-size: 17px;
+    font-weight: 700;
+
+    line-height: 1.2;
+}
+
+.brand-text span {
+    margin-top: 2px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+    font-weight: 500;
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   4. MAIN CONTENT
+========================================================= */
+
+.register-content {
+    flex: 1;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: 45px 20px 60px;
+}
+
+
+/* =========================================================
+   5. REGISTRATION CARD
+========================================================= */
+
+.register-card {
+    width: 100%;
+    max-width: 620px;
+
+    padding: 34px 38px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================================
+   6. FORM HEADER
+========================================================= */
+
+.form-header {
+    margin-bottom: 28px;
+}
+
+.form-header .section-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--text-muted);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+}
+
+.form-header h2 {
+    color: var(--text-primary);
+
+    font-size: 24px;
+    font-weight: 700;
+
+    letter-spacing: -0.2px;
+}
+
+.form-header p {
+    max-width: 500px;
+
+    margin-top: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   7. FORM
+========================================================= */
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--text-primary);
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 12px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-sm);
+
+    color: var(--text-primary);
+
+    font-size: 12px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted);
+}
+
+.form-group input:hover {
+    border-color: #cbd5e1;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-blue);
+
+    box-shadow:
+        0 0 0 3px rgba(11, 79, 138, 0.08);
+}
+
+
+/* =========================================================
+   8. TWO-COLUMN FORM
+========================================================= */
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+}
+
+
+/* =========================================================
+   9. PASSWORD FIELD
+========================================================= */
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 65px;
+}
+
+.toggle-password {
+    position: absolute;
+
+    top: 50%;
+    right: 11px;
+
+    transform: translateY(-50%);
+
+    color: var(--primary-blue);
+
+    background: transparent;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.toggle-password:hover {
+    color: var(--primary-dark);
+}
+
+/* =========================================================
+   PASSWORD STRENGTH
+========================================================= */
+
+.password-strength {
+    margin-top: 8px;
+}
+
+.strength-bar {
+    width: 100%;
+    height: 4px;
+
+    background: #e2e8f0;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.strength-bar-fill {
+    width: 0;
+    height: 100%;
+
+    border-radius: 10px;
+
+    transition:
+        width 0.25s ease,
+        background 0.25s ease;
+}
+
+#strengthText {
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   PASSWORD REQUIREMENTS
+========================================================= */
+
+.password-requirements {
+    margin-top: 8px;
+}
+
+.password-requirements p {
+    margin-bottom: 3px;
+
+    color: var(--text-muted);
+
+    font-size: 9px;
+}
+
+.password-requirements span {
+    display: inline-block;
+
+    width: 14px;
+
+    font-weight: 700;
+}
+
+
+/* Requirement completed */
+
+.password-requirements p.valid {
+    color: var(--success);
+}
+
+.password-requirements p.valid span {
+    color: var(--success);
+}
+
+/* =========================================================
+   10. TERMS & CONDITIONS
+========================================================= */
+
+.terms-group {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 8px;
+
+    margin: 6px 0 20px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.terms-group input {
+    width: 14px;
+    height: 14px;
+
+    flex-shrink: 0;
+
+    margin-top: 2px;
+
+    accent-color: var(--primary-blue);
+
+    cursor: pointer;
+}
+
+.terms-group a {
+    color: var(--primary-blue);
+
+    font-weight: 600;
+}
+
+.terms-group a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   11. ERROR MESSAGE
+========================================================= */
+
+.error-message {
+    min-height: 17px;
+
+    margin-bottom: 8px;
+
+    color: var(--danger);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   12. CREATE ACCOUNT BUTTON
+========================================================= */
+
+.create-account-btn {
+    width: 100%;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--primary-blue);
+    color: var(--white);
+
+    border-radius: 7px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.create-account-btn:hover {
+    background: var(--primary-dark);
+
+    transform: translateY(-1px);
+}
+
+.create-account-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   13. LOGIN LINK
+========================================================= */
+
+.login-link {
+    margin-top: 22px;
+
+    padding-top: 19px;
+
+    border-top: 1px solid var(--border-light);
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+.login-link a {
+    color: var(--primary-blue);
+
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   14. FOOTER
+========================================================= */
+
+.register-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #062d50 0%,
+            #0b4f8a 55%,
+            #1269a7 100%
+        );
+
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   15. RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .register-header {
+        height: 68px;
+
+        padding: 0 22px;
+    }
+
+    .register-content {
+        padding: 30px 16px 45px;
+    }
+
+    .register-card {
+        padding: 28px 25px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+}
+
+
+/* =========================================================
+   16. RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .register-header {
+        padding: 0 16px;
+    }
+
+    .brand-logo {
+        width: 35px;
+        height: 35px;
+
+        margin-right: 9px;
+    }
+
+    .brand-text h1 {
+        font-size: 16px;
+    }
+
+    .brand-text span {
+        font-size: 9px;
+    }
+
+    .register-content {
+        padding: 20px 12px 35px;
+    }
+
+    .register-card {
+        padding: 25px 20px;
+
+        border-radius: var(--radius-md);
+    }
+
+    .form-header {
+        margin-bottom: 23px;
+    }
+
+    .form-header h2 {
+        font-size: 21px;
+    }
+
+    .form-header p {
+        font-size: 11px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .register-footer {
+        padding: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   17. VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .register-card {
+        padding: 22px 17px;
+    }
+
+    .form-header h2 {
+        font-size: 20px;
+    }
+
+}

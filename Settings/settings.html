@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | BarangayPay</title>
+
+    <!-- Main Dashboard Styles -->
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Settings Page Styles -->
+    <link rel="stylesheet" href="../Settings/settings.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- =========================================
+             SIDEBAR
+        ========================================== -->
+        <aside class="sidebar" id="sidebar">
+
+            <!-- Brand -->
+            <div class="sidebar-brand">
+
+                <div class="brand-logo">
+                    BP
+                </div>
+
+                <div class="brand-text">
+                    <h1>BarangayPay</h1>
+                    <span>Barangay Services</span>
+                </div>
+
+            </div>
+
+
+            <!-- Navigation -->
+            <nav class="sidebar-navigation" aria-label="Main Navigation">
+
+                <div class="navigation-section">
+                    <span class="navigation-title">MAIN</span>
+
+                    <a href="../index.html" class="navigation-item active">
+                        <span class="navigation-icon">⌂</span>
+                        <span class="navigation-label">Dashboard</span>
+                    </a>
+
+                    <a href="../MyTransactions/transactions.html" class="navigation-item">
+                        <span class="navigation-icon">▤</span>
+                        <span class="navigation-label">My Transactions</span>
+                    </a>
+
+                    <a href="../Services/services.html" class="navigation-item">
+                        <span class="navigation-icon">▦</span>
+                        <span class="navigation-label">Services</span>
+                    </a>
+                </div>
+
+
+                <div class="navigation-section">
+                    <span class="navigation-title">ACCOUNT</span>
+
+                    <a href="../Profile/profile.html" class="navigation-item">
+                        <span class="navigation-icon">◯</span>
+                        <span class="navigation-label">Profile</span>
+                    </a>
+
+                    <a href="settings.html" class="navigation-item">
+                        <span class="navigation-icon">⚙</span>
+                        <span class="navigation-label">Settings</span>
+                    </a>
+                </div>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- =========================================
+             MAIN CONTENT
+        ========================================== -->
+        <main class="main-content">
+
+
+            <!-- =====================================
+                 TOP HEADER
+            ====================================== -->
+            <header class="top-header">
+
+                <div class="header-left">
+
+                    <button
+                        type="button"
+                        class="menu-toggle"
+                        id="menuToggle"
+                        aria-label="Toggle navigation menu">
+                        ☰
+                    </button>
+
+                    <div class="page-heading">
+                        <span class="page-section">Resident Portal</span>
+                        <h2>Dashboard</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="header-right">
+
+                    <!-- Notifications -->
+                    <button
+                        type="button"
+                        class="header-button notification-button"
+                        aria-label="Notifications">
+
+                        <span class="header-icon">🔔</span>
+
+                        <span
+                            class="notification-indicator"
+                            aria-hidden="true">
+                        </span>
+
+                    </button>
+
+
+                    <!-- User Profile -->
+                    <a
+                        href="Profile/profile.html"
+                        class="user-menu"
+                        id="userMenu"
+                        aria-label="Open user menu">
+
+                        <div class="user-avatar">
+                            U
+                        </div>
+
+                        <div class="user-information">
+                            <strong>Resident</strong>
+                            <span>Account</span>
+                        </div>
+
+                        <span class="user-menu-arrow">⌄</span>
+
+                    </a>
+
+                </div>
+
+            </header>
+
+
+            <!-- =====================================
+                 SETTINGS CONTENT
+            ====================================== -->
+            <section class="dashboard-content">
+
+
+                <!-- Page Header -->
+                <div class="page-header">
+
+                    <div class="page-header-text">
+
+                        <span class="page-eyebrow">
+                            Account Preferences
+                        </span>
+
+                        <h2>
+                            Settings
+                        </h2>
+
+                        <p>
+                            Manage your account preferences and
+                            notification settings.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     SETTINGS LAYOUT
+                ================================== -->
+                <div class="settings-layout">
+
+
+                    <!-- =================================
+                         ACCOUNT SECURITY
+                    ================================== -->
+                    <section class="settings-panel">
+
+                        <div class="settings-panel-header">
+
+                            <div class="settings-panel-icon">
+                                🔒
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Account Security
+                                </h3>
+
+                                <p>
+                                    Manage your account security
+                                    preferences.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-panel-body">
+
+
+                            <!-- Change Password -->
+                            <div class="settings-item">
+
+                                <div class="settings-item-content">
+
+                                    <h4>
+                                        Password
+                                    </h4>
+
+                                    <p>
+                                        Change your account password
+                                        regularly to help keep your
+                                        account secure.
+                                    </p>
+
+                                </div>
+
+                                <a
+                                    href="#"
+                                    class="settings-action"
+                                >
+                                    Change Password
+                                </a>
+
+                            </div>
+
+
+                            <!-- Login Security -->
+                            <div class="settings-item">
+
+                                <div class="settings-item-content">
+
+                                    <h4>
+                                        Login Security
+                                    </h4>
+
+                                    <p>
+                                        Your account is protected by
+                                        your registered email and
+                                        password.
+                                    </p>
+
+                                </div>
+
+                                <span class="security-status">
+                                    Protected
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================
+                         NOTIFICATION SETTINGS
+                    ================================== -->
+                    <section class="settings-panel">
+
+                        <div class="settings-panel-header">
+
+                            <div class="settings-panel-icon">
+                                🔔
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Notifications
+                                </h3>
+
+                                <p>
+                                    Choose how you want to receive
+                                    important account updates.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-panel-body">
+
+
+                            <!-- Transaction Notifications -->
+                            <div class="settings-toggle-item">
+
+                                <div class="settings-item-content">
+
+                                    <h4>
+                                        Transaction Updates
+                                    </h4>
+
+                                    <p>
+                                        Receive notifications when
+                                        your service request status
+                                        changes.
+                                    </p>
+
+                                </div>
+
+                                <label class="toggle-switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="transactionNotifications"
+                                        checked
+                                    >
+
+                                    <span class="toggle-slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <!-- Payment Notifications -->
+                            <div class="settings-toggle-item">
+
+                                <div class="settings-item-content">
+
+                                    <h4>
+                                        Payment Updates
+                                    </h4>
+
+                                    <p>
+                                        Receive notifications about
+                                        payment status and receipts.
+                                    </p>
+
+                                </div>
+
+                                <label class="toggle-switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="paymentNotifications"
+                                        checked
+                                    >
+
+                                    <span class="toggle-slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <!-- Document Notifications -->
+                            <div class="settings-toggle-item">
+
+                                <div class="settings-item-content">
+
+                                    <h4>
+                                        Document Updates
+                                    </h4>
+
+                                    <p>
+                                        Receive notifications when
+                                        your requested document is
+                                        ready.
+                                    </p>
+
+                                </div>
+
+                                <label class="toggle-switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="documentNotifications"
+                                        checked
+                                    >
+
+                                    <span class="toggle-slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <!-- General Notifications -->
+                            <div class="settings-toggle-item">
+
+                                <div class="settings-item-content">
+
+                                    <h4>
+                                        General Notifications
+                                    </h4>
+
+                                    <p>
+                                        Receive important announcements
+                                        and barangay service updates.
+                                    </p>
+
+                                </div>
+
+                                <label class="toggle-switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="generalNotifications"
+                                        checked
+                                    >
+
+                                    <span class="toggle-slider"></span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================
+                         EMAIL PREFERENCES
+                    ================================== -->
+                    <section class="settings-panel">
+
+                        <div class="settings-panel-header">
+
+                            <div class="settings-panel-icon">
+                                ✉
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Email Preferences
+                                </h3>
+
+                                <p>
+                                    Manage email communication
+                                    preferences.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-panel-body">
+
+                            <div class="settings-toggle-item">
+
+                                <div class="settings-item-content">
+
+                                    <h4>
+                                        Email Notifications
+                                    </h4>
+
+                                    <p>
+                                        Receive important transaction
+                                        and account updates through
+                                        your registered email address.
+                                    </p>
+
+                                </div>
+
+                                <label class="toggle-switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="emailNotifications"
+                                        checked
+                                    >
+
+                                    <span class="toggle-slider"></span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================
+                         SAVE SETTINGS
+                    ================================== -->
+                    <div class="settings-actions">
+
+                        <button
+                            type="button"
+                            class="secondary-button"
+                            id="resetSettings"
+                        >
+                            Reset
+                        </button>
+
+                        <button
+                            type="button"
+                            class="primary-button"
+                            id="saveSettings"
+                        >
+                            Save Changes
+                        </button>
+
+                    </div>
+
+
+                    <!-- =================================
+                         ACCOUNT INFORMATION
+                    ================================== -->
+                    <div class="settings-information">
+
+                        <div class="information-icon">
+                            i
+                        </div>
+
+                        <div class="information-content">
+
+                            <h3>
+                                Account Settings
+                            </h3>
+
+                            <p>
+                                Some account information, such as your
+                                name, address, and contact details, can
+                                be managed from your Profile page.
+                            </p>
+
+                            <a href="profile.html">
+                                Go to Profile
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 FOOTER
+            ====================================== -->
+            <footer class="main-footer">
+
+                <p>
+                    © 2026 BarangayPay. Barangay Services Portal.
+                </p>
+
+                <div class="footer-links">
+
+                    <a href="#">
+                        Privacy
+                    </a>
+
+                    <a href="#">
+                        Terms
+                    </a>
+
+                </div>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- Main UI JavaScript -->
+    <script src="js/script.js"></script>
+
+    <!-- Settings JavaScript -->
+    <script src="js/settings.js"></script>
+
+</body>
+</html>

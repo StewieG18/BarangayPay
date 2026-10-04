@@ -49,48 +49,41 @@
                         <span class="navigation-label">My Transactions</span>
                     </a>
 
-                    <a href="../RequestService/service.html" class="navigation-item">
-                        <span class="navigation-icon">＋</span>
-                        <span class="navigation-label">Request a Service</span>
-                    </a>
-
                     <a href="services.html" class="navigation-item active">
-                        <span class="navigation-icon">▦</span>
+                        <span class="navigation-icon">☷</span>
                         <span class="navigation-label">Services</span>
-                    </a>
-
-                    <a href="#" class="navigation-item">
-                        <span class="navigation-icon">₱</span>
-                        <span class="navigation-label">Payments</span>
                     </a>
                 </div>
 
 
                 <!-- Account -->
                 <div class="navigation-section">
-
-                    <div class="navigation-label">
-                        Account
-                    </div>
+                    <span class="navigation-title">ACCOUNT</span>
+                    
 
                     <a href="../Profile/profile.html" class="navigation-item">
                         <span class="navigation-icon">◯</span>
                         <span>Profile</span>
                     </a>
 
-                    <a href="#" class="navigation-item">
+                    <a href="../Settings/settings.html" class="navigation-item">
                         <span class="navigation-icon">⚙</span>
                         <span>Settings</span>
-                    </a>
-
-                    <a href="../login/login.html" class="navigation-item logout-item">
-                        <span class="navigation-icon">↪</span>
-                        <span>Sign Out</span>
                     </a>
 
                 </div>
 
             </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+
+                <a href="login/login.html" class="navigation-item logout-item">
+                    <span class="navigation-icon">↪</span>
+                    <span class="navigation-label">Sign Out</span>
+                </a>
+
+            </div>
 
         </aside>
 
@@ -105,77 +98,61 @@
             ====================================== -->
             <header class="top-header">
 
-                <!-- Mobile Menu -->
-                <button
-                    type="button"
-                    class="menu-toggle"
-                    id="menuToggle"
-                    aria-label="Open navigation menu"
-                >
-                    ☰
-                </button>
+                <div class="header-left">
+
+                    <button
+                        type="button"
+                        class="menu-toggle"
+                        id="menuToggle"
+                        aria-label="Toggle navigation menu">
+                        ☰
+                    </button>
+
+                    <div class="page-heading">
+                        <span class="page-section">Resident Portal</span>
+                        <h2>Dashboard</h2>
+                    </div>
+
+                </div>
 
 
-                <!-- Header Right -->
-                <div class="header-actions">
+                <div class="header-right">
 
                     <!-- Notifications -->
                     <button
                         type="button"
-                        class="notification-button"
-                        id="notificationButton"
-                        aria-label="Notifications"
-                    >
-                        🔔
+                        class="header-button notification-button"
+                        aria-label="Notifications">
+
+                        <span class="header-icon">🔔</span>
+
                         <span
                             class="notification-indicator"
-                            id="notificationIndicator"
-                        ></span>
+                            aria-hidden="true">
+                        </span>
+
                     </button>
 
 
-                    <!-- User Menu -->
-                    <div class="user-menu" id="userMenu">
+                    <!-- User Profile -->
+                    <a
+                        href="Profile/profile.html"
+                        class="user-menu"
+                        id="userMenu"
+                        aria-label="Open user menu">
 
-                        <button
-                            type="button"
-                            class="user-menu-button"
-                            id="userMenuButton"
-                        >
-
-                            <span class="user-avatar">
-                                R
-                            </span>
-
-                            <span class="user-menu-name">
-                                Resident
-                            </span>
-
-                            <span class="user-menu-arrow">
-                                ▾
-                            </span>
-
-                        </button>
-
-
-                        <!-- Dropdown -->
-                        <div class="user-menu-dropdown">
-
-                            <a href="../Profile/profile.html">
-                                Profile
-                            </a>
-
-                            <a href="#">
-                                Settings
-                            </a>
-
-                            <a href="../login/login.html">
-                                Sign Out
-                            </a>
-
+                        <div class="user-avatar">
+                            U
                         </div>
 
-                    </div>
+                        <div class="user-information">
+                            <strong>Resident</strong>
+                            <span>Account</span>
+                        </div>
+
+                        <span class="user-menu-arrow">⌄</span>
+
+                    </a>
 
                 </div>
 

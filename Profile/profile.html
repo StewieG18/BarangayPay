@@ -8,29 +8,55 @@
     <link rel="stylesheet" href="../Profile/profile.css">
 </head>
 <body>
-    <div class="profile-app">
-        <aside class="profile-sidebar">
-            <a class="profile-brand" href="../index.html">
-                <span class="profile-brand-logo">BP</span>
-                <span><strong>BarangayPay</strong><small>Barangay Services</small></span>
-            </a>
+    <div class="profile-app" style="display: flex; min-height: 100vh;">
+        <aside class="sidebar" id="sidebar" style="position: relative; flex: 0 0 260px;">
+            <div class="sidebar-brand">
+                <div class="brand-logo">BP</div>
+                <div class="brand-text">
+                    <h1>BarangayPay</h1>
+                    <span>Barangay Services</span>
+                </div>
+            </div>
 
-            <nav class="profile-nav" aria-label="Main navigation">
-                <span class="profile-nav-heading">MAIN</span>
-                <a href="../index.html"><span>⌂</span> Dashboard</a>
-                <a href="../MyTransactions/transactions.html"><span>▤</span> My Requests</a>
-                <a href="../RequestService/service.html"><span>＋</span> Request a Service</a>
-                <a href="../Services/services.html"><span>▦</span> Services</a>
+            <nav class="sidebar-navigation" aria-label="Main Navigation">
+                <div class="navigation-section">
+                    <span class="navigation-title">MAIN</span>
+                    <a href="../index.html" class="navigation-item">
+                        <span class="navigation-icon">⌂</span>
+                        <span class="navigation-label">Dashboard</span>
+                    </a>
+                    <a href="../MyTransactions/transactions.html" class="navigation-item">
+                        <span class="navigation-icon">▤</span>
+                        <span class="navigation-label">My Transactions</span>
+                    </a>
+                    <a href="../Services/services.html" class="navigation-item">
+                        <span class="navigation-icon">▦</span>
+                        <span class="navigation-label">Services</span>
+                    </a>
+                </div>
 
-                <span class="profile-nav-heading">ACCOUNT</span>
-                <a class="selected" href="profile.html" aria-current="page"><span>◯</span> Profile</a>
-                <a href="../login/login.html"><span>↪</span> Log Out</a>
+                <div class="navigation-section">
+                    <span class="navigation-title">ACCOUNT</span>
+                    <a href="profile.html" class="navigation-item active" aria-current="page">
+                        <span class="navigation-icon">◯</span>
+                        <span class="navigation-label">Profile</span>
+                    </a>
+                    <a href="../Settings/settings.html" class="navigation-item">
+                        <span class="navigation-icon">⚙</span>
+                        <span class="navigation-label">Settings</span>
+                    </a>
+                </div>
             </nav>
 
-            <div class="profile-sidebar-footer">Digital Barangay Services</div>
+            <div class="sidebar-footer">
+                <a href="login/login.html" class="navigation-item logout-item">
+                    <span class="navigation-icon">↪</span>
+                    <span class="navigation-label">Sign Out</span>
+                </a>
+            </div>
         </aside>
 
-        <main class="profile-main">
+        <main class="profile-main" style="flex: 1; min-width: 0;">
             <header class="profile-topbar">
                 <span class="profile-topbar-label">Resident Account</span>
                 <a href="../MyTransactions/transactions.html">My Requests <span aria-hidden="true">→</span></a>
