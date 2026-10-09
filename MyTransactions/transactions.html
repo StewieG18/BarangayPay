@@ -49,10 +49,9 @@
                         <span>Dashboard</span>
                     </a>
 
-                    <a
-                        href="../MyTransactions/transactions.css"
-                        class="navigation-item active"
-                    >
+                    <a href="transactions.html"
+                    class="navigation-item active"
+                    aria-current="page">
                         <span class="navigation-icon">▤</span>
                         <span>My Transactions</span>
                     </a>
@@ -153,7 +152,7 @@
 
                     <!-- User Profile -->
                     <a
-                        href="Profile/profile.html"
+                        href="../Profile/profile.html"
                         class="user-menu"
                         id="userMenu"
                         aria-label="Open user menu">
@@ -445,11 +444,10 @@
     </div>
 
 
-    <!-- Main UI JavaScript -->
-    <script src="js/script.js"></script>
 
-    <!-- Transactions JavaScript -->
-    <script src="js/transactions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="transactions.js"></script>
 
 </body>
 </html>

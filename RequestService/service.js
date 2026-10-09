@@ -232,8 +232,251 @@ form.querySelectorAll('input[name="service"]').forEach(radio => {
         validateField('requirements');
     });
 
+       /* ---------- confirmation modal (self-contained) ---------- */
+    const SERVICE_NAMES = {
+        'barangay-clearance': 'Barangay Clearance',
+        'certificate-residency': 'Certificate of Residency',
+        'certificate-indigency': 'Certificate of Indigency',
+        'business-clearance': 'Barangay Business Clearance'
+    };
+    const PURPOSE_NAMES = {
+        employment: 'Employment',
+        school: 'School / Education',
+        business: 'Business',
+        government: 'Government Requirement',
+        personal: 'Personal',
+        other: 'Other'
+    };
+
+    // Styles
+    const modalStyle = document.createElement('style');
+    modalStyle.textContent = `
+        .cm-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: rgba(15, 23, 42, 0.55);
+            overscroll-behavior: contain;   /* add this */
+        }
+        .cm-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: rgba(15, 23, 42, 0.55);
+        }
+        .cm-overlay.open { display: flex; }
+        .cm-dialog {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 640px;
+            max-height: 90vh;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+        .cm-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .cm-header h2 { margin: 0 0 4px; font-size: 20px; }
+        .cm-header p { margin: 0; color: #6b7280; font-size: 14px; }
+        .cm-close {
+            align-self: flex-start;
+            width: 32px;
+            height: 32px;
+            border: 0;
+            border-radius: 8px;
+            background: transparent;
+            font-size: 24px;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .cm-close:hover { background: #f3f4f6; }
+        .cm-body { padding: 8px 24px 16px; overflow-y: auto; }
+        .cm-group { padding: 14px 0; border-bottom: 1px solid #f0f1f3; }
+        .cm-group:last-child { border-bottom: 0; }
+        .cm-group h3 {
+            margin: 0 0 10px;
+            font-size: 12px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #6b7280;
+        }
+        .cm-row {
+            display: grid;
+            grid-template-columns: 170px 1fr;
+            gap: 12px;
+            padding: 6px 0;
+            font-size: 14px;
+        }
+        .cm-row span { color: #6b7280; }
+        .cm-row strong { font-weight: 600; word-break: break-word; white-space: pre-wrap; }
+        .cm-files { margin: 0; padding-left: 18px; font-size: 14px; }
+        .cm-files li { padding: 3px 0; word-break: break-all; }
+        .cm-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 16px 24px;
+            border-top: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+        .cm-btn { cursor: pointer; font: inherit; }
+        .cm-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        @media (max-width: 520px) {
+            .cm-row { grid-template-columns: 1fr; gap: 2px; }
+            .cm-footer { flex-direction: column-reverse; }
+            .cm-footer > * { width: 100%; }
+        }
+    `;
+    document.head.appendChild(modalStyle);
+
+    // Markup (removes any older modal left from earlier attempts)
+    document.getElementById('confirmModal')?.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'confirmModal';
+    modal.className = 'cm-overlay';
+    modal.innerHTML = `
+        <div class="cm-dialog" role="dialog" aria-modal="true" aria-labelledby="cmTitle">
+            <div class="cm-header">
+                <div>
+                    <h2 id="cmTitle">Confirm Your Request</h2>
+                    <p>Please review your details before submitting.</p>
+                </div>
+                <button type="button" class="cm-close" id="cmClose" aria-label="Close">×</button>
+            </div>
+            <div class="cm-body" id="cmBody"></div>
+            <div class="cm-footer">
+                <button type="button" class="secondary-button cm-btn" id="cmEdit">Edit Details</button>
+                <button type="button" class="primary-button cm-btn" id="cmConfirm">Confirm &amp; Submit</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalBody  = modal.querySelector('#cmBody');
+    const confirmBtn = modal.querySelector('#cmConfirm');
+    let lastFocused  = null;
+
+    const formatDate = v => {
+        const d = new Date(`${v}T00:00:00`);
+        return Number.isNaN(d.getTime())
+            ? v
+            : d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    };
+
+    const formatSize = bytes =>
+        bytes >= 1048576
+            ? `${(bytes / 1048576).toFixed(2)} MB`
+            : `${Math.max(1, Math.round(bytes / 1024))} KB`;
+
+    function addGroup(title, rows) {
+        const group = document.createElement('section');
+        group.className = 'cm-group';
+
+        const h = document.createElement('h3');
+        h.textContent = title;
+        group.appendChild(h);
+
+        rows.forEach(([label, value]) => {
+            const row = document.createElement('div');
+            row.className = 'cm-row';
+
+            const l = document.createElement('span');
+            l.textContent = label;
+
+            const v = document.createElement('strong');
+            v.textContent = value || 'Not provided';
+
+            row.append(l, v);
+            group.appendChild(row);
+        });
+
+        modalBody.appendChild(group);
+    }
+
+    function buildSummary() {
+        modalBody.replaceChildren();
+
+        const service  = form.querySelector('input[name="service"]:checked').value;
+        const fullName = [val('firstName'), val('middleName'), val('lastName')]
+            .filter(Boolean).join(' ');
+
+        addGroup('Service', [
+            ['Requested Service', SERVICE_NAMES[service] || service]
+        ]);
+
+        addGroup('Applicant Information', [
+            ['Full Name', fullName],
+            ['Contact Number', val('contactNumber')],
+            ['Address', val('address')]
+        ]);
+
+        addGroup('Request Details', [
+            ['Purpose', PURPOSE_NAMES[$('purpose').value] || $('purpose').value],
+            ['Preferred Date', formatDate($('preferredDate').value)],
+            ['Additional Information', val('requestNotes')]
+        ]);
+
+        const files = Array.from($('requirements').files);
+        const fileGroup = document.createElement('section');
+        fileGroup.className = 'cm-group';
+
+        const h = document.createElement('h3');
+        h.textContent = 'Uploaded Documents';
+        fileGroup.appendChild(h);
+
+        const ul = document.createElement('ul');
+        ul.className = 'cm-files';
+        files.forEach(f => {
+            const li = document.createElement('li');
+            li.textContent = `${f.name} (${formatSize(f.size)})`;
+            ul.appendChild(li);
+        });
+        fileGroup.appendChild(ul);
+        modalBody.appendChild(fileGroup);
+    }
+
+    function openModal() {
+        lastFocused = document.activeElement;
+        buildSummary();
+        modal.classList.add('open');
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = 'Confirm & Submit';
+        confirmBtn.focus();
+    }
+
+    function closeModal() {
+        modal.classList.remove('open');
+        if (lastFocused) lastFocused.focus();
+    }
+
+    const tryClose = () => { if (!confirmBtn.disabled) closeModal(); };
+
+    modal.querySelector('#cmClose').addEventListener('click', tryClose);
+    modal.querySelector('#cmEdit').addEventListener('click', tryClose);
+    modal.addEventListener('click', e => { if (e.target === modal) tryClose(); });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) tryClose();
+    });
+
     /* ---------- submit ---------- */
-    form.addEventListener('submit', async e => {
+    // Step 1: validate, then show the confirmation modal
+    form.addEventListener('submit', e => {
         e.preventDefault();
         setStatus('', '');
 
@@ -244,17 +487,25 @@ form.querySelectorAll('input[name="service"]').forEach(radio => {
             return;
         }
 
-        const btn = form.querySelector('.primary-button');
-        btn.disabled = true;
+        openModal();
+    });
+
+    // Step 2: the user confirmed, so send the request
+    confirmBtn.addEventListener('click', async () => {
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = 'Submitting...';
 
         try {
-            const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+            const res  = await fetch(form.action, { method: 'POST', body: new FormData(form) });
             const data = await res.json();
+
+            closeModal();
 
             if (data.success) {
                 form.reset();
                 renderFiles();
                 Object.keys(fields).forEach(k => showError(k, ''));
+                form.dispatchEvent(new Event('change'));
                 setStatus('success', data.message || 'Your request was submitted.');
             } else {
                 Object.entries(data.errors || {}).forEach(([k, m]) => fields[k] && showError(k, m));
@@ -263,9 +514,11 @@ form.querySelectorAll('input[name="service"]').forEach(radio => {
                 if (bad) focusField(bad);
             }
         } catch (err) {
+            closeModal();
             setStatus('error', 'Could not reach the server. Please try again later.');
         } finally {
-            btn.disabled = false;
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = 'Confirm & Submit';
         }
     });
 
@@ -319,3 +572,27 @@ form.querySelectorAll('input[name="service"]').forEach(radio => {
     // ...existing code...
 
 })();
+
+// Pre-select the service chosen on services.html
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const selectedService = params.get("service");
+
+    if (!selectedService) return;
+
+    const radio = document.querySelector(
+        `input[name="service"][value="${CSS.escape(selectedService)}"]`
+    );
+
+    if (!radio) return; // unknown value, leave the form untouched
+
+    radio.checked = true;
+
+    // Fires any existing "change" logic, such as the requirements list
+    radio.dispatchEvent(new Event("change", { bubbles: true }));
+
+    radio.closest(".service-option")?.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+});

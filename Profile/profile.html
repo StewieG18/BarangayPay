@@ -1,17 +1,26 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Resident Profile | BarangayPay</title>
+
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../Profile/profile.css">
 </head>
+
 <body>
     <div class="profile-app" style="display: flex; min-height: 100vh;">
-        <aside class="sidebar" id="sidebar" style="position: relative; flex: 0 0 260px;">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar"
+            style="position: relative; flex: 0 0 260px;">
+
             <div class="sidebar-brand">
                 <div class="brand-logo">BP</div>
+
                 <div class="brand-text">
                     <h1>BarangayPay</h1>
                     <span>Barangay Services</span>
@@ -19,16 +28,21 @@
             </div>
 
             <nav class="sidebar-navigation" aria-label="Main Navigation">
+
                 <div class="navigation-section">
                     <span class="navigation-title">MAIN</span>
+
                     <a href="../index.html" class="navigation-item">
                         <span class="navigation-icon">⌂</span>
                         <span class="navigation-label">Dashboard</span>
                     </a>
-                    <a href="../MyTransactions/transactions.html" class="navigation-item">
+
+                    <a href="../MyTransactions/transactions.html"
+                        class="navigation-item">
                         <span class="navigation-icon">▤</span>
                         <span class="navigation-label">My Transactions</span>
                     </a>
+
                     <a href="../Services/services.html" class="navigation-item">
                         <span class="navigation-icon">▦</span>
                         <span class="navigation-label">Services</span>
@@ -37,10 +51,14 @@
 
                 <div class="navigation-section">
                     <span class="navigation-title">ACCOUNT</span>
-                    <a href="profile.html" class="navigation-item active" aria-current="page">
+
+                    <a href="profile.html"
+                        class="navigation-item active"
+                        aria-current="page">
                         <span class="navigation-icon">◯</span>
                         <span class="navigation-label">Profile</span>
                     </a>
+
                     <a href="../Settings/settings.html" class="navigation-item">
                         <span class="navigation-icon">⚙</span>
                         <span class="navigation-label">Settings</span>
@@ -49,20 +67,28 @@
             </nav>
 
             <div class="sidebar-footer">
-                <a href="login/login.html" class="navigation-item logout-item">
+                <a href="#" id="sidebarLogoutButton"
+                    class="navigation-item logout-item">
                     <span class="navigation-icon">↪</span>
                     <span class="navigation-label">Sign Out</span>
                 </a>
             </div>
         </aside>
 
+        <!-- Main Content -->
         <main class="profile-main" style="flex: 1; min-width: 0;">
+
             <header class="profile-topbar">
                 <span class="profile-topbar-label">Resident Account</span>
-                <a href="../MyTransactions/transactions.html">My Requests <span aria-hidden="true">→</span></a>
+
+                <a href="../MyTransactions/transactions.html">
+                    My Requests <span aria-hidden="true">→</span>
+                </a>
             </header>
 
             <div class="profile-content">
+
+                <!-- Page Heading -->
                 <div class="profile-page-heading">
                     <div>
                         <span class="profile-eyebrow">ACCOUNT</span>
@@ -71,125 +97,222 @@
                     </div>
                 </div>
 
-                <section class="profile-card profile-summary" aria-label="Resident profile summary">
-                    <div class="profile-avatar" aria-hidden="true">JC</div>
+                <!-- Profile Summary -->
+                <section class="profile-card profile-summary"
+                    aria-label="Resident profile summary">
+
+                    <div class="profile-avatar" id="profileAvatar"
+                        aria-hidden="true">--</div>
+
                     <div class="profile-summary-details">
-                        <h2 data-profile-key="fullName">Jhouanese Condor</h2>
-                        <p>Resident ID: <strong>BP-2026-0001</strong></p>
+                        <h2 data-profile-key="fullName">Loading...</h2>
+
+                        <p>
+                            Email:
+                            <strong data-profile-key="email">Loading...</strong>
+                        </p>
                     </div>
-                    <span class="profile-status"><span aria-hidden="true">●</span> Active</span>
+
+                    <span class="profile-status" id="profileStatus">
+                        Loading...
+                    </span>
                 </section>
 
+                <!-- Personal Information -->
                 <section class="profile-card">
+
                     <div class="profile-section-heading">
                         <div>
                             <h2>Personal Information</h2>
                             <p>Your personal and contact details.</p>
                         </div>
                     </div>
+
                     <div class="profile-details-grid">
+
                         <div class="profile-detail">
                             <span>Full Name</span>
-                            <strong data-profile-key="fullName">Jhouanese Condor</strong>
+                            <strong data-profile-key="fullName">Loading...</strong>
                         </div>
+
                         <div class="profile-detail">
                             <span>Date of Birth</span>
-                            <strong>March 15, 2002</strong>
+                            <strong data-profile-key="birthdate">Loading...</strong>
                         </div>
+
                         <div class="profile-detail">
                             <span>Sex</span>
-                            <strong>Female</strong>
+                            <strong data-profile-key="sex">Loading...</strong>
                         </div>
+
                         <div class="profile-detail">
                             <span>Contact Number</span>
-                            <strong data-profile-key="contact">0917 123 4567</strong>
+                            <strong data-profile-key="contact">Loading...</strong>
                         </div>
+
                         <div class="profile-detail profile-detail-wide">
                             <span>Email Address</span>
-                            <strong data-profile-key="email">jhouanese.condor@example.com</strong>
+                            <strong data-profile-key="email">Loading...</strong>
                         </div>
+
                     </div>
                 </section>
 
+                <!-- Address -->
                 <section class="profile-card">
+
                     <div class="profile-section-heading">
                         <div>
                             <h2>Address</h2>
                             <p>Your registered residential address.</p>
                         </div>
                     </div>
+
                     <div class="profile-details-grid">
+
                         <div class="profile-detail">
                             <span>House / Street</span>
-                            <strong data-profile-key="street">123 Mabini Street</strong>
+                            <strong data-profile-key="street">Loading...</strong>
                         </div>
+
                         <div class="profile-detail">
                             <span>Barangay</span>
-                            <strong>Barangay San Isidro</strong>
+                            <strong data-profile-key="barangay">Loading...</strong>
                         </div>
+
                         <div class="profile-detail">
                             <span>City / Municipality</span>
-                            <strong>Quezon City</strong>
+                            <strong data-profile-key="city">Loading...</strong>
                         </div>
+
                         <div class="profile-detail">
                             <span>Province</span>
-                            <strong>Metro Manila</strong>
+                            <strong data-profile-key="province">Loading...</strong>
                         </div>
+
                     </div>
                 </section>
 
-                <section class="profile-requests-section" aria-labelledby="request-stats-heading">
+                <!-- Request Statistics -->
+                <section class="profile-requests-section"
+                    aria-labelledby="request-stats-heading">
+
                     <div class="profile-section-heading">
                         <div>
                             <h2 id="request-stats-heading">My Requests</h2>
                             <p>A summary of your service requests.</p>
                         </div>
-                        <a class="profile-text-link" href="../MyTransactions/transactions.html">View requests →</a>
+
+                        <a class="profile-text-link"
+                            href="../MyTransactions/transactions.html">
+                            View requests →
+                        </a>
                     </div>
 
                     <div class="profile-stat-grid">
+
                         <article class="profile-stat-card">
-                            <span class="profile-stat-icon total-icon" aria-hidden="true">▤</span>
-                            <div><span>Total Requests</span><strong>8</strong></div>
+                            <span class="profile-stat-icon total-icon"
+                                aria-hidden="true">▤</span>
+                            <div>
+                                <span>Total Requests</span>
+                                <strong id="totalRequests">—</strong>
+                            </div>
                         </article>
+
                         <article class="profile-stat-card">
-                            <span class="profile-stat-icon pending-icon" aria-hidden="true">◷</span>
-                            <div><span>Pending</span><strong>2</strong></div>
+                            <span class="profile-stat-icon pending-icon"
+                                aria-hidden="true">◷</span>
+                            <div>
+                                <span>Pending</span>
+                                <strong id="pendingRequests">—</strong>
+                            </div>
                         </article>
+
                         <article class="profile-stat-card">
-                            <span class="profile-stat-icon approved-icon" aria-hidden="true">✓</span>
-                            <div><span>Approved</span><strong>5</strong></div>
+                            <span class="profile-stat-icon approved-icon"
+                                aria-hidden="true">✓</span>
+                            <div>
+                                <span>Completed</span>
+                                <strong id="approvedRequests">—</strong>
+                            </div>
                         </article>
+
                         <article class="profile-stat-card">
-                            <span class="profile-stat-icon rejected-icon" aria-hidden="true">×</span>
-                            <div><span>Rejected</span><strong>1</strong></div>
+                            <span class="profile-stat-icon rejected-icon"
+                                aria-hidden="true">×</span>
+                            <div>
+                                <span>Rejected</span>
+                                <strong id="rejectedRequests">—</strong>
+                            </div>
                         </article>
+
                     </div>
                 </section>
 
+                <!-- Account Actions -->
                 <section class="profile-card profile-actions">
+
                     <div class="profile-section-heading">
                         <div>
                             <h2>Account Actions</h2>
                             <p>Manage your profile and account access.</p>
                         </div>
                     </div>
+
                     <div class="profile-action-buttons">
-                        <button class="profile-button profile-button-primary" id="editProfileButton" type="button">
+
+                        <button class="profile-button profile-button-primary"
+                            id="editProfileButton" type="button">
                             Edit Profile
                         </button>
-                        <button class="profile-button profile-button-secondary" id="changePasswordButton" type="button">
+
+                        <button class="profile-button profile-button-secondary"
+                            id="changePasswordButton" type="button">
                             Change Password
                         </button>
-                        <a class="profile-button profile-button-danger" href="../login/login.html">Log Out</a>
+
+                        <button class="profile-button profile-button-danger"
+                            id="logoutButton" type="button">
+                            Log Out
+                        </button>
+
                     </div>
-                    <p class="profile-edit-message" id="profileEditMessage" aria-live="polite"></p>
+
+                    <p class="profile-edit-message"
+                        id="profileEditMessage" aria-live="polite"></p>
                 </section>
 
-                <footer class="profile-footer">© 2026 BarangayPay <span>Digital Barangay Services</span></footer>
+                <footer class="profile-footer">
+                    © 2026 BarangayPay
+                    <span>Digital Barangay Services</span>
+                </footer>
+
             </div>
         </main>
     </div>
+
+    <!-- Load Supabase before the profile logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
     <script src="profile.js"></script>
+
+    <!-- Sidebar sign-out uses the same Supabase session -->
+    <script>
+        document.getElementById("sidebarLogoutButton")
+            ?.addEventListener("click", async function (event) {
+                event.preventDefault();
+
+                const { error } = await supabaseClient.auth.signOut();
+
+                if (error) {
+                    console.error("Sign out failed:", error);
+                    alert("Unable to sign out. Please try again.");
+                    return;
+                }
+
+                window.location.href = "../login/login.html";
+            });
+    </script>
 </body>
 </html>
