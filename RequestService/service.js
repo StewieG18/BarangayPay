@@ -1,598 +1,560 @@
-/* Request a Service - client-side validation.
-   The same rules are re-checked on the server in submit_request.php. */
 (() => {
-    'use strict';
+  'use strict';
 
-    const form = document.getElementById('serviceRequestForm');
-    if (!form) return;
+  const form = document.getElementById('serviceRequestForm');
+  if (!form) return;
 
-    const SERVICES = ['barangay-clearance', 'certificate-residency', 'certificate-indigency', 'business-clearance'];
-    const PURPOSES = ['employment', 'school', 'business', 'government', 'personal', 'other'];
-    const NAME_RE  = /^\p{L}[\p{L} .'-]*$/u;
-    const PHONE_RE = /^(09|\+639)\d{9}$/;
-    const FILE = { exts: ['pdf', 'jpg', 'jpeg', 'png'], maxMB: 5, maxFiles: 5 };
-    const MAX_DAYS_AHEAD = 90;
+  const BUCKET_NAME = 'service-requirements';
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
+  const MAX_FILES = 5;
 
-    const $   = id => document.getElementById(id);
-    const val = id => $(id).value.trim();
+  const SERVICE_IDS = {
+    'barangay-clearance': 1,
+    'certificate-residency': 2,
+    'certificate-indigency': 3,
+    'business-clearance': 4
+  };
 
-    const pad = n => String(n).padStart(2, '0');
-    const iso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-    const today = new Date();
-    const maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + MAX_DAYS_AHEAD);
-    $('preferredDate').min = iso(today);
-    $('preferredDate').max = iso(maxDate);
+  const SERVICE_NAMES = {
+    'barangay-clearance': 'Barangay Clearance',
+    'certificate-residency': 'Certificate of Residency',
+    'certificate-indigency': 'Certificate of Indigency',
+    'business-clearance': 'Business Clearance'
+  };
 
-    const serviceRequirements = {
-    'barangay-clearance': [
-        'Valid government-issued ID',
-        'Proof of residency if required'
-    ],
-    'certificate-residency': [
-        'Valid government-issued ID',
-        'Proof of residency/address if required'
-    ],
-    'certificate-indigency': [
-        'Valid government-issued ID',
-        'Proof of residency',
-        'Supporting document explaining the purpose, if applicable'
-    ],
-    'business-clearance': [
-        'Valid government-issued ID',
-        'DTI/SEC registration, as applicable',
-        'Proof of business address/occupancy',
-        'Other business-related permits/documents required by the barangay'
-    ]
-};
+  const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
 
-function updateRequirements() {
-    const selected = form.querySelector('input[name="service"]:checked');
-    const list = document.getElementById('requirementsList');
-    if (!selected || !serviceRequirements[selected.value]) {
-        list.innerHTML = '';
-        return;
+  let isSubmitting = false;
+
+  // Create a status message area.
+  let statusBox = document.getElementById('serviceRequestStatus');
+
+  if (!statusBox) {
+    statusBox = document.createElement('div');
+    statusBox.id = 'serviceRequestStatus';
+    statusBox.setAttribute('role', 'status');
+    statusBox.setAttribute('aria-live', 'polite');
+    statusBox.style.cssText =
+      'display:none;margin:16px 0;padding:12px 16px;' +
+      'border-radius:8px;white-space:pre-wrap;';
+
+    form.parentNode.insertBefore(statusBox, form);
+  }
+
+  function setStatus(type, message) {
+    statusBox.style.display = 'block';
+    statusBox.textContent = message;
+
+    if (type === 'success') {
+      statusBox.style.background = '#e8f7ed';
+      statusBox.style.color = '#176534';
+      statusBox.style.border = '1px solid #a8dfb8';
+    } else {
+      statusBox.style.background = '#fff0f0';
+      statusBox.style.color = '#9c2424';
+      statusBox.style.border = '1px solid #efb3b3';
     }
-    const docs = serviceRequirements[selected.value];
-    list.innerHTML = docs.map(d => `<li>${d}</li>`).join('');
-}
 
-form.querySelectorAll('input[name="service"]').forEach(radio => {
-    radio.addEventListener('change', updateRequirements);
-});
+    statusBox.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest'
+    });
+  }
 
-    const nameCheck = (id, label, required) => () => {
-        const v = val(id);
-        if (!v) return required ? `${label} is required.` : '';
-        if (v.length < 2) return `${label} must be at least 2 characters.`;
-        if (v.length > 50) return `${label} must be 50 characters or fewer.`;
-        if (!NAME_RE.test(v)) return `${label} may only contain letters, spaces, periods, hyphens and apostrophes.`;
-        return '';
+  function clearStatus() {
+    statusBox.style.display = 'none';
+    statusBox.textContent = '';
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? '').replace(/[&<>"']/g, character => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[character]);
+  }
+
+  function getValue(id) {
+    return document.getElementById(id)?.value?.trim() || '';
+  }
+
+  function getSelectedService() {
+    const selected = form.querySelector('input[type="radio"]:checked');
+    return selected ? selected.value : '';
+  }
+
+  function getSelectedFiles() {
+    return Array.from(
+      document.getElementById('requirements')?.files || []
+    );
+  }
+
+  function getFormDetails() {
+    const serviceValue = getSelectedService();
+
+    return {
+      serviceValue,
+      serviceName: SERVICE_NAMES[serviceValue] || serviceValue,
+      firstName: getValue('firstName'),
+      lastName: getValue('lastName'),
+      middleName: getValue('middleName'),
+      contactNumber: getValue('contactNumber'),
+      address: getValue('address'),
+      purpose: getValue('purpose'),
+      preferredDate: getValue('preferredDate'),
+      requestNotes: getValue('requestNotes'),
+      files: getSelectedFiles()
     };
+  }
 
-    const fields = {
-        service: {
-            anchor: () => form.querySelector('.service-selection'),
-            check: () => {
-                const c = form.querySelector('input[name="service"]:checked');
-                if (!c) return 'Please select a service.';
-                return SERVICES.includes(c.value) ? '' : 'The selected service is not valid.';
-            }
-        },
-        firstName:  { anchor: () => $('firstName').closest('.form-group'),  check: nameCheck('firstName', 'First name', true) },
-        lastName:   { anchor: () => $('lastName').closest('.form-group'),   check: nameCheck('lastName', 'Last name', true) },
-        middleName: { anchor: () => $('middleName').closest('.form-group'), check: nameCheck('middleName', 'Middle name', false) },
-        contactNumber: {
-            anchor: () => $('contactNumber').closest('.form-group'),
-            check: () => {
-                const v = val('contactNumber').replace(/[\s\-()]/g, '');
-                if (!v) return 'Contact number is required.';
-                return PHONE_RE.test(v) ? '' : 'Enter a valid mobile number, e.g. 0917 123 4567 or +63 917 123 4567.';
-            }
-        },
-        address: {
-            anchor: () => $('address').closest('.form-group'),
-            check: () => {
-                const v = val('address');
-                if (!v) return 'Address is required.';
-                if (v.length < 10) return 'Please enter your complete address (at least 10 characters).';
-                return v.length > 255 ? 'Address must be 255 characters or fewer.' : '';
-            }
-        },
-        purpose: {
-            anchor: () => $('purpose').closest('.form-group'),
-            check: () => {
-                const v = $('purpose').value;
-                if (!v) return 'Please select a purpose.';
-                return PURPOSES.includes(v) ? '' : 'The selected purpose is not valid.';
-            }
-        },
-        preferredDate: {
-            anchor: () => $('preferredDate').closest('.form-group'),
-            check: () => {
-                const v = $('preferredDate').value;
-                if (!v) return 'Please choose a valid preferred date.';
-                if (v < iso(today)) return 'Preferred date cannot be in the past.';
-                if (v > iso(maxDate)) return `Preferred date must be within ${MAX_DAYS_AHEAD} days from today.`;
-                return '';
-            }
-        },
-        requestNotes: {
-            anchor: () => $('requestNotes').closest('.form-group'),
-            check: () => val('requestNotes').length > 500 ? 'Additional information must be 500 characters or fewer.' : ''
-        },
-        requirements: {
-            anchor: () => form.querySelector('.upload-area'),
-            check: () => {
-                const files = Array.from($('requirements').files);
-                if (!files.length) return 'Please upload at least one supporting document.';
-                if (files.length > FILE.maxFiles) return `You can upload up to ${FILE.maxFiles} files.`;
-                for (const f of files) {
-                    const ext = f.name.split('.').pop().toLowerCase();
-                    if (!FILE.exts.includes(ext)) return `"${f.name}" is not an accepted format (PDF, JPG, JPEG, PNG).`;
-                    if (f.size === 0) return `"${f.name}" is empty.`;
-                    if (f.size > FILE.maxMB * 1024 * 1024) return `"${f.name}" is larger than ${FILE.maxMB} MB.`;
-                }
-                return '';
-            }
-        },
-        confirmInformation: {
-            anchor: () => form.querySelector('.confirmation-checkbox'),
-            check: () => $('confirmInformation').checked ? '' : 'Please confirm that your information is accurate.'
-        }
-    };
+  function validateForm(details) {
+    const errors = [];
 
-    /* ---------- error display ---------- */
-    function showError(key, msg) {
-        const anchor = fields[key].anchor();
-        const old = form.querySelector(`.field-error[data-for="${key}"]`);
-        if (old) old.remove();
-        anchor.classList.toggle('has-error', !!msg);
-        if (!msg) return;
-        const p = document.createElement('p');
-        p.className = 'field-error';
-        p.dataset.for = key;
-        p.setAttribute('role', 'alert');
-        p.textContent = msg;
-        anchor.classList.contains('form-group') ? anchor.appendChild(p) : anchor.after(p);
+    if (!SERVICE_IDS[details.serviceValue]) {
+      errors.push('Please select a valid service.');
     }
 
-    const validateField = key => { const m = fields[key].check(); showError(key, m); return !m; };
-
-    function validateAll() {
-        let firstBad = null;
-        for (const key of Object.keys(fields)) {
-            if (!validateField(key) && !firstBad) firstBad = key;
-        }
-        return firstBad;
+    if (!details.firstName) {
+      errors.push('Please enter your first name.');
     }
 
-    function focusField(key) {
-        const target = key === 'service' ? form.querySelector('input[name="service"]')
-                     : key === 'requirements' ? form.querySelector('.upload-button')
-                     : $(key);
-        const box = fields[key].anchor();
-        box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        if (target && key !== 'requirements') target.focus({ preventScroll: true });
+    if (!details.lastName) {
+      errors.push('Please enter your last name.');
     }
 
-    /* ---------- status banner ---------- */
-    const status = document.createElement('div');
-    status.className = 'form-status';
-    status.hidden = true;
-    status.setAttribute('role', 'status');
-    form.prepend(status);
-
-    function setStatus(type, msg) {
-        status.hidden = !msg;
-        status.className = `form-status ${type || ''}`;
-        status.textContent = msg || '';
-        if (msg) status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (!details.contactNumber) {
+      errors.push('Please enter your contact number.');
     }
 
-    /* ---------- live validation ---------- */
-    Object.keys(fields).forEach(key => {
-        const els = key === 'service' ? form.querySelectorAll('input[name="service"]') : [$(key)];
-        els.forEach(el => {
-            el.addEventListener('change', () => validateField(key));
-            if (['INPUT', 'TEXTAREA'].includes(el.tagName) && !['checkbox', 'file', 'radio'].includes(el.type)) {
-                el.addEventListener('blur', () => { el.value = el.value.trim(); validateField(key); });
-                el.addEventListener('input', () => {
-                    if (fields[key].anchor().classList.contains('has-error')) validateField(key);
-                });
-            }
-        });
+    if (!details.address) {
+      errors.push('Please enter your address.');
+    }
+
+    if (!details.purpose) {
+      errors.push('Please select the purpose of your request.');
+    }
+
+    const confirmation =
+      document.getElementById('confirmInformation');
+
+    if (!confirmation?.checked) {
+      errors.push('Please confirm that your information is correct.');
+    }
+
+    if (details.files.length === 0) {
+      errors.push('Please upload at least one requirement.');
+    }
+
+    if (details.files.length > MAX_FILES) {
+      errors.push(`You can upload a maximum of ${MAX_FILES} files.`);
+    }
+
+    details.files.forEach(file => {
+      const extension = file.name.split('.').pop().toLowerCase();
+
+      if (!allowedExtensions.includes(extension)) {
+        errors.push(
+          `${file.name}: only PDF, JPG, JPEG, and PNG files are allowed.`
+        );
+      }
+
+      if (file.size > MAX_FILE_SIZE) {
+        errors.push(`${file.name}: the maximum file size is 5 MB.`);
+      }
+
+      if (file.size === 0) {
+        errors.push(`${file.name}: the file is empty.`);
+      }
     });
 
-    /* ---------- file list + drag and drop ---------- */
-    const upload = form.querySelector('.upload-area');
-    const list = document.createElement('ul');
-    list.className = 'file-list';
-    upload.appendChild(list);
+    return errors;
+  }
 
-    const renderFiles = () => {
-        list.innerHTML = '';
-        Array.from($('requirements').files).forEach(f => {
-            const li = document.createElement('li');
-            li.textContent = `${f.name} (${(f.size / 1024 / 1024).toFixed(2)} MB)`;
-            list.appendChild(li);
-        });
-    };
-    $('requirements').addEventListener('change', renderFiles);
+  // Create a confirmation modal.
+  const modalStyles = document.createElement('style');
 
-    ['dragenter', 'dragover'].forEach(ev => upload.addEventListener(ev, e => {
-        e.preventDefault(); upload.classList.add('dragover');
-    }));
-    ['dragleave', 'drop'].forEach(ev => upload.addEventListener(ev, e => {
-        e.preventDefault(); upload.classList.remove('dragover');
-    }));
-    upload.addEventListener('drop', e => {
-        if (!e.dataTransfer.files.length) return;
-        $('requirements').files = e.dataTransfer.files;
-        renderFiles();
-        validateField('requirements');
-    });
+  modalStyles.textContent = `
+    .bp-confirm-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0, 0, 0, 0.58);
+    }
 
-       /* ---------- confirmation modal (self-contained) ---------- */
-    const SERVICE_NAMES = {
-        'barangay-clearance': 'Barangay Clearance',
-        'certificate-residency': 'Certificate of Residency',
-        'certificate-indigency': 'Certificate of Indigency',
-        'business-clearance': 'Barangay Business Clearance'
-    };
-    const PURPOSE_NAMES = {
-        employment: 'Employment',
-        school: 'School / Education',
-        business: 'Business',
-        government: 'Government Requirement',
-        personal: 'Personal',
-        other: 'Other'
-    };
+    .bp-confirm-overlay[hidden] {
+      display: none !important;
+    }
 
-    // Styles
-    const modalStyle = document.createElement('style');
-    modalStyle.textContent = `
-        .cm-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            background: rgba(15, 23, 42, 0.55);
-            overscroll-behavior: contain;   /* add this */
-        }
-        .cm-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            background: rgba(15, 23, 42, 0.55);
-        }
-        .cm-overlay.open { display: flex; }
-        .cm-dialog {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 640px;
-            max-height: 90vh;
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
-        }
-        .cm-header {
-            display: flex;
-            justify-content: space-between;
-            gap: 16px;
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        .cm-header h2 { margin: 0 0 4px; font-size: 20px; }
-        .cm-header p { margin: 0; color: #6b7280; font-size: 14px; }
-        .cm-close {
-            align-self: flex-start;
-            width: 32px;
-            height: 32px;
-            border: 0;
-            border-radius: 8px;
-            background: transparent;
-            font-size: 24px;
-            line-height: 1;
-            cursor: pointer;
-        }
-        .cm-close:hover { background: #f3f4f6; }
-        .cm-body { padding: 8px 24px 16px; overflow-y: auto; }
-        .cm-group { padding: 14px 0; border-bottom: 1px solid #f0f1f3; }
-        .cm-group:last-child { border-bottom: 0; }
-        .cm-group h3 {
-            margin: 0 0 10px;
-            font-size: 12px;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: #6b7280;
-        }
-        .cm-row {
-            display: grid;
-            grid-template-columns: 170px 1fr;
-            gap: 12px;
-            padding: 6px 0;
-            font-size: 14px;
-        }
-        .cm-row span { color: #6b7280; }
-        .cm-row strong { font-weight: 600; word-break: break-word; white-space: pre-wrap; }
-        .cm-files { margin: 0; padding-left: 18px; font-size: 14px; }
-        .cm-files li { padding: 3px 0; word-break: break-all; }
-        .cm-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            padding: 16px 24px;
-            border-top: 1px solid #e5e7eb;
-            background: #f9fafb;
-        }
-        .cm-btn { cursor: pointer; font: inherit; }
-        .cm-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        @media (max-width: 520px) {
-            .cm-row { grid-template-columns: 1fr; gap: 2px; }
-            .cm-footer { flex-direction: column-reverse; }
-            .cm-footer > * { width: 100%; }
-        }
+    .bp-confirm-dialog {
+      width: 100%;
+      max-width: 540px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 24px;
+      border-radius: 14px;
+      background: #fff;
+      color: #202020;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .bp-confirm-dialog h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+
+    .bp-confirm-details {
+      margin: 18px 0;
+      padding: 14px;
+      background: #f5f7fa;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .bp-confirm-details p {
+      margin: 8px 0;
+    }
+
+    .bp-confirm-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .bp-confirm-actions button {
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .bp-confirm-actions button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #bpCancelSubmit {
+      background: #e8e8e8;
+      color: #222;
+    }
+
+    #bpConfirmSubmit {
+      background: #176b45;
+      color: white;
+    }
+  `;
+
+  document.head.appendChild(modalStyles);
+
+  // Remove any old modal created by the previous service.js.
+  document.getElementById('confirmModal')?.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'confirmModal';
+  modal.className = 'bp-confirm-overlay';
+  modal.hidden = true;
+
+  modal.innerHTML = `
+    <section
+      class="bp-confirm-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="bpConfirmTitle"
+    >
+      <h2 id="bpConfirmTitle">Confirm Service Request</h2>
+      <p>Please review your information before submitting.</p>
+
+      <div class="bp-confirm-details" id="bpConfirmDetails"></div>
+
+      <p>
+        By confirming, you agree to submit this information
+        to BarangayPay for processing.
+      </p>
+
+      <div class="bp-confirm-actions">
+        <button type="button" id="bpCancelSubmit">
+          Go Back
+        </button>
+        <button type="button" id="bpConfirmSubmit">
+          Confirm &amp; Submit
+        </button>
+      </div>
+    </section>
+  `;
+
+  document.body.appendChild(modal);
+
+  const detailsBox = modal.querySelector('#bpConfirmDetails');
+  const confirmButton = modal.querySelector('#bpConfirmSubmit');
+  const cancelButton = modal.querySelector('#bpCancelSubmit');
+
+  function closeModal() {
+    modal.hidden = true;
+  }
+
+  function openModal(details) {
+    const fullName = [
+      details.firstName,
+      details.middleName,
+      details.lastName
+    ].filter(Boolean).join(' ');
+
+    detailsBox.innerHTML = `
+      <p><strong>Service:</strong> ${escapeHTML(details.serviceName)}</p>
+      <p><strong>Name:</strong> ${escapeHTML(fullName)}</p>
+      <p><strong>Contact:</strong> ${escapeHTML(details.contactNumber)}</p>
+      <p><strong>Address:</strong> ${escapeHTML(details.address)}</p>
+      <p><strong>Purpose:</strong> ${escapeHTML(details.purpose)}</p>
+      <p><strong>Preferred date:</strong>
+        ${escapeHTML(details.preferredDate || 'Not specified')}
+      </p>
+      <p><strong>Notes:</strong>
+        ${escapeHTML(details.requestNotes || 'None')}
+      </p>
+      <p><strong>Requirements:</strong>
+        ${details.files.map(file => escapeHTML(file.name)).join(', ')}
+      </p>
     `;
-    document.head.appendChild(modalStyle);
 
-    // Markup (removes any older modal left from earlier attempts)
-    document.getElementById('confirmModal')?.remove();
+    clearStatus();
+    modal.hidden = false;
+    cancelButton.focus();
+  }
 
-    const modal = document.createElement('div');
-    modal.id = 'confirmModal';
-    modal.className = 'cm-overlay';
-    modal.innerHTML = `
-        <div class="cm-dialog" role="dialog" aria-modal="true" aria-labelledby="cmTitle">
-            <div class="cm-header">
-                <div>
-                    <h2 id="cmTitle">Confirm Your Request</h2>
-                    <p>Please review your details before submitting.</p>
-                </div>
-                <button type="button" class="cm-close" id="cmClose" aria-label="Close">×</button>
-            </div>
-            <div class="cm-body" id="cmBody"></div>
-            <div class="cm-footer">
-                <button type="button" class="secondary-button cm-btn" id="cmEdit">Edit Details</button>
-                <button type="button" class="primary-button cm-btn" id="cmConfirm">Confirm &amp; Submit</button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modal);
+  cancelButton.addEventListener('click', closeModal);
 
-    const modalBody  = modal.querySelector('#cmBody');
-    const confirmBtn = modal.querySelector('#cmConfirm');
-    let lastFocused  = null;
+  modal.addEventListener('click', event => {
+    if (event.target === modal) closeModal();
+  });
 
-    const formatDate = v => {
-        const d = new Date(`${v}T00:00:00`);
-        return Number.isNaN(d.getTime())
-            ? v
-            : d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !modal.hidden && !isSubmitting) {
+      closeModal();
+    }
+  });
+
+  // Preserve service selection from links such as
+  // service.html?service=barangay-clearance.
+  const params = new URLSearchParams(window.location.search);
+  const requestedService = params.get('service');
+
+  if (requestedService && SERVICE_IDS[requestedService]) {
+    const radio = Array.from(
+      form.querySelectorAll('input[type="radio"]')
+    ).find(input => input.value === requestedService);
+
+    if (radio) {
+      radio.checked = true;
+      radio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+  // Validate first; do not send anything until the resident confirms.
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+
+    if (isSubmitting) return;
+
+    const details = getFormDetails();
+    const errors = validateForm(details);
+
+    if (errors.length) {
+      setStatus('error', errors.join('\n'));
+      return;
+    }
+
+    openModal(details);
+  });
+
+  function generateRequestCode() {
+    const randomPart = (
+      window.crypto?.randomUUID?.() ||
+      Math.random().toString(36).slice(2) +
+      Math.random().toString(36).slice(2)
+    ).replace(/-/g, '').slice(0, 8).toUpperCase();
+
+    return `BP-${Date.now()}-${randomPart}`;
+  }
+
+  function getContentType(file) {
+    const extension = file.name.split('.').pop().toLowerCase();
+
+    const contentTypes = {
+      pdf: 'application/pdf',
+      jpg: 'image/jpeg',
+      jpeg: 'image/jpeg',
+      png: 'image/png'
     };
 
-    const formatSize = bytes =>
-        bytes >= 1048576
-            ? `${(bytes / 1048576).toFixed(2)} MB`
-            : `${Math.max(1, Math.round(bytes / 1024))} KB`;
+    return contentTypes[extension] || file.type;
+  }
 
-    function addGroup(title, rows) {
-        const group = document.createElement('section');
-        group.className = 'cm-group';
+  function safeFileName(name) {
+    return name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  }
 
-        const h = document.createElement('h3');
-        h.textContent = title;
-        group.appendChild(h);
+  confirmButton.addEventListener('click', async () => {
+    if (isSubmitting) return;
 
-        rows.forEach(([label, value]) => {
-            const row = document.createElement('div');
-            row.className = 'cm-row';
+    const details = getFormDetails();
+    const errors = validateForm(details);
 
-            const l = document.createElement('span');
-            l.textContent = label;
-
-            const v = document.createElement('strong');
-            v.textContent = value || 'Not provided';
-
-            row.append(l, v);
-            group.appendChild(row);
-        });
-
-        modalBody.appendChild(group);
+    if (errors.length) {
+      closeModal();
+      setStatus('error', errors.join('\n'));
+      return;
     }
 
-    function buildSummary() {
-        modalBody.replaceChildren();
+    const client = window.supabaseClient;
 
-        const service  = form.querySelector('input[name="service"]:checked').value;
-        const fullName = [val('firstName'), val('middleName'), val('lastName')]
-            .filter(Boolean).join(' ');
-
-        addGroup('Service', [
-            ['Requested Service', SERVICE_NAMES[service] || service]
-        ]);
-
-        addGroup('Applicant Information', [
-            ['Full Name', fullName],
-            ['Contact Number', val('contactNumber')],
-            ['Address', val('address')]
-        ]);
-
-        addGroup('Request Details', [
-            ['Purpose', PURPOSE_NAMES[$('purpose').value] || $('purpose').value],
-            ['Preferred Date', formatDate($('preferredDate').value)],
-            ['Additional Information', val('requestNotes')]
-        ]);
-
-        const files = Array.from($('requirements').files);
-        const fileGroup = document.createElement('section');
-        fileGroup.className = 'cm-group';
-
-        const h = document.createElement('h3');
-        h.textContent = 'Uploaded Documents';
-        fileGroup.appendChild(h);
-
-        const ul = document.createElement('ul');
-        ul.className = 'cm-files';
-        files.forEach(f => {
-            const li = document.createElement('li');
-            li.textContent = `${f.name} (${formatSize(f.size)})`;
-            ul.appendChild(li);
-        });
-        fileGroup.appendChild(ul);
-        modalBody.appendChild(fileGroup);
+    if (!client) {
+      closeModal();
+      setStatus(
+        'error',
+        'Supabase is not initialized. Check the script tags in service.html and your js/supabase.js file.'
+      );
+      return;
     }
 
-    function openModal() {
-        lastFocused = document.activeElement;
-        buildSummary();
-        modal.classList.add('open');
-        confirmBtn.disabled = false;
-        confirmBtn.textContent = 'Confirm & Submit';
-        confirmBtn.focus();
-    }
+    isSubmitting = true;
+    confirmButton.disabled = true;
+    cancelButton.disabled = true;
+    confirmButton.textContent = 'Submitting...';
 
-    function closeModal() {
-        modal.classList.remove('open');
-        if (lastFocused) lastFocused.focus();
-    }
+    const uploadedPaths = [];
 
-    const tryClose = () => { if (!confirmBtn.disabled) closeModal(); };
+    try {
+      // 1. Confirm that the resident is logged in.
+      const {
+        data: { user },
+        error: authError
+      } = await client.auth.getUser();
 
-    modal.querySelector('#cmClose').addEventListener('click', tryClose);
-    modal.querySelector('#cmEdit').addEventListener('click', tryClose);
-    modal.addEventListener('click', e => { if (e.target === modal) tryClose(); });
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && modal.classList.contains('open')) tryClose();
-    });
+      if (authError) throw authError;
 
-    /* ---------- submit ---------- */
-    // Step 1: validate, then show the confirmation modal
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        setStatus('', '');
+      if (!user) {
+        throw new Error(
+          'You must log in before submitting a service request. Please log in and try again.'
+        );
+      }
 
-        const firstBad = validateAll();
-        if (firstBad) {
-            setStatus('error', 'Please fix the highlighted fields and try again.');
-            focusField(firstBad);
-            return;
+      const requestCode = generateRequestCode();
+
+      // 2. Upload the files to the private Storage bucket.
+      for (let index = 0; index < details.files.length; index++) {
+        const file = details.files[index];
+
+        const uniqueName =
+          `${Date.now()}-${index}-${safeFileName(file.name)}`;
+
+        // The first folder must be the authenticated user's UUID.
+        const storagePath =
+          `${user.id}/${requestCode}/${uniqueName}`;
+
+        const { error: uploadError } = await client.storage
+          .from(BUCKET_NAME)
+          .upload(storagePath, file, {
+            cacheControl: '3600',
+            upsert: false,
+            contentType: getContentType(file)
+          });
+
+        if (uploadError) {
+          throw new Error(
+            `Could not upload "${file.name}": ${uploadError.message}`
+          );
         }
 
-        openModal();
-    });
+        uploadedPaths.push(storagePath);
+      }
 
-    // Step 2: the user confirmed, so send the request
-    confirmBtn.addEventListener('click', async () => {
-        confirmBtn.disabled = true;
-        confirmBtn.textContent = 'Submitting...';
+      // 3. Save the form's extra details in remarks because
+      //    the current service_requests schema has no separate
+      //    columns for name, contact, purpose, or file paths.
+      const fullName = [
+        details.firstName,
+        details.middleName,
+        details.lastName
+      ].filter(Boolean).join(' ');
 
+      const remarks = [
+        `Resident name: ${fullName}`,
+        `Contact number: ${details.contactNumber}`,
+        `Address: ${details.address}`,
+        `Purpose: ${details.purpose}`,
+        `Preferred date: ${details.preferredDate || 'Not specified'}`,
+        `Additional notes: ${details.requestNotes || 'None'}`,
+        '',
+        'Uploaded requirement paths:',
+        ...uploadedPaths.map(path => `- ${path}`)
+      ].join('\n');
+
+      // 4. Insert the request into Supabase.
+      // submitted_at and updated_at use their database defaults.
+      const { error: insertError } = await client
+        .from('service_requests')
+        .insert({
+          request_code: requestCode,
+          resident_id: user.id,
+          service_id: SERVICE_IDS[details.serviceValue],
+          status: 'pending',
+          payment_status: 'unpaid',
+          remarks: remarks
+        });
+
+      if (insertError) throw insertError;
+
+      // 5. The request was saved successfully.
+      closeModal();
+      form.reset();
+
+      setStatus(
+        'success',
+        `Your service request was submitted successfully!\n` +
+        `Request code: ${requestCode}\n` +
+        `Status: Pending\n` +
+        `Payment: Unpaid`
+      );
+
+    } catch (error) {
+      // If upload or database insertion fails, try to remove
+      // any files uploaded for this unsuccessful request.
+      if (uploadedPaths.length > 0) {
         try {
-            const res  = await fetch(form.action, { method: 'POST', body: new FormData(form) });
-            const data = await res.json();
-
-            closeModal();
-
-            if (data.success) {
-                form.reset();
-                renderFiles();
-                Object.keys(fields).forEach(k => showError(k, ''));
-                form.dispatchEvent(new Event('change'));
-                setStatus('success', data.message || 'Your request was submitted.');
-            } else {
-                Object.entries(data.errors || {}).forEach(([k, m]) => fields[k] && showError(k, m));
-                setStatus('error', data.message || 'Some information is not valid. Please review the form.');
-                const bad = Object.keys(data.errors || {}).find(k => fields[k]);
-                if (bad) focusField(bad);
-            }
-        } catch (err) {
-            closeModal();
-            setStatus('error', 'Could not reach the server. Please try again later.');
-        } finally {
-            confirmBtn.disabled = false;
-            confirmBtn.textContent = 'Confirm & Submit';
+          await client.storage
+            .from(BUCKET_NAME)
+            .remove(uploadedPaths);
+        } catch (cleanupError) {
+          console.error('Storage cleanup failed:', cleanupError);
         }
-    });
+      }
 
-        // ...existing code...
-    
-    (() => {
-        const form = document.getElementById('serviceRequestForm');
-        const steps = [...document.querySelectorAll('.request-steps .request-step')];
-        const lines = [...document.querySelectorAll('.request-steps .step-line')];
-    
-        if (!form || steps.length !== 4) return;
-    
-        const checks = [
-            () => Boolean(form.querySelector('[name="service"]:checked')),
-            () => ['firstName', 'lastName', 'contactNumber', 'address', 'purpose']
-                .every(id => form.querySelector(`#${id}`)?.value.trim()),
-            () => (form.querySelector('#requirements')?.files.length ?? 0) > 0,
-            () => Boolean(form.querySelector('#confirmInformation')?.checked)
-        ];
-    
-        const updateSteps = () => {
-            const completed = checks.map(check => check());
-            const current = completed.findIndex(done => !done);
-    
-            steps.forEach((step, index) => {
-                const isComplete = completed[index];
-                const number = step.querySelector('.step-number');
-    
-                step.classList.toggle('completed', isComplete);
-                step.classList.toggle('active', index === current);
-    
-                if (number) number.textContent = isComplete ? '✓' : String(index + 1);
-    
-                if (isComplete) {
-                    step.setAttribute('aria-label', `Step ${index + 1} completed`);
-                } else {
-                    step.removeAttribute('aria-label');
-                }
-            });
-    
-            lines.forEach((line, index) => {
-                line.classList.toggle('completed', completed[index]);
-            });
-        };
-    
-        form.addEventListener('input', updateSteps);
-        form.addEventListener('change', updateSteps);
-        updateSteps();
-    })();
-    
-    // ...existing code...
+      closeModal();
+
+      console.error('Service request submission failed:', error);
+
+      const message = error?.message || 'An unexpected error occurred.';
+
+      setStatus(
+        'error',
+        `Your request could not be submitted.\n${message}\n\n` +
+        'Please check your login, Supabase policies, bucket settings, and database schema before trying again.'
+      );
+
+    } finally {
+      isSubmitting = false;
+      confirmButton.disabled = false;
+      cancelButton.disabled = false;
+      confirmButton.textContent = 'Confirm & Submit';
+    }
+  });
 
 })();
-
-// Pre-select the service chosen on services.html
-document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-    const selectedService = params.get("service");
-
-    if (!selectedService) return;
-
-    const radio = document.querySelector(
-        `input[name="service"][value="${CSS.escape(selectedService)}"]`
-    );
-
-    if (!radio) return; // unknown value, leave the form untouched
-
-    radio.checked = true;
-
-    // Fires any existing "change" logic, such as the requirements list
-    radio.dispatchEvent(new Event("change", { bubbles: true }));
-
-    radio.closest(".service-option")?.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-});
