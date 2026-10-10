@@ -366,7 +366,7 @@
         <!-- SIGN OUT -->
         <div class="staff-sidebar-bottom">
 
-            <a href="../login/login.html" class="staff-signout">
+            <a href="/login/login.html" class="staff-signout">
 
                 <span class="nav-icon">↪</span>
 
@@ -460,7 +460,7 @@
 
                     <div class="dropdown-divider"></div>
 
-                    <a href="../login/login.html">
+                    <a href="/login/login.html">
                         Sign Out
                     </a>
 
@@ -517,8 +517,8 @@
                         Total Documents
                     </span>
 
-                    <strong>
-                        156
+                    <strong id="totalDocuments">
+                        0
                     </strong>
 
                 </div>
@@ -530,8 +530,8 @@
                         Pending Generation
                     </span>
 
-                    <strong>
-                        8
+                    <strong id="pendingDocuments">
+                        0
                     </strong>
 
                 </div>
@@ -543,8 +543,8 @@
                         Ready for Release
                     </span>
 
-                    <strong>
-                        14
+                    <strong id="readyDocuments">
+                        0
                     </strong>
 
                 </div>
@@ -556,8 +556,8 @@
                         Released
                     </span>
 
-                    <strong>
-                        126
+                    <strong id="releasedDocuments">
+                        0
                     </strong>
 
                 </div>
@@ -569,8 +569,8 @@
                         Archived
                     </span>
 
-                    <strong>
-                        8
+                    <strong id="archivedDocuments">
+                        0
                     </strong>
 
                 </div>
@@ -703,468 +703,9 @@
 
 
                         <tbody id="documentsTableBody">
-
-
-                            <!-- DOCUMENT 1 -->
-                            <tr
-                                data-type="Barangay Clearance"
-                                data-status="Ready for Release"
-                            >
-
-                                <td>
-                                    <strong class="document-id">
-                                        DOC-2026-00124
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
-                                    <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            JD
-                                        </div>
-
-                                        <div>
-
-                                            <strong>
-                                                Juan Dela Cruz
-                                            </strong>
-
-                                            <span>
-                                                RES-00124
-                                            </span>
-
-                                        </div>
-
-                                    </div>
-
-                                </td>
-
-
-                                <td>
-                                    Barangay Clearance
-                                </td>
-
-
-                                <td>
-                                    BP-2026-00124
-                                </td>
-
-
-                                <td>
-                                    Oct 4, 2026
-                                </td>
-
-
-                                <td>
-
-                                    <span class="document-status ready">
-                                        Ready for Release
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <a
-                                        href="#"
-                                        class="view-button"
-                                    >
-                                        View
-                                    </a>
-
-                                </td>
-
+                            <tr>
+                                <td colspan="7">Loading documents...</td>
                             </tr>
-
-
-
-                            <!-- DOCUMENT 2 -->
-                            <tr
-                                data-type="Certificate of Residency"
-                                data-status="Released"
-                            >
-
-                                <td>
-                                    <strong class="document-id">
-                                        DOC-2026-00123
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
-                                    <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            MS
-                                        </div>
-
-                                        <div>
-
-                                            <strong>
-                                                Maria Santos
-                                            </strong>
-
-                                            <span>
-                                                RES-00123
-                                            </span>
-
-                                        </div>
-
-                                    </div>
-
-                                </td>
-
-
-                                <td>
-                                    Certificate of Residency
-                                </td>
-
-
-                                <td>
-                                    BP-2026-00123
-                                </td>
-
-
-                                <td>
-                                    Oct 4, 2026
-                                </td>
-
-
-                                <td>
-
-                                    <span class="document-status released">
-                                        Released
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <a
-                                        href="#"
-                                        class="view-button"
-                                    >
-                                        View
-                                    </a>
-
-                                </td>
-
-                            </tr>
-
-
-
-                            <!-- DOCUMENT 3 -->
-                            <tr
-                                data-type="Certificate of Indigency"
-                                data-status="Released"
-                            >
-
-                                <td>
-                                    <strong class="document-id">
-                                        DOC-2026-00122
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
-                                    <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            PR
-                                        </div>
-
-                                        <div>
-
-                                            <strong>
-                                                Pedro Reyes
-                                            </strong>
-
-                                            <span>
-                                                RES-00122
-                                            </span>
-
-                                        </div>
-
-                                    </div>
-
-                                </td>
-
-
-                                <td>
-                                    Certificate of Indigency
-                                </td>
-
-
-                                <td>
-                                    BP-2026-00122
-                                </td>
-
-
-                                <td>
-                                    Oct 3, 2026
-                                </td>
-
-
-                                <td>
-
-                                    <span class="document-status released">
-                                        Released
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <a
-                                        href="#"
-                                        class="view-button"
-                                    >
-                                        View
-                                    </a>
-
-                                </td>
-
-                            </tr>
-
-
-
-                            <!-- DOCUMENT 4 -->
-                            <tr
-                                data-type="Business Clearance"
-                                data-status="Pending Generation"
-                            >
-
-                                <td>
-                                    <strong class="document-id">
-                                        DOC-2026-00121
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
-                                    <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            AG
-                                        </div>
-
-                                        <div>
-
-                                            <strong>
-                                                Ana Garcia
-                                            </strong>
-
-                                            <span>
-                                                RES-00121
-                                            </span>
-
-                                        </div>
-
-                                    </div>
-
-                                </td>
-
-
-                                <td>
-                                    Business Clearance
-                                </td>
-
-
-                                <td>
-                                    BP-2026-00121
-                                </td>
-
-
-                                <td>
-                                    —
-                                </td>
-
-
-                                <td>
-
-                                    <span class="document-status pending">
-                                        Pending Generation
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <a
-                                        href="#"
-                                        class="process-button"
-                                    >
-                                        Process
-                                    </a>
-
-                                </td>
-
-                            </tr>
-
-
-
-                            <!-- DOCUMENT 5 -->
-                            <tr
-                                data-type="Barangay Clearance"
-                                data-status="Released"
-                            >
-
-                                <td>
-                                    <strong class="document-id">
-                                        DOC-2026-00120
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
-                                    <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            RM
-                                        </div>
-
-                                        <div>
-
-                                            <strong>
-                                                Ramon Mendoza
-                                            </strong>
-
-                                            <span>
-                                                RES-00120
-                                            </span>
-
-                                        </div>
-
-                                    </div>
-
-                                </td>
-
-
-                                <td>
-                                    Barangay Clearance
-                                </td>
-
-
-                                <td>
-                                    BP-2026-00120
-                                </td>
-
-
-                                <td>
-                                    Oct 2, 2026
-                                </td>
-
-
-                                <td>
-
-                                    <span class="document-status released">
-                                        Released
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <a
-                                        href="#"
-                                        class="view-button"
-                                    >
-                                        View
-                                    </a>
-
-                                </td>
-
-                            </tr>
-
-
-
-                            <!-- DOCUMENT 6 -->
-                            <tr
-                                data-type="Certificate of Residency"
-                                data-status="Archived"
-                            >
-
-                                <td>
-                                    <strong class="document-id">
-                                        DOC-2026-00119
-                                    </strong>
-                                </td>
-
-
-                                <td>
-
-                                    <div class="resident-cell">
-
-                                        <div class="resident-avatar">
-                                            LC
-                                        </div>
-
-                                        <div>
-
-                                            <strong>
-                                                Liza Cruz
-                                            </strong>
-
-                                            <span>
-                                                RES-00119
-                                            </span>
-
-                                        </div>
-
-                                    </div>
-
-                                </td>
-
-
-                                <td>
-                                    Certificate of Residency
-                                </td>
-
-
-                                <td>
-                                    BP-2026-00119
-                                </td>
-
-
-                                <td>
-                                    Sep 28, 2026
-                                </td>
-
-
-                                <td>
-
-                                    <span class="document-status archived">
-                                        Archived
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <a
-                                        href="#"
-                                        class="view-button"
-                                    >
-                                        View
-                                    </a>
-
-                                </td>
-
-                            </tr>
-
                         </tbody>
 
                     </table>
@@ -1246,425 +787,577 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase.js"></script>
 
 
 <script>
+const client = window.supabaseClient;
 
-    /* =========================
-       DOCUMENT MODAL
-    ========================= */
+const tableBody = document.getElementById("documentsTableBody");
+const documentSearch = document.getElementById("documentSearch");
+const typeFilter = document.getElementById("typeFilter");
+const statusFilter = document.getElementById("statusFilter");
+const noResults = document.getElementById("noResults");
 
-    const documentModal =
-        document.getElementById("documentModal");
+const documentModal = document.getElementById("documentModal");
+const documentModalOverlay = document.getElementById("documentModalOverlay");
+const modalClose = document.getElementById("modalClose");
+const modalCancel = document.getElementById("modalCancel");
+const modalProcess = document.getElementById("modalProcess");
 
-    const documentModalOverlay =
-        document.getElementById("documentModalOverlay");
+let documents = [];
+let processingRequests = [];
+let selectedDocument = null;
 
-    const modalClose =
-        document.getElementById("modalClose");
+const STATUS_LABELS = {
+    pending_generation: "Pending Generation",
+    ready_for_release: "Ready for Release",
+    released: "Released",
+    archived: "Archived"
+};
 
-    const modalCancel =
-        document.getElementById("modalCancel");
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>\"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
 
-    const modalProcess =
-        document.getElementById("modalProcess");
+function residentName(request) {
+    return [
+        request.first_name,
+        request.middle_name,
+        request.last_name
+    ].filter(Boolean).join(" ") || "Unknown Resident";
+}
 
+function displayDate(value) {
+    if (!value) return "—";
 
-    const modalDocumentId =
-        document.getElementById("modalDocumentId");
+    const date = new Date(value);
 
-    const modalRequestId =
-        document.getElementById("modalRequestId");
+    return Number.isNaN(date.getTime())
+        ? "—"
+        : date.toLocaleDateString("en-PH", {
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+        });
+}
 
-    const modalDocumentType =
-        document.getElementById("modalDocumentType");
+function statusLabel(status) {
+    return STATUS_LABELS[status] || status || "Unknown";
+}
 
-    const modalDateGenerated =
-        document.getElementById("modalDateGenerated");
+function statusClass(status) {
+    return ({
+        pending_generation: "pending",
+        ready_for_release: "ready",
+        released: "released",
+        archived: "archived"
+    })[status] || "pending";
+}
 
-    const modalStatus =
-        document.getElementById("modalStatus");
+function getDocumentType(doc) {
+    return doc.document_type || doc.request?.service || "Service Document";
+}
 
-    const modalResident =
-        document.getElementById("modalResident");
+async function loadDocuments() {
+    tableBody.innerHTML =
+        '<tr><td colspan="7">Loading documents...</td></tr>';
 
-    const modalResidentId =
-        document.getElementById("modalResidentId");
+    try {
+        const { data: requestData, error: requestError } = await client
+            .from("service_requests")
+            .select(`
+                id,
+                request_code,
+                resident_id,
+                service_id,
+                service,
+                first_name,
+                middle_name,
+                last_name,
+                contact_number,
+                address,
+                document_paths,
+                status,
+                submitted_at
+            `)
+            .eq("status", "processing")
+            .order("submitted_at", { ascending: false });
 
-    const previewDocumentType =
-        document.getElementById("previewDocumentType");
+        if (requestError) throw requestError;
 
+        processingRequests = requestData || [];
 
-    let selectedRow = null;
+        
+const { data: documentData, error: documentError } = await client
+    .from("documents")
+    .select(`
+        id,
+        document_code,
+        request_id,
+        document_type,
+        status,
+        file_path,
+        generated_at,
+        released_at,
+        created_at
+    `)
+    .order("created_at", { ascending: false });
 
+if (documentError) throw documentError;
 
-    /* OPEN DOCUMENT */
+// Find requests that already have document records.
+const existingRequestIds = new Set(
+    (documentData || []).map(doc => String(doc.request_id))
+);
 
-    function openDocument(row) {
+// Fetch actual service names.
+const { data: services, error: servicesError } = await client
+    .from("services")
+    .select("id, name");
 
-        selectedRow = row;
+if (servicesError) throw servicesError;
 
+const serviceNames = new Map(
+    (services || []).map(service => [
+        String(service.id),
+        service.name
+    ])
+);
 
-        const cells = row.querySelectorAll("td");
+        // Create document records for processing requests
+        // that don't have a document yet.
+        const missingDocuments = processingRequests
+            .filter(request =>
+                !existingRequestIds.has(String(request.id))
+            )
+            .map(request => ({
+                document_code: `DOC-${request.id}-${Date.now()}`,
+                request_id: request.id,
+                document_type:
+                    serviceNames.get(String(request.service_id)) ||
+                    (typeof request.service === "string" && request.service.trim()) ||
+                    "Service Document",
+                status: "pending_generation"
+            }));
 
+        let createdDocuments = [];
 
-        const documentId =
-            cells[0].innerText.trim();
+        if (missingDocuments.length > 0) {
+            const { data: created, error: createError } = await client
+                .from("documents")
+                .insert(missingDocuments)
+                .select(`
+                    id,
+                    document_code,
+                    request_id,
+                    document_type,
+                    status,
+                    file_path,
+                    generated_at,
+                    released_at,
+                    created_at
+                `);
 
-        const residentName =
-            cells[1].querySelector("strong").innerText.trim();
+            if (createError) throw createError;
 
-        const residentId =
-            cells[1].querySelector("span").innerText.trim();
-
-        const documentType =
-            cells[2].innerText.trim();
-
-        const requestId =
-            cells[3].innerText.trim();
-
-        const dateGenerated =
-            cells[4].innerText.trim();
-
-        const status =
-            row.dataset.status;
-
-
-        modalDocumentId.innerText =
-            documentId;
-
-        modalRequestId.innerText =
-            requestId;
-
-        modalDocumentType.innerText =
-            documentType;
-
-        modalDateGenerated.innerText =
-            dateGenerated;
-
-        modalStatus.innerText =
-            status;
-
-        modalResident.innerText =
-            residentName;
-
-        modalResidentId.innerText =
-            residentId;
-
-        previewDocumentType.innerText =
-            documentType.toUpperCase();
-
-
-        /*
-            Only pending documents
-            should show Process.
-        */
-
-        if (status === "Pending Generation") {
-
-            modalProcess.style.display =
-                "inline-flex";
-
-            modalProcess.innerText =
-                "Process Document";
-
-        } else if (status === "Ready for Release") {
-
-            modalProcess.style.display =
-                "inline-flex";
-
-            modalProcess.innerText =
-                "Mark as Released";
-
-        } else {
-
-            modalProcess.style.display =
-                "none";
-
+            createdDocuments = created || [];
         }
 
-
-        documentModal.classList.add("show");
-
-        document.body.classList.add("modal-open");
-
-    }
-
-
-    /* CLOSE DOCUMENT */
-
-    function closeDocument() {
-
-        documentModal.classList.remove("show");
-
-        document.body.classList.remove("modal-open");
-
-        selectedRow = null;
-
-    }
+        // Continue using the existing rendering logic.
+        const allDocumentData = [
+            ...(documentData || []),
+            ...createdDocuments
+        ];
 
 
-    modalClose.addEventListener(
-        "click",
-        closeDocument
-    );
-
-
-    modalCancel.addEventListener(
-        "click",
-        closeDocument
-    );
-
-
-    documentModalOverlay.addEventListener(
-        "click",
-        closeDocument
-    );
-
-
-    /* ESCAPE KEY */
-
-    document.addEventListener(
-        "keydown",
-        function (event) {
-
-            if (
-                event.key === "Escape" &&
-                documentModal.classList.contains("show")
-            ) {
-
-                closeDocument();
-
-            }
-
-        }
-    );
-
-
-    /* =========================
-       VIEW BUTTONS
-    ========================= */
-
-    document.querySelectorAll(
-        ".view-button"
-    ).forEach(function (button) {
-
-        button.addEventListener(
-            "click",
-            function (event) {
-
-                event.preventDefault();
-
-                const row =
-                    button.closest("tr");
-
-                openDocument(row);
-
-            }
+        const requestMap = new Map(
+            processingRequests.map(request => [String(request.id), request])
         );
 
+            const missingRequestIds = [...new Set(
+                allDocumentData
+            .map(doc => doc.request_id)
+            .filter(id => !requestMap.has(String(id)))
+            )];
+
+        if (missingRequestIds.length) {
+            const { data: otherRequests, error: otherError } = await client
+                .from("service_requests")
+                .select(`
+                    id,
+                    request_code,
+                    resident_id,
+                    service_id,
+                    service,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    contact_number,
+                    address,
+                    document_paths,
+                    status,
+                    submitted_at
+                `)
+                .in("id", missingRequestIds);
+
+            if (otherError) throw otherError;
+
+            (otherRequests || []).forEach(request => {
+                requestMap.set(String(request.id), request);
+            });
+        }
+
+        documents = allDocumentData.map(doc => ({
+            ...doc,
+            request: requestMap.get(String(doc.request_id)) || null
+        }));
+
+        const previousType = typeFilter.value;
+        const types = [...new Set(
+            documents.map(getDocumentType).filter(Boolean)
+        )].sort((a, b) => a.localeCompare(b));
+
+        typeFilter.replaceChildren(new Option("All Document Types", "all"));
+
+        types.forEach(type => typeFilter.add(new Option(type, type)));
+
+        if (types.includes(previousType)) {
+            typeFilter.value = previousType;
+        }
+
+        updateSummary();
+        renderDocuments();
+    } catch (error) {
+        console.error("Failed to load documents:", error);
+
+        tableBody.innerHTML =
+            '<tr><td colspan="7">Could not load documents. Check the console and Supabase policies.</td></tr>';
+    }
+}
+
+function updateSummary() {
+    document.getElementById("totalDocuments").textContent =
+        documents.length;
+
+    document.getElementById("pendingDocuments").textContent =
+        documents.filter(doc => doc.status === "pending_generation").length;
+
+    document.getElementById("readyDocuments").textContent =
+        documents.filter(doc => doc.status === "ready_for_release").length;
+
+    document.getElementById("releasedDocuments").textContent =
+        documents.filter(doc => doc.status === "released").length;
+
+    document.getElementById("archivedDocuments").textContent =
+        documents.filter(doc => doc.status === "archived").length;
+}
+
+function renderDocuments() {
+    const search = documentSearch.value.trim().toLowerCase();
+    const selectedType = typeFilter.value;
+    const selectedStatus = statusFilter.value;
+
+    const filtered = documents.filter(doc => {
+        const request = doc.request || {};
+        const name = residentName(request);
+        const type = getDocumentType(doc);
+        const requestCode = request.request_code || doc.request_id;
+        const code = doc.document_code || `DOC-${doc.id}`;
+
+        const matchesSearch = [
+            code,
+            name,
+            requestCode,
+            type
+        ].some(value =>
+            String(value ?? "").toLowerCase().includes(search)
+        );
+
+        return matchesSearch &&
+            (selectedType === "all" || type === selectedType) &&
+            (selectedStatus === "all" || doc.status === selectedStatus);
     });
 
-
-    /* =========================
-       PROCESS BUTTONS
-    ========================= */
-
-    document.querySelectorAll(
-        ".process-button"
-    ).forEach(function (button) {
-
-        button.addEventListener(
-            "click",
-            function (event) {
-
-                event.preventDefault();
-
-                const row =
-                    button.closest("tr");
-
-                openDocument(row);
-
-            }
-        );
-
-    });
-
-
-    /* =========================
-       PROCESS DOCUMENT
-    ========================= */
-
-    modalProcess.addEventListener(
-        "click",
-        function () {
-
-            if (!selectedRow) {
-                return;
-            }
-
-
-            const currentStatus =
-                selectedRow.dataset.status;
-
-
-            if (
-                currentStatus ===
-                "Pending Generation"
-            ) {
-
-                const confirmed =
-                    confirm(
-                        "Generate this document?"
-                    );
-
-
-                if (!confirmed) {
-                    return;
-                }
-
-
-                /*
-                    Update document status
-                */
-
-                selectedRow.dataset.status =
-                    "Ready for Release";
-
-
-                const statusBadge =
-                    selectedRow.querySelector(
-                        ".document-status"
-                    );
-
-
-                statusBadge.className =
-                    "document-status ready";
-
-                statusBadge.innerText =
-                    "Ready for Release";
-
-
-                /*
-                    Change action button
-                */
-
-                const actionButton =
-                    selectedRow.querySelector(
-                        ".process-button"
-                    );
-
-
-                if (actionButton) {
-
-                    actionButton.className =
-                        "view-button";
-
-                    actionButton.innerText =
-                        "View";
-
-                }
-
-
-                /*
-                    Update date
-                */
-
-                const cells =
-                    selectedRow.querySelectorAll("td");
-
-                cells[4].innerText =
-                    "Oct 4, 2026";
-
-
-                /*
-                    Update modal
-                */
-
-                modalStatus.innerText =
-                    "Ready for Release";
-
-                modalDateGenerated.innerText =
-                    "Oct 4, 2026";
-
-
-                modalProcess.innerText =
-                    "Mark as Released";
-
-
-                alert(
-                    "Document generated successfully."
-                );
-
-
-            } else if (
-                currentStatus ===
-                "Ready for Release"
-            ) {
-
-                const confirmed =
-                    confirm(
-                        "Mark this document as released?"
-                    );
-
-
-                if (!confirmed) {
-                    return;
-                }
-
-
-                selectedRow.dataset.status =
-                    "Released";
-
-
-                const statusBadge =
-                    selectedRow.querySelector(
-                        ".document-status"
-                    );
-
-
-                statusBadge.className =
-                    "document-status released";
-
-                statusBadge.innerText =
-                    "Released";
-
-
-                modalStatus.innerText =
-                    "Released";
-
-
-                modalProcess.style.display =
-                    "none";
-
-
-                alert(
-                    "Document marked as released."
-                );
-
-            }
-
+    if (!filtered.length) {
+        tableBody.innerHTML =
+            '<tr><td colspan="7">No documents found.</td></tr>';
+        noResults.style.display = "none";
+        return;
+    }
+
+    tableBody.innerHTML = filtered.map(doc => {
+        const request = doc.request || {};
+        const name = residentName(request);
+        const type = getDocumentType(doc);
+        const code = doc.document_code || `DOC-${doc.id}`;
+        const requestCode = request.request_code || `Request #${doc.request_id}`;
+        const status = doc.status || "pending_generation";
+        const label = statusLabel(status);
+        const initials = name.split(/\s+/)
+            .filter(Boolean)
+            .slice(0, 2)
+            .map(part => part[0])
+            .join("")
+            .toUpperCase();
+
+        return `
+            <tr>
+                <td><strong class="document-id">${escapeHTML(code)}</strong></td>
+                <td>
+                    <div class="resident-cell">
+                        <div class="resident-avatar">${escapeHTML(initials)}</div>
+                        <div>
+                            <strong>${escapeHTML(name)}</strong>
+                            <span>${escapeHTML(request.resident_id || "Resident")}</span>
+                        </div>
+                    </div>
+                </td>
+                <td>${escapeHTML(type)}</td>
+                <td>${escapeHTML(requestCode)}</td>
+                <td>${escapeHTML(displayDate(doc.generated_at))}</td>
+                <td>
+                    <span class="document-status ${statusClass(status)}">
+                        ${escapeHTML(label)}
+                    </span>
+                </td>
+                <td>
+                    <button type="button"
+                        class="${status === "pending_generation" ? "process-button" : "view-button"}"
+                        data-document-id="${escapeHTML(doc.id)}">
+                        ${status === "pending_generation" ? "Process" : "View"}
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join("");
+
+    noResults.style.display = "none";
+}
+
+function openDocument(doc) {
+    selectedDocument = doc;
+
+    const request = doc.request || {};
+    const name = residentName(request);
+    const type = getDocumentType(doc);
+    const status = doc.status || "pending_generation";
+
+    document.getElementById("modalDocumentTitle").textContent =
+        doc.document_code || `Document #${doc.id}`;
+
+    document.getElementById("modalDocumentId").textContent =
+        doc.document_code || `DOC-${doc.id}`;
+
+    document.getElementById("modalRequestId").textContent =
+        request.request_code || `Request #${doc.request_id}`;
+
+    document.getElementById("modalDocumentType").textContent = type;
+    document.getElementById("modalDateGenerated").textContent =
+        displayDate(doc.generated_at);
+
+    document.getElementById("modalStatus").textContent =
+        statusLabel(status);
+
+    document.getElementById("modalResident").textContent = name;
+    document.getElementById("modalResidentId").textContent =
+        request.resident_id || "—";
+
+    document.getElementById("previewDocumentType").textContent =
+        type.toUpperCase();
+
+    const infoItems = document.querySelectorAll(".modal-section .modal-info-item strong");
+
+    const residentSection = document.querySelectorAll(".modal-section")[1];
+    if (residentSection) {
+        const items = residentSection.querySelectorAll(".modal-info-item strong");
+        if (items[2]) items[2].textContent = request.address || "—";
+        if (items[3]) items[3].textContent = request.contact_number || "—";
+    }
+
+    const uploadedFiles = document.getElementById("uploadedFiles");
+    uploadedFiles.innerHTML = "<p>No uploaded files listed.</p>";
+
+    modalProcess.style.display =
+        ["pending_generation", "ready_for_release"].includes(status)
+            ? "inline-flex"
+            : "none";
+
+    modalProcess.textContent =
+        status === "pending_generation"
+            ? "Generate Document"
+            : "Mark as Released";
+
+    documentModal.classList.add("show");
+    document.body.classList.add("modal-open");
+
+    void infoItems;
+}
+
+function closeDocument() {
+    documentModal.classList.remove("show");
+    document.body.classList.remove("modal-open");
+    selectedDocument = null;
+}
+
+async function processSelectedDocument() {
+    if (!selectedDocument) return;
+
+    const doc = selectedDocument;
+
+    if (doc.status === "pending_generation") {
+        const confirmed = confirm("Generate this document?");
+        if (!confirmed) return;
+
+        const { error } = await client
+            .from("documents")
+            .update({
+                status: "ready_for_release",
+                generated_at: new Date().toISOString()
+            })
+            .eq("id", doc.id);
+
+        if (error) {
+            console.error(error);
+            alert("Could not update the document. Check Supabase policies.");
+            return;
         }
+
+        alert("Document marked ready for release.");
+    } else if (doc.status === "ready_for_release") {
+        const confirmed = confirm("Mark this document as released?");
+        if (!confirmed) return;
+
+        const { error } = await client
+            .from("documents")
+            .update({
+                status: "released",
+                released_at: new Date().toISOString()
+            })
+            .eq("id", doc.id);
+
+        if (error) {
+            console.error(error);
+            alert("Could not release the document. Check Supabase policies.");
+            return;
+        }
+
+        alert("Document marked as released.");
+    }
+
+    closeDocument();
+    await loadDocuments();
+}
+
+async function generateDocumentForRequest(request) {
+    const existing = documents.find(
+        doc => String(doc.request_id) === String(request.id)
     );
 
+    if (existing) {
+        openDocument(existing);
+        return;
+    }
 
-    /* =========================
-       GENERATE DOCUMENT BUTTON
-    ========================= */
+    const type = typeof request.service === "string" && request.service.trim()
+        ? request.service.trim()
+        : `Service #${request.service_id}`;
 
-    document
-        .getElementById("generateButton")
-        .addEventListener(
-            "click",
-            function () {
+    const { data, error } = await client
+        .from("documents")
+        .insert({
+            document_code: `DOC-${request.id}-${Date.now()}`,
+            request_id: request.id,
+            document_type: type,
+            status: "pending_generation"
+        })
+        .select()
+        .single();
 
-                alert(
-                    "The document generation form will be connected here."
-                );
+    if (error) {
+        console.error(error);
+        alert("Could not create the document record. Check Supabase policies.");
+        return;
+    }
 
-            }
-        );
+    await loadDocuments();
 
+    const created = documents.find(
+        doc => String(doc.id) === String(data.id)
+    );
+
+    if (created) openDocument(created);
+}
+
+tableBody.addEventListener("click", event => {
+    const button = event.target.closest("button[data-document-id]");
+    if (!button) return;
+
+    const doc = documents.find(
+        item => String(item.id) === button.dataset.documentId
+    );
+
+    if (doc) openDocument(doc);
+});
+
+documentSearch.addEventListener("input", renderDocuments);
+typeFilter.addEventListener("change", renderDocuments);
+statusFilter.addEventListener("change", renderDocuments);
+
+modalClose.addEventListener("click", closeDocument);
+modalCancel.addEventListener("click", closeDocument);
+documentModalOverlay.addEventListener("click", closeDocument);
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && documentModal.classList.contains("show")) {
+        closeDocument();
+    }
+});
+
+modalProcess.addEventListener("click", processSelectedDocument);
+
+document.getElementById("generateButton").addEventListener("click", async () => {
+    if (!processingRequests.length) {
+        alert("There are no requests with status Processing.");
+        return;
+    }
+
+    const choices = processingRequests.map((request, index) =>
+        `${index + 1}. ${request.request_code || `Request #${request.id}`} — ${residentName(request)}`
+    ).join("\n");
+
+    const answer = prompt(
+        "Enter the number of the request to generate a document for:\n\n" + choices
+    );
+
+    if (answer === null) return;
+
+    const index = Number(answer) - 1;
+
+    if (!Number.isInteger(index) || index < 0 || index >= processingRequests.length) {
+        alert("Invalid selection.");
+        return;
+    }
+
+    await generateDocumentForRequest(processingRequests[index]);
+});
+
+statusFilter.replaceChildren(
+    new Option("All Status", "all"),
+    new Option("Pending Generation", "pending_generation"),
+    new Option("Ready for Release", "ready_for_release"),
+    new Option("Released", "released"),
+    new Option("Archived", "archived")
+);
+
+loadDocuments();
 </script>
 
 
