@@ -4,7 +4,6 @@
   const form = document.getElementById('serviceRequestForm');
   if (!form) return;
 
-  const BUCKET_NAME = 'service-requirements';
   const MAX_FILE_SIZE = 5 * 1024 * 1024;
   const MAX_FILES = 5;
 
@@ -21,6 +20,14 @@
     'certificate-indigency': 'Certificate of Indigency',
     'business-clearance': 'Business Clearance'
   };
+
+  const FEES = {
+    'barangay-clearance': 50,
+    'certificate-residency': 50,
+    'certificate-indigency': 0,
+    'business-clearance': 350
+  };
+  
 
   const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
 
@@ -136,8 +143,7 @@
       errors.push('Please select the purpose of your request.');
     }
 
-    const confirmation =
-      document.getElementById('confirmInformation');
+    const confirmation = document.getElementById('confirmInformation');
 
     if (!confirmation?.checked) {
       errors.push('Please confirm that your information is correct.');
@@ -374,33 +380,11 @@
     openModal(details);
   });
 
-  function generateRequestCode() {
-    const randomPart = (
-      window.crypto?.randomUUID?.() ||
-      Math.random().toString(36).slice(2) +
-      Math.random().toString(36).slice(2)
-    ).replace(/-/g, '').slice(0, 8).toUpperCase();
-
-    return `BP-${Date.now()}-${randomPart}`;
-  }
-
-  function getContentType(file) {
-    const extension = file.name.split('.').pop().toLowerCase();
-
-    const contentTypes = {
-      pdf: 'application/pdf',
-      jpg: 'image/jpeg',
-      jpeg: 'image/jpeg',
-      png: 'image/png'
-    };
-
-    return contentTypes[extension] || file.type;
-  }
-
   function safeFileName(name) {
-    return name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    return name.replace(/[^A-Za-z0-9._-]/g, '_');
   }
 
+  // Step 2: the user confirmed. Save the request, then go to payment.
   confirmButton.addEventListener('click', async () => {
     if (isSubmitting) return;
 
@@ -413,146 +397,86 @@
       return;
     }
 
-    const client = window.supabaseClient;
-
-    if (!client) {
-      closeModal();
-      setStatus(
-        'error',
-        'Supabase is not initialized. Check the script tags in service.html and your js/supabase.js file.'
-      );
-      return;
-    }
-
     isSubmitting = true;
     confirmButton.disabled = true;
-    cancelButton.disabled = true;
-    confirmButton.textContent = 'Submitting...';
+    confirmButton.textContent = 'Saving request...';
 
-    const uploadedPaths = [];
+    const uploaded = [];
 
     try {
-      // 1. Confirm that the resident is logged in.
-      const {
-        data: { user },
-        error: authError
-      } = await client.auth.getUser();
+      if (typeof supabaseClient === 'undefined') {
+        throw new Error('Supabase is not initialized. Check the script tags in service.html and your js/supabase.js file.');
+      }
 
-      if (authError) throw authError;
+      const client = supabaseClient;;
 
+      const { data: sessionData, error: sessionError } = await client.auth.getSession();
+      if (sessionError) throw sessionError;
+
+      const user = sessionData.session?.user;
       if (!user) {
-        throw new Error(
-          'You must log in before submitting a service request. Please log in and try again.'
-        );
+        window.location.href = '../login/login.html';
+        return;
       }
 
-      const requestCode = generateRequestCode();
+      const serviceValue = getSelectedService();
+      const amount = FEES[serviceValue] ?? 0;
 
-      // 2. Upload the files to the private Storage bucket.
-      for (let index = 0; index < details.files.length; index++) {
-        const file = details.files[index];
+      // Upload documents first: <user id>/<random folder>/<file>
+      const folder = `${user.id}/${window.crypto.randomUUID()}`;
+      const files = details.files;
 
-        const uniqueName =
-          `${Date.now()}-${index}-${safeFileName(file.name)}`;
-
-        // The first folder must be the authenticated user's UUID.
-        const storagePath =
-          `${user.id}/${requestCode}/${uniqueName}`;
-
-        const { error: uploadError } = await client.storage
-          .from(BUCKET_NAME)
-          .upload(storagePath, file, {
-            cacheControl: '3600',
-            upsert: false,
-            contentType: getContentType(file)
-          });
-
-        if (uploadError) {
-          throw new Error(
-            `Could not upload "${file.name}": ${uploadError.message}`
-          );
-        }
-
-        uploadedPaths.push(storagePath);
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const path = `${folder}/${i + 1}-${safeFileName(file.name)}`;
+        const { error } = await client.storage
+          .from('request-documents')
+          .upload(path, file, { contentType: file.type });
+        if (error) throw error;
+        uploaded.push(path);
       }
 
-      // 3. Save the form's extra details in remarks because
-      //    the current service_requests schema has no separate
-      //    columns for name, contact, purpose, or file paths.
-      const fullName = [
-        details.firstName,
-        details.middleName,
-        details.lastName
-      ].filter(Boolean).join(' ');
-
-      const remarks = [
-        `Resident name: ${fullName}`,
-        `Contact number: ${details.contactNumber}`,
-        `Address: ${details.address}`,
-        `Purpose: ${details.purpose}`,
-        `Preferred date: ${details.preferredDate || 'Not specified'}`,
-        `Additional notes: ${details.requestNotes || 'None'}`,
-        '',
-        'Uploaded requirement paths:',
-        ...uploadedPaths.map(path => `- ${path}`)
-      ].join('\n');
-
-      // 4. Insert the request into Supabase.
-      // submitted_at and updated_at use their database defaults.
-      const { error: insertError } = await client
+      const { data, error: insertError } = await client
         .from('service_requests')
         .insert({
-          request_code: requestCode,
           resident_id: user.id,
-          service_id: SERVICE_IDS[details.serviceValue],
-          status: 'pending',
-          payment_status: 'unpaid',
-          remarks: remarks
-        });
+          service: SERVICE_NAMES[serviceValue],
+          service_id: SERVICE_IDS[serviceValue],
+          first_name: details.firstName,
+          middle_name: details.middleName || null,
+          last_name: details.lastName,
+          contact_number: details.contactNumber,
+          address: details.address,
+          purpose: details.purpose,
+          preferred_date: details.preferredDate || null,
+          notes: details.requestNotes || null,
+          document_paths: uploaded,
+          amount: amount,
+          payment_status: amount > 0 ? 'unpaid' : 'not_required',
+          status: 'pending'
+        })
+        .select('id')
+        .single();
 
       if (insertError) throw insertError;
 
-      // 5. The request was saved successfully.
-      closeModal();
-      form.reset();
+      window.location.href = `../Payment/payment.html?request=${encodeURIComponent(data.id)}`;
 
-      setStatus(
-        'success',
-        `Your service request was submitted successfully!\n` +
-        `Request code: ${requestCode}\n` +
-        `Status: Pending\n` +
-        `Payment: Unpaid`
-      );
+    } catch (err) {
+      console.error('Saving the request failed:', err);
 
-    } catch (error) {
-      // If upload or database insertion fails, try to remove
-      // any files uploaded for this unsuccessful request.
-      if (uploadedPaths.length > 0) {
+      if (uploaded.length && typeof supabaseClient !== 'undefined') {
         try {
-          await client.storage
-            .from(BUCKET_NAME)
-            .remove(uploadedPaths);
+          await supabaseClient.storage.from('request-documents').remove(uploaded);
         } catch (cleanupError) {
           console.error('Storage cleanup failed:', cleanupError);
         }
       }
 
       closeModal();
-
-      console.error('Service request submission failed:', error);
-
-      const message = error?.message || 'An unexpected error occurred.';
-
-      setStatus(
-        'error',
-        `Your request could not be submitted.\n${message}\n\n` +
-        'Please check your login, Supabase policies, bucket settings, and database schema before trying again.'
-      );
-
-    } finally {
+      setStatus('error', `Could not save your request: ${err.message}`);
       isSubmitting = false;
       confirmButton.disabled = false;
-      cancelButton.disabled = false;
       confirmButton.textContent = 'Confirm & Submit';
     }
   });

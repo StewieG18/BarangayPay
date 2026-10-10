@@ -159,7 +159,7 @@
             <div class="staff-sidebar-bottom">
 
                 <a
-                    href="../login/login.html"
+                    href="../../login/login.html"
                     class="staff-navigation-item staff-logout"
                 >
 
@@ -270,7 +270,7 @@
                             Settings
                         </a>
 
-                        <a href="../login/login.html">
+                        <a href="../../login/login.html">
                             Sign Out
                         </a>
 
@@ -351,8 +351,8 @@
                         </div>
 
 
-                        <strong class="summary-card-value">
-                            12
+                        <strong class="summary-card-value" id="pendingCount">
+                            —
                         </strong>
 
 
@@ -381,8 +381,8 @@
                         </div>
 
 
-                        <strong class="summary-card-value">
-                            8
+                        <strong class="summary-card-value" id="processingCount">
+                            —
                         </strong>
 
 
@@ -411,8 +411,8 @@
                         </div>
 
 
-                        <strong class="summary-card-value">
-                            47
+                        <strong class="summary-card-value" id="completedCount">
+                            —
                         </strong>
 
 
@@ -431,7 +431,7 @@
                         <div class="summary-card-top">
 
                             <span class="summary-card-label">
-                                Total Residents
+                                Residents with Requests
                             </span>
 
                             <span class="summary-card-icon">
@@ -441,8 +441,8 @@
                         </div>
 
 
-                        <strong class="summary-card-value">
-                            1,284
+                        <strong class="summary-card-value" id="residentCount">
+                            —
                         </strong>
 
 
@@ -486,7 +486,8 @@
 
 
                             <a
-                                href="requests.html"
+                                id="viewAllRequests"
+                                href="../StaffRequests/requests.html"
                                 class="staff-view-all"
                             >
                                 View All
@@ -529,143 +530,10 @@
                                 </thead>
 
 
-                                <tbody>
-
-
-                                    <!-- REQUEST 1 -->
-
+                                <tbody id="recentRequestsBody">
                                     <tr>
-
-                                        <td>
-                                            <strong>
-                                                BP-2026-00124
-                                            </strong>
-                                        </td>
-
-                                        <td>
-                                            Juan Dela Cruz
-                                        </td>
-
-                                        <td>
-                                            Barangay Clearance
-                                        </td>
-
-                                        <td>
-                                            Oct 4, 2026
-                                        </td>
-
-                                        <td>
-
-                                            <span class="request-status pending">
-                                                Pending
-                                            </span>
-
-                                        </td>
-
+                                        <td colspan="5">Loading service requests...</td>
                                     </tr>
-
-
-
-                                    <!-- REQUEST 2 -->
-
-                                    <tr>
-
-                                        <td>
-                                            <strong>
-                                                BP-2026-00123
-                                            </strong>
-                                        </td>
-
-                                        <td>
-                                            Maria Santos
-                                        </td>
-
-                                        <td>
-                                            Certificate of Residency
-                                        </td>
-
-                                        <td>
-                                            Oct 4, 2026
-                                        </td>
-
-                                        <td>
-
-                                            <span class="request-status processing">
-                                                Processing
-                                            </span>
-
-                                        </td>
-
-                                    </tr>
-
-
-
-                                    <!-- REQUEST 3 -->
-
-                                    <tr>
-
-                                        <td>
-                                            <strong>
-                                                BP-2026-00122
-                                            </strong>
-                                        </td>
-
-                                        <td>
-                                            Pedro Reyes
-                                        </td>
-
-                                        <td>
-                                            Certificate of Indigency
-                                        </td>
-
-                                        <td>
-                                            Oct 3, 2026
-                                        </td>
-
-                                        <td>
-
-                                            <span class="request-status completed">
-                                                Completed
-                                            </span>
-
-                                        </td>
-
-                                    </tr>
-
-
-
-                                    <!-- REQUEST 4 -->
-
-                                    <tr>
-
-                                        <td>
-                                            <strong>
-                                                BP-2026-00121
-                                            </strong>
-                                        </td>
-
-                                        <td>
-                                            Ana Garcia
-                                        </td>
-
-                                        <td>
-                                            Business Clearance
-                                        </td>
-
-                                        <td>
-                                            Oct 3, 2026
-                                        </td>
-
-                                        <td>
-
-                                            <span class="request-status pending">
-                                                Pending
-                                            </span>
-
-                                        </td>
-
-                                    </tr>
-
                                 </tbody>
 
                             </table>
@@ -763,6 +631,11 @@
          JAVASCRIPT
          ========================================= -->
 
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase.js"></script>
+
+
     <script>
 
         /* =========================================
@@ -852,6 +725,223 @@
                 );
 
         }
+
+
+
+/* =========================================
+   LIVE SERVICE REQUESTS FROM SUPABASE
+   ========================================= */
+
+const SERVICE_NAMES = {
+    1: "Barangay Clearance",
+    2: "Certificate of Residency",
+    3: "Certificate of Indigency",
+    4: "Business Clearance"
+};
+
+const requestsBody = document.getElementById("recentRequestsBody");
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
+}
+
+function getApplicantName(request) {
+    return [request.first_name, request.middle_name, request.last_name]
+        .filter(Boolean)
+        .join(" ") || "Resident";
+}
+
+function formatRequestDate(dateValue) {
+    if (!dateValue) return "—";
+
+    const date = new Date(dateValue);
+
+    if (Number.isNaN(date.getTime())) return "—";
+
+    return date.toLocaleDateString("en-PH", {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+    });
+}
+
+function normalizeStatus(status) {
+    const value = String(status || "pending")
+        .toLowerCase()
+        .replace(/[_-]/g, " ")
+        .trim();
+
+    if (value === "in progress" || value === "processing") {
+        return { label: "Processing", css: "processing" };
+    }
+
+    if (value === "completed" || value === "complete") {
+        return { label: "Completed", css: "completed" };
+    }
+
+    if (value === "rejected" || value === "cancelled" ||
+        value === "canceled") {
+        return { label: value.charAt(0).toUpperCase() + value.slice(1), css: "rejected" };
+    }
+
+    return {
+        label: value.charAt(0).toUpperCase() + value.slice(1) || "Pending",
+        css: "pending"
+    };
+}
+
+function showRequestMessage(message) {
+    if (!requestsBody) return;
+
+    requestsBody.innerHTML = `
+        <tr>
+            <td colspan="5">${escapeHTML(message)}</td>
+        </tr>
+    `;
+}
+
+async function loadServiceRequests() {
+    if (!requestsBody) return;
+
+    const client = window.supabaseClient;
+
+    if (!client) {
+        showRequestMessage(
+            "Supabase could not initialize. Check your script paths and configuration."
+        );
+        return;
+    }
+
+    showRequestMessage("Loading service requests...");
+
+    try {
+        const {
+            data: { user },
+            error: authError
+        } = await client.auth.getUser();
+
+        if (authError || !user) {
+            showRequestMessage(
+                "Please sign in with an authorized staff account to view requests."
+            );
+            return;
+        }
+
+        const { data: requests, error } = await client
+            .from("service_requests")
+            .select(`
+                id,
+                request_code,
+                resident_id,
+                service_id,
+                service,
+                first_name,
+                middle_name,
+                last_name,
+                status,
+                payment_status,
+                amount,
+                submitted_at
+            `)
+            .order("submitted_at", { ascending: false });
+
+        if (error) throw error;
+
+        const rows = requests || [];
+
+        // Update dashboard summary cards using actual database records.
+        const countByStatus = status =>
+            rows.filter(request =>
+                normalizeStatus(request.status).css === status
+            ).length;
+
+        const pendingElement = document.getElementById("pendingCount");
+        const processingElement = document.getElementById("processingCount");
+        const completedElement = document.getElementById("completedCount");
+        const residentElement = document.getElementById("residentCount");
+
+        if (pendingElement) {
+            pendingElement.textContent = countByStatus("pending");
+        }
+
+        if (processingElement) {
+            processingElement.textContent = countByStatus("processing");
+        }
+
+        if (completedElement) {
+            const now = new Date();
+
+            completedElement.textContent = rows.filter(request => {
+                const date = new Date(request.submitted_at);
+
+                return normalizeStatus(request.status).css === "completed" &&
+                    !Number.isNaN(date.getTime()) &&
+                    date.getMonth() === now.getMonth() &&
+                    date.getFullYear() === now.getFullYear();
+            }).length;
+        }
+
+        if (residentElement) {
+            residentElement.textContent = new Set(
+                rows.map(request => request.resident_id).filter(Boolean)
+            ).size;
+        }
+
+        if (rows.length === 0) {
+            showRequestMessage("No service requests have been submitted yet.");
+            return;
+        }
+
+        // Show the five newest requests on the dashboard.
+        requestsBody.innerHTML = rows.slice(0, 5).map(request => {
+            const status = normalizeStatus(request.status);
+            const applicant = [
+                request.first_name,
+                request.middle_name,
+                request.last_name
+            ].filter(name => name && name.trim()).join(" ") || "Resident";
+            const serviceName =
+                request.service ||
+                SERVICE_NAMES[Number(request.service_id)] ||
+                "Unknown Service";
+
+            return `
+                <tr>
+                    <td>
+                        <strong>${escapeHTML(request.request_code || request.id)}</strong>
+                    </td>
+                    <td>${escapeHTML(applicant)}</td>
+                    <td>${escapeHTML(serviceName)}</td>
+                    <td>${escapeHTML(formatRequestDate(request.submitted_at))}</td>
+                    <td>
+                        <span class="request-status ${escapeHTML(status.css)}">
+                            ${escapeHTML(status.label)}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        }).join("");
+
+            } catch (error) {
+                console.error("Could not load service requests:", error);
+
+                showRequestMessage(
+                    "Unable to load requests. Check your database columns, staff permissions, and Supabase RLS policies."
+                );
+            }
+        }
+
+        loadServiceRequests();
+
+        // Refresh the dashboard every 30 seconds.
+        setInterval(loadServiceRequests, 30000);
+
 
     </script>
 

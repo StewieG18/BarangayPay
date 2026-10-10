@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Payment | BarangayPay</title>
+
+    <link rel="stylesheet" href="payment.css">
+</head>
+
+<body>
+
+    <header class="pm-topbar">
+        <div class="pm-brand">
+            <div class="pm-logo">BP</div>
+            <div>
+                <strong>BarangayPay</strong>
+                <span>Secure checkout</span>
+            </div>
+        </div>
+
+        <span class="pm-test-badge">Test mode: PayMongo simulation</span>
+    </header>
+
+    <main class="pm-wrap">
+
+        <div class="pm-banner" id="pmBanner" role="alert" hidden></div>
+
+        <!-- Loading -->
+        <section class="pm-card pm-center" id="viewLoading">
+            <div class="pm-spinner" aria-hidden="true"></div>
+            <p>Loading your request...</p>
+        </section>
+
+        <!-- Checkout -->
+        <div class="pm-layout" id="viewCheckout" hidden>
+
+            <aside class="pm-card pm-summary">
+                <h2>Order summary</h2>
+
+                <dl class="pm-list">
+                    <div>
+                        <dt>Service</dt>
+                        <dd id="sumService">-</dd>
+                    </div>
+                    <div>
+                        <dt>Request no.</dt>
+                        <dd id="sumRef">-</dd>
+                    </div>
+                    <div>
+                        <dt>Applicant</dt>
+                        <dd id="sumName">-</dd>
+                    </div>
+                </dl>
+
+                <div class="pm-total">
+                    <span>Total due</span>
+                    <strong id="sumAmount">-</strong>
+                </div>
+
+                <a class="pm-link" href="../index.html">Pay later and go to dashboard</a>
+            </aside>
+
+            <section class="pm-card pm-pay">
+                <h2>Choose a payment method</h2>
+
+                <div class="pm-methods" id="methodList" role="radiogroup"
+                     aria-label="Payment method">
+
+                    <label class="pm-method">
+                        <input type="radio" name="method" value="gcash" checked>
+                        <span class="pm-method-box">
+                            <span class="pm-chip pm-gcash">G</span>
+                            <span>GCash</span>
+                        </span>
+                    </label>
+
+                    <label class="pm-method">
+                        <input type="radio" name="method" value="maya">
+                        <span class="pm-method-box">
+                            <span class="pm-chip pm-maya">M</span>
+                            <span>Maya</span>
+                        </span>
+                    </label>
+
+                    <label class="pm-method">
+                        <input type="radio" name="method" value="grabpay">
+                        <span class="pm-method-box">
+                            <span class="pm-chip pm-grab">GP</span>
+                            <span>GrabPay</span>
+                        </span>
+                    </label>
+
+                    <label class="pm-method">
+                        <input type="radio" name="method" value="card">
+                        <span class="pm-method-box">
+                            <span class="pm-chip pm-card-chip">&#9645;</span>
+                            <span>Credit / debit card</span>
+                        </span>
+                    </label>
+
+                </div>
+
+                <!-- E-wallet note -->
+                <p class="pm-note" id="walletNote">
+                    You will be taken to a test authorization screen. No real
+                    wallet is used.
+                </p>
+
+                <!-- Card form -->
+                <div class="pm-card-form" id="cardForm" hidden>
+
+                    <div class="pm-field">
+                        <label for="cardNumber">Card number</label>
+                        <input type="text" id="cardNumber" inputmode="numeric"
+                               autocomplete="off" maxlength="19"
+                               placeholder="0000 0000 0000 0000">
+                    </div>
+
+                    <div class="pm-row">
+                        <div class="pm-field">
+                            <label for="cardExpiry">Expiry (MM/YY)</label>
+                            <input type="text" id="cardExpiry" inputmode="numeric"
+                                   autocomplete="off" maxlength="5" placeholder="MM/YY">
+                        </div>
+
+                        <div class="pm-field">
+                            <label for="cardCvc">CVC</label>
+                            <input type="text" id="cardCvc" inputmode="numeric"
+                                   autocomplete="off" maxlength="3" placeholder="123">
+                        </div>
+                    </div>
+
+                    <div class="pm-field">
+                        <label for="cardName">Name on card</label>
+                        <input type="text" id="cardName" autocomplete="off"
+                               maxlength="60" placeholder="Juan Dela Cruz">
+                    </div>
+
+                    <div class="pm-testcards">
+                        <strong>Test cards (any expiry in the future, any 3-digit CVC)</strong>
+                        <ul>
+                            <li><code>4343 4343 4343 4345</code> payment succeeds</li>
+                            <li><code>4571 7360 0000 0003</code> payment fails</li>
+                        </ul>
+                        <p>Other card numbers are rejected. Never enter a real card.</p>
+                    </div>
+
+                </div>
+
+                <p class="pm-field-error" id="payError" role="alert" hidden></p>
+
+                <button type="button" class="pm-button" id="payButton">
+                    Pay
+                </button>
+
+            </section>
+        </div>
+
+        <!-- E-wallet authorization -->
+        <section class="pm-card pm-center pm-auth" id="viewWallet" hidden>
+            <div class="pm-chip pm-chip-lg" id="walletChip">G</div>
+            <h2 id="walletTitle">Authorize payment</h2>
+            <p id="walletText">Authorize this test payment.</p>
+
+            <div class="pm-auth-actions">
+                <button type="button" class="pm-button" id="walletAuthorize">
+                    Authorize test payment
+                </button>
+                <button type="button" class="pm-button pm-button-danger" id="walletFail">
+                    Fail test payment
+                </button>
+                <button type="button" class="pm-button pm-button-ghost" id="walletCancel">
+                    Cancel and go back
+                </button>
+            </div>
+        </section>
+
+        <!-- Receipt -->
+        <section class="pm-card pm-receipt" id="viewReceipt" hidden>
+
+            <div class="pm-receipt-head">
+                <div class="pm-check" aria-hidden="true">&#10003;</div>
+                <h2 id="receiptTitle">Payment successful</h2>
+                <p id="receiptText">Your request has been submitted to the barangay.</p>
+            </div>
+
+            <dl class="pm-list pm-list-lines">
+                <div><dt>Reference no.</dt><dd id="rcRef">-</dd></div>
+                <div><dt>Request no.</dt><dd id="rcRequest">-</dd></div>
+                <div><dt>Service</dt><dd id="rcService">-</dd></div>
+                <div><dt>Amount</dt><dd id="rcAmount">-</dd></div>
+                <div><dt>Payment method</dt><dd id="rcMethod">-</dd></div>
+                <div><dt>Date</dt><dd id="rcDate">-</dd></div>
+                <div><dt>Request status</dt><dd id="rcStatus">-</dd></div>
+            </dl>
+
+            <p class="pm-note">
+                This is a simulation. No real payment was made.
+            </p>
+
+            <div class="pm-receipt-actions">
+                <a class="pm-button" href="../index.html">Return to dashboard</a>
+                <a class="pm-button pm-button-ghost"
+                   href="../MyTransactions/transactions.html">View my transactions</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Processing overlay -->
+    <div class="pm-overlay" id="processing" hidden>
+        <div class="pm-overlay-box" role="status" aria-live="polite">
+            <div class="pm-spinner" aria-hidden="true"></div>
+            <strong>Processing payment...</strong>
+            <span>Please do not close this page.</span>
+        </div>
+    </div>
+
+    <!-- Supabase must load before the payment logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="payment.js"></script>
+
+</body>
+</html>

@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     break;
 
                 case "staff":
-                    window.location.href = "../StaffPage/staff.html";
+                    window.location.href = "../Staff/StaffPage/staff.html";
                     break;
 
                 case "admin":

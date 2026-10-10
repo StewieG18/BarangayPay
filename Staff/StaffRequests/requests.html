@@ -136,27 +136,27 @@
 
                 <div class="request-summary-card">
                     <span class="summary-label">All Requests</span>
-                    <strong>71</strong>
+                    <strong id="allCount">0</strong>
                 </div>
 
                 <div class="request-summary-card pending-card">
                     <span class="summary-label">Pending</span>
-                    <strong>12</strong>
+                    <strong id="pendingCount">0</strong>
                 </div>
 
                 <div class="request-summary-card processing-card">
                     <span class="summary-label">Processing</span>
-                    <strong>8</strong>
+                    <strong id="processingCount">0</strong>
                 </div>
 
                 <div class="request-summary-card completed-card">
                     <span class="summary-label">Completed</span>
-                    <strong>47</strong>
+                    <strong id="completedCount">0</strong>
                 </div>
 
                 <div class="request-summary-card rejected-card">
                     <span class="summary-label">Rejected</span>
-                    <strong>4</strong>
+                    <strong id="rejectedCount">0</strong>
                 </div>
 
             </div>
@@ -218,7 +218,10 @@
                         </thead>
 
                         <tbody id="requestsTableBody">
-
+                            <tr>
+                                <td colspan="7">Loading service requests...</td>
+                            </tr>
+                            <!--
                             <!-- REQUEST 1 -->
                             <tr
                                 data-service="Barangay Clearance"
@@ -435,6 +438,8 @@
                             </tr>
 
                         </tbody>
+                            -->
+                        </tbody>
 
                     </table>
 
@@ -622,94 +627,26 @@
 
 </div>
 
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase.js"></script>
 
 <script>
+/* =========================================================
+   BARANGAYPAY - LIVE SERVICE REQUESTS
+========================================================= */
 
-/* ========================================================= */
-/* MOBILE SIDEBAR */
-/* ========================================================= */
+const client = window.supabaseClient;
 
-const staffMenuToggle = document.getElementById("staffMenuToggle");
 const staffSidebar = document.getElementById("staffSidebar");
-
-staffMenuToggle.addEventListener("click", function () {
-    staffSidebar.classList.toggle("open");
-});
-
-
-/* ========================================================= */
-/* USER DROPDOWN */
-/* ========================================================= */
-
+const staffMenuToggle = document.getElementById("staffMenuToggle");
 const staffUserButton = document.getElementById("staffUserButton");
 const staffUserDropdown = document.getElementById("staffUserDropdown");
-
-staffUserButton.addEventListener("click", function (event) {
-    event.stopPropagation();
-    staffUserDropdown.classList.toggle("show");
-});
-
-document.addEventListener("click", function () {
-    staffUserDropdown.classList.remove("show");
-});
-
-
-/* ========================================================= */
-/* SEARCH + FILTER */
-/* ========================================================= */
 
 const requestSearch = document.getElementById("requestSearch");
 const serviceFilter = document.getElementById("serviceFilter");
 const statusFilter = document.getElementById("statusFilter");
 const requestTableBody = document.getElementById("requestsTableBody");
 const noResults = document.getElementById("noResults");
-
-function filterRequests() {
-
-    const searchValue = requestSearch.value.toLowerCase();
-    const selectedService = serviceFilter.value;
-    const selectedStatus = statusFilter.value;
-
-    const requestRows = requestTableBody.querySelectorAll("tr");
-
-    let visibleRows = 0;
-
-    requestRows.forEach(function (row) {
-
-        const rowText = row.textContent.toLowerCase();
-        const rowService = row.dataset.service;
-        const rowStatus = row.dataset.status;
-
-        const matchesSearch = rowText.includes(searchValue);
-
-        const matchesService =
-            selectedService === "all" || rowService === selectedService;
-
-        const matchesStatus =
-            selectedStatus === "all" || rowStatus === selectedStatus;
-
-        if (matchesSearch && matchesService && matchesStatus) {
-            row.style.display = "";
-            visibleRows++;
-        } else {
-            row.style.display = "none";
-        }
-
-    });
-
-    noResults.style.display = visibleRows === 0 ? "block" : "none";
-
-}
-
-requestSearch.addEventListener("input", filterRequests);
-serviceFilter.addEventListener("change", filterRequests);
-statusFilter.addEventListener("change", filterRequests);
-
-
-/* ========================================================= */
-/* REQUEST MODAL ELEMENTS */
-/* ========================================================= */
 
 const requestModal = document.getElementById("requestModal");
 const modalClose = document.getElementById("modalClose");
@@ -730,247 +667,593 @@ const staffNotes = document.getElementById("staffNotes");
 const modalProcessButton = document.getElementById("modalProcessButton");
 const modalRejectButton = document.getElementById("modalRejectButton");
 
-let selectedRequestRow = null;
+let allRequests = [];
+let selectedRequest = null;
+let isUpdating = false;
 
+/* =========================================================
+   HELPERS
+========================================================= */
 
-function setModalStatus(status) {
-    modalStatus.textContent = status;
-    modalStatus.className = "request-status " + status.toLowerCase();
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>\"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
 }
 
+function normalizeStatus(status) {
+    const value = String(status || "pending").toLowerCase().trim();
 
-/* ========================================================= */
-/* OPEN / CLOSE MODAL */
-/* ========================================================= */
+    if (value === "in progress" || value === "in_progress") {
+        return "processing";
+    }
 
-function openRequestModal(row) {
+    return value;
+}
 
-    selectedRequestRow = row;
+function displayStatus(status) {
+    const value = normalizeStatus(status);
 
-    modalRequestId.textContent = row.dataset.requestId;
-    modalResident.textContent = row.dataset.resident;
-    modalEmail.textContent = row.dataset.email;
-    modalService.textContent = row.dataset.service;
-    modalDate.textContent = row.dataset.date;
+    return value.charAt(0).toUpperCase() + value.slice(1);
+}
 
-    modalPayment.textContent = row.dataset.payment;
-    modalPayment.classList.toggle("paid-text", row.dataset.payment === "Paid");
+function formatDate(value) {
+    if (!value) return "—";
 
-    setModalStatus(row.dataset.status);
+    const date = new Date(value);
 
-    modalPreviewTitle.textContent = row.dataset.service.toUpperCase();
-    modalPreviewResident.textContent = row.dataset.resident;
+    if (Number.isNaN(date.getTime())) return "—";
 
-    staffNotes.value = "";
+    return date.toLocaleDateString("en-PH", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+    });
+}
 
-    const isOpenRequest =
-        row.dataset.status === "Pending" ||
-        row.dataset.status === "Processing";
+function getResidentName(request) {
+    const name = [
+        request.first_name,
+        request.middle_name,
+        request.last_name
+    ].filter(Boolean).join(" ").trim();
 
-    /* Completed / Rejected → only Close is shown */
-    modalProcessButton.style.display = isOpenRequest ? "" : "none";
-    modalRejectButton.style.display = isOpenRequest ? "" : "none";
+    return name || "Resident";
+}
+
+function getServiceName(request) {
+    const service = request.service;
+
+    if (Array.isArray(service) && service.length > 0) {
+        return service[0].name || `Service #${request.service_id}`;
+    }
+
+    if (service && typeof service === "object") {
+        return service.name || `Service #${request.service_id}`;
+    }
+
+    return `Service #${request.service_id ?? "Unknown"}`;
+}
+
+function getPaymentStatus(request) {
+    return String(request.payment_status || "unpaid").toLowerCase();
+}
+
+function statusClass(status) {
+    const allowed = ["pending", "processing", "completed", "rejected"];
+    const normalized = normalizeStatus(status);
+
+    return allowed.includes(normalized) ? normalized : "pending";
+}
+
+/* =========================================================
+   SIDEBAR AND DROPDOWN
+========================================================= */
+
+staffMenuToggle?.addEventListener("click", () => {
+    staffSidebar.classList.toggle("open");
+});
+
+staffUserButton?.addEventListener("click", event => {
+    event.stopPropagation();
+    staffUserDropdown.classList.toggle("show");
+});
+
+document.addEventListener("click", () => {
+    staffUserDropdown?.classList.remove("show");
+});
+
+/* =========================================================
+   LOAD REAL REQUESTS
+========================================================= */
+
+async function loadRequests() {
+    if (!client) {
+        showLoadError("Supabase is not initialized. Check your script paths.");
+        return;
+    }
+
+    requestTableBody.innerHTML =
+        '<tr><td colspan="7">Loading service requests...</td></tr>';
+
+    try {
+        const { data: sessionData, error: sessionError } =
+            await client.auth.getSession();
+
+        if (sessionError) throw sessionError;
+
+        if (!sessionData.session) {
+            showLoadError("Please log in using your staff account.");
+            return;
+        }
+
+        const { data: profile, error: profileError } = await client
+            .from("profiles")
+            .select("role, status")
+            .eq("id", sessionData.session.user.id)
+            .single();
+
+        if (profileError) throw profileError;
+
+        if (
+            String(profile.role).toLowerCase().trim() !== "staff" ||
+            String(profile.status).toLowerCase().trim() !== "active"
+        ) {
+            showLoadError("Access denied. An active staff account is required.");
+            return;
+        }
+
+        
+            const { data, error } = await client
+                .from("service_requests")
+                .select(`
+                    id,
+                    request_code,
+                    resident_id,
+                    service_id,
+                    service:services!service_requests_service_id_fkey (
+                        id,
+                        name
+                    ),
+                    first_name,
+                    middle_name,
+                    last_name,
+                    contact_number,
+                    address,
+                    purpose,
+                    preferred_date,
+                    notes,
+                    remarks,
+                    document_paths,
+                    amount,
+                    status,
+                    payment_status,
+                    payment_method,
+                    payment_reference,
+                    submitted_at,
+                    updated_at
+                `)
+                .order("submitted_at", { ascending: false });
+
+
+        if (error) throw error;
+
+        allRequests = data || [];
+
+        renderSummary();
+        renderRequests();
+
+    } catch (error) {
+        console.error("Unable to load service requests:", error);
+        showLoadError(
+            "Could not load requests. Check your staff permissions and browser console."
+        );
+    }
+}
+
+function showLoadError(message) {
+    requestTableBody.innerHTML = `
+        <tr>
+            <td colspan="7">${escapeHTML(message)}</td>
+        </tr>
+    `;
+}
+
+/* =========================================================
+   SUMMARY COUNTS
+========================================================= */
+
+function renderSummary() {
+    const count = status =>
+        allRequests.filter(request =>
+            normalizeStatus(request.status) === status
+        ).length;
+
+    document.getElementById("allCount").textContent =
+        allRequests.length;
+
+    document.getElementById("pendingCount").textContent =
+        count("pending");
+
+    document.getElementById("processingCount").textContent =
+        count("processing");
+
+    document.getElementById("completedCount").textContent =
+        count("completed");
+
+    document.getElementById("rejectedCount").textContent =
+        count("rejected");
+}
+
+/* =========================================================
+   RENDER REQUEST TABLE
+========================================================= */
+
+function renderRequests() {
+    const search = requestSearch.value.trim().toLowerCase();
+    const selectedService = serviceFilter.value;
+    const selectedStatus = statusFilter.value.toLowerCase();
+
+    const filtered = allRequests.filter(request => {
+        const name = getResidentName(request);
+        const service = getServiceName(request);
+        const code = request.request_code || request.id;
+        const status = normalizeStatus(request.status);
+
+        const matchesSearch = [
+            code,
+            name,
+            service,
+            request.contact_number,
+            request.address
+        ].some(value =>
+            String(value || "").toLowerCase().includes(search)
+        );
+
+        const matchesService =
+            selectedService === "all" ||
+            service.trim().toLowerCase() === selectedService.trim().toLowerCase();
+
+        const matchesStatus =
+            selectedStatus === "all" ||
+            status === selectedStatus;
+
+        return matchesSearch && matchesService && matchesStatus;
+    });
+
+    if (filtered.length === 0) {
+        requestTableBody.innerHTML = "";
+        noResults.style.display = "block";
+    } else {
+        noResults.style.display = "none";
+
+        requestTableBody.innerHTML = filtered.map(request => {
+            const name = getResidentName(request);
+            const service = getServiceName(request);
+            const code = request.request_code || request.id;
+            const status = normalizeStatus(request.status);
+            const payment = getPaymentStatus(request);
+            const initials = name.split(/\s+/)
+                .map(part => part[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase();
+
+            const actionButton =
+                `<button type="button" class="view-button"
+                        data-action="view" data-id="${escapeHTML(request.id)}">
+                        View
+                       </button>`;
+
+            return `
+                <tr>
+                    <td><strong>${escapeHTML(code)}</strong></td>
+                    <td>
+                        <div class="resident-cell">
+                            <div class="resident-avatar">${escapeHTML(initials)}</div>
+                            <div>
+                                <strong>${escapeHTML(name)}</strong>
+                                <span>${escapeHTML(request.contact_number || "No contact number")}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${escapeHTML(service)}</td>
+                    <td>${escapeHTML(formatDate(request.submitted_at))}</td>
+                    <td>
+                        <span class="payment-status ${
+                            payment === "paid" ? "paid" : "unpaid"
+                        }">${escapeHTML(displayStatus(payment))}</span>
+                    </td>
+                    <td>
+                        <span class="request-status ${statusClass(status)}">
+                            ${escapeHTML(displayStatus(status))}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="request-actions">${actionButton}</div>
+                    </td>
+                </tr>
+            `;
+        }).join("");
+    }
+
+    const paginationInfo = document.querySelector(".pagination-info");
+
+    if (paginationInfo) {
+        paginationInfo.textContent =
+            `Showing ${filtered.length ? 1 : 0}–${filtered.length} of ${filtered.length} matching requests`;
+    }
+
+    const paginationButtons =
+        document.querySelector(".pagination-buttons");
+
+    if (paginationButtons) {
+        paginationButtons.style.display = "none";
+    }
+}
+
+/* =========================================================
+   SEARCH AND FILTERS
+========================================================= */
+
+requestSearch.addEventListener("input", renderRequests);
+serviceFilter.addEventListener("change", renderRequests);
+statusFilter.addEventListener("change", renderRequests);
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function setModalStatus(status) {
+    modalStatus.textContent = displayStatus(status);
+    modalStatus.className = "request-status " + statusClass(status);
+}
+
+function renderUploadedFiles(paths) {
+    const list = document.querySelector(".document-list");
+    if (!list) return;
+
+    list.innerHTML = "";
+
+    let files = paths;
+
+    if (typeof files === "string") {
+        try {
+            files = JSON.parse(files);
+        } catch {
+            files = files ? [files] : [];
+        }
+    }
+
+    if (!Array.isArray(files)) {
+        files = files ? [files] : [];
+    }
+
+    if (!files.length) {
+        list.innerHTML = "<p>No uploaded files recorded for this request.</p>";
+        return;
+    }
+
+    files.forEach(file => {
+        const path = typeof file === "string"
+            ? file
+            : file.path || file.name || file.url || "";
+
+        const label = typeof file === "string"
+            ? file.split("/").pop()
+            : file.name || file.path?.split("/").pop() || "Uploaded document";
+
+        const item = document.createElement("div");
+        item.className = "document-item";
+
+        const info = document.createElement("div");
+        info.className = "document-info";
+
+        const icon = document.createElement("div");
+        icon.className = "document-icon";
+        icon.textContent = label.split(".").pop().slice(0, 4).toUpperCase();
+
+        const textContainer = document.createElement("div");
+        const title = document.createElement("strong");
+        title.textContent = label;
+
+        const hint = document.createElement("span");
+        hint.textContent = "Uploaded document";
+
+        textContainer.append(title, hint);
+        info.append(icon, textContainer);
+        item.append(info);
+
+        if (path) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "document-btn";
+            button.textContent = "Open";
+
+            button.addEventListener("click", async () => {
+                if (/^https?:\/\//i.test(path)) {
+                    window.open(path, "_blank", "noopener,noreferrer");
+                    return;
+                }
+
+                const { data, error } = await client.storage
+                    .from("request-documents")
+                    .createSignedUrl(path, 60);
+
+                if (error || !data?.signedUrl) {
+                    alert("Unable to open this file. Check the storage bucket and file path.");
+                    console.error(error);
+                    return;
+                }
+
+                window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+            });
+
+            const actions = document.createElement("div");
+            actions.className = "document-actions";
+            actions.append(button);
+            item.append(actions);
+        }
+
+        list.append(item);
+    });
+}
+
+function openRequestModal(request) {
+    selectedRequest = request;
+
+    const name = getResidentName(request);
+    const service = getServiceName(request);
+    const status = normalizeStatus(request.status);
+    const payment = getPaymentStatus(request);
+
+    modalRequestId.textContent =
+        request.request_code || request.id;
+
+    modalResident.textContent = name;
+    modalEmail.textContent = request.contact_number || "Not provided";
+    modalService.textContent = service;
+    modalDate.textContent = formatDate(request.submitted_at);
+    modalPayment.textContent = displayStatus(payment);
+    modalPayment.classList.toggle("paid-text", payment === "paid");
+
+    setModalStatus(status);
+
+    modalPreviewTitle.textContent = service.toUpperCase();
+    modalPreviewResident.textContent = name;
+
+    staffNotes.value = request.remarks || request.notes || "";
+
+    renderUploadedFiles(request.document_paths);
+
+    const canProcess = status === "pending" || status === "processing";
+
+    modalProcessButton.style.display = canProcess ? "" : "none";
+    modalRejectButton.style.display = canProcess ? "" : "none";
 
     modalProcessButton.textContent =
-        row.dataset.status === "Processing" ? "Complete" : "Accept";
+        status === "processing" ? "Complete" : "Accept";
 
     requestModal.classList.add("show");
     document.body.classList.add("modal-open");
-
 }
 
 function closeRequestModal() {
-
     requestModal.classList.remove("show");
     document.body.classList.remove("modal-open");
-    selectedRequestRow = null;
-
+    selectedRequest = null;
 }
 
 modalClose.addEventListener("click", closeRequestModal);
 modalCloseButton.addEventListener("click", closeRequestModal);
 
-/* click on the dark backdrop (not the modal itself) closes it */
-requestModal.addEventListener("click", function (event) {
-    if (event.target === requestModal) {
-        closeRequestModal();
-    }
+requestModal.addEventListener("click", event => {
+    if (event.target === requestModal) closeRequestModal();
 });
 
-document.addEventListener("keydown", function (event) {
+document.addEventListener("keydown", event => {
     if (event.key === "Escape" && requestModal.classList.contains("show")) {
         closeRequestModal();
     }
 });
 
+requestTableBody.addEventListener("click", event => {
+    const button = event.target.closest('[data-action="view"]');
+    if (!button) return;
 
-/* ========================================================= */
-/* VIEW + PROCESS BUTTONS (both open the modal) */
-/* ========================================================= */
-
-document.addEventListener("click", function (event) {
-
-    if (
-        event.target.classList.contains("view-button") ||
-        event.target.classList.contains("process-button")
-    ) {
-
-        const row = event.target.closest("tr");
-
-        if (row) {
-            openRequestModal(row);
-        }
-
-    }
-
-});
-
-
-/* ========================================================= */
-/* REJECT BUTTONS (table) */
-/* ========================================================= */
-
-document.addEventListener("click", function (event) {
-
-    if (event.target.classList.contains("reject-button")) {
-
-        const row = event.target.closest("tr");
-        const requestId = row.dataset.requestId;
-
-        const confirmReject = confirm(
-            "Are you sure you want to reject " + requestId + "?"
-        );
-
-        if (!confirmReject) {
-            return;
-        }
-
-        row.dataset.status = "Rejected";
-
-        const statusElement = row.querySelector(".request-status");
-
-        statusElement.textContent = "Rejected";
-        statusElement.className = "request-status rejected";
-
-        row.querySelector(".request-actions").innerHTML = `
-            <button type="button" class="view-button">View</button>
-        `;
-
-    }
-
-});
-
-
-/* ========================================================= */
-/* ACCEPT / COMPLETE (modal) */
-/* ========================================================= */
-
-modalProcessButton.addEventListener("click", function () {
-
-    if (!selectedRequestRow) {
-        return;
-    }
-
-    const currentStatus = selectedRequestRow.dataset.status;
-
-    /* PENDING → PROCESSING */
-
-    if (currentStatus === "Pending") {
-
-        selectedRequestRow.dataset.status = "Processing";
-
-        const statusElement =
-            selectedRequestRow.querySelector(".request-status");
-
-        statusElement.textContent = "Processing";
-        statusElement.className = "request-status processing";
-
-        const processButton =
-            selectedRequestRow.querySelector(".process-button");
-
-        if (processButton) {
-            processButton.textContent = "Continue";
-        }
-
-        setModalStatus("Processing");
-        modalProcessButton.textContent = "Complete";
-
-        alert(
-            "Request " +
-            selectedRequestRow.dataset.requestId +
-            " is now being processed."
-        );
-
-        return;
-
-    }
-
-    /* PROCESSING → COMPLETED */
-
-    if (currentStatus === "Processing") {
-
-        selectedRequestRow.dataset.status = "Completed";
-
-        const statusElement =
-            selectedRequestRow.querySelector(".request-status");
-
-        statusElement.textContent = "Completed";
-        statusElement.className = "request-status completed";
-
-        selectedRequestRow.querySelector(".request-actions").innerHTML = `
-            <button type="button" class="view-button">View</button>
-        `;
-
-        alert(
-            "Request " +
-            selectedRequestRow.dataset.requestId +
-            " has been completed."
-        );
-
-        closeRequestModal();
-
-    }
-
-});
-
-
-/* ========================================================= */
-/* REJECT (modal) */
-/* ========================================================= */
-
-modalRejectButton.addEventListener("click", function () {
-
-    if (!selectedRequestRow) {
-        return;
-    }
-
-    const requestId = selectedRequestRow.dataset.requestId;
-
-    const confirmReject = confirm(
-        "Are you sure you want to reject " + requestId + "?"
+    const request = allRequests.find(
+        item => String(item.id) === button.dataset.id
     );
 
-    if (!confirmReject) {
-        return;
-    }
-
-    selectedRequestRow.dataset.status = "Rejected";
-
-    const statusElement =
-        selectedRequestRow.querySelector(".request-status");
-
-    statusElement.textContent = "Rejected";
-    statusElement.className = "request-status rejected";
-
-    selectedRequestRow.querySelector(".request-actions").innerHTML = `
-        <button type="button" class="view-button">View</button>
-    `;
-
-    alert("Request " + requestId + " has been rejected.");
-
-    closeRequestModal();
-
+    if (request) openRequestModal(request);
 });
+
+/* =========================================================
+   SAVE STATUS TO SUPABASE
+========================================================= */
+
+async function updateRequestStatus(newStatus) {
+    if (!selectedRequest || isUpdating) return;
+
+    isUpdating = true;
+
+    modalProcessButton.disabled = true;
+    modalRejectButton.disabled = true;
+
+    try {
+        const { data: sessionData } = await client.auth.getSession();
+
+        if (!sessionData.session) {
+            throw new Error("Your session has expired. Please log in again.");
+        }
+
+        const { error } = await client
+            .from("service_requests")
+            .update({
+                status: newStatus,
+                updated_at: new Date().toISOString()
+            })
+            .eq("id", selectedRequest.id);
+
+        if (error) throw error;
+
+        selectedRequest.status = newStatus;
+
+        alert(
+            `Request ${selectedRequest.request_code || selectedRequest.id} ` +
+            `is now ${displayStatus(newStatus)}.`
+        );
+
+        renderSummary();
+        renderRequests();
+        closeRequestModal();
+
+    } catch (error) {
+        console.error("Status update failed:", error);
+        alert(
+            "Unable to update the request. Check the staff UPDATE policy in Supabase.\n\n" +
+            error.message
+        );
+    } finally {
+        isUpdating = false;
+        modalProcessButton.disabled = false;
+        modalRejectButton.disabled = false;
+    }
+}
+
+modalProcessButton.addEventListener("click", () => {
+    if (!selectedRequest) return;
+
+    const current = normalizeStatus(selectedRequest.status);
+
+    if (current === "pending") {
+        updateRequestStatus("processing");
+    } else if (current === "processing") {
+        updateRequestStatus("completed");
+    }
+});
+
+modalRejectButton.addEventListener("click", () => {
+    if (!selectedRequest) return;
+
+    const code = selectedRequest.request_code || selectedRequest.id;
+
+    if (confirm(`Are you sure you want to reject ${code}?`)) {
+        updateRequestStatus("rejected");
+    }
+});
+
+/* =========================================================
+   INITIAL LOAD AND REFRESH
+========================================================= */
+
+loadRequests();
+
+setInterval(loadRequests, 30000);
 
 </script>
 
