@@ -1214,3 +1214,175 @@ a {
     }
 
 }
+
+/* ==============================
+   RECENT TRANSACTIONS
+============================== */
+
+.transactions-panel {
+    min-width: 0;
+    overflow: hidden;
+}
+
+#recentTransactions {
+    padding: 0 24px 12px;
+}
+
+.recent-transactions-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.recent-transaction {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    padding: 19px 0;
+    border-bottom: 1px solid #edf0f4;
+    transition: background 0.2s ease;
+}
+
+.recent-transaction:last-child {
+    border-bottom: none;
+}
+
+.recent-transaction:hover {
+    background: #f9fbff;
+}
+
+.transaction-service-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #edf4ff;
+    color: #2864c5;
+    font-size: 22px;
+}
+
+.recent-transaction-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.recent-transaction-info > strong {
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.transaction-reference {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.transaction-date {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.recent-transaction-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    min-width: 100px;
+}
+
+.transaction-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.status-pending {
+    background: #fff4db;
+    color: #9a6700;
+}
+
+.status-processing {
+    background: #e8f1ff;
+    color: #2459ad;
+}
+
+.status-completed,
+.status-approved {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-rejected,
+.status-cancelled {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.transaction-amount {
+    color: #1f2937;
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.transaction-payment {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.payment-paid {
+    color: #15803d;
+}
+
+.payment-unpaid {
+    color: #9a6700;
+}
+
+/* Mobile layout */
+@media (max-width: 520px) {
+    #recentTransactions {
+        padding: 0 16px 10px;
+    }
+
+    .recent-transaction {
+        grid-template-columns: 38px minmax(0, 1fr) auto;
+        gap: 10px;
+        padding: 16px 0;
+    }
+
+    .transaction-service-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 19px;
+        border-radius: 10px;
+    }
+
+    .recent-transaction-info > strong {
+        font-size: 13px;
+    }
+
+    .recent-transaction-right {
+        min-width: 80px;
+    }
+
+    .transaction-status {
+        padding: 4px 7px;
+        font-size: 10px;
+    }
+
+    .transaction-amount {
+        font-size: 12px;
+    }
+}

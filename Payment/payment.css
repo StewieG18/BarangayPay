@@ -647,3 +647,48 @@ a {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* ---------- Real PayMongo flow additions ---------- */
+
+.pm-center h2 {
+    margin-bottom: 8px;
+}
+
+.pm-center .pm-button {
+    margin-top: 18px;
+}
+
+.pm-pay .pm-note {
+    margin-bottom: 16px;
+}
+
+.pm-pay .pm-testcards {
+    margin-bottom: 18px;
+}
+
+.pm-pay .pm-button:disabled {
+    cursor: wait;
+}
+
+
+/* ---------- Real PayMongo checkout additions ---------- */
+
+.pm-banner-info {
+    border-color: #cfe0f1;
+    background: var(--blue-light);
+    color: var(--blue-dark);
+}
+
+.pm-lead {
+    margin-bottom: 14px;
+    font-size: 15px;
+    color: var(--text);
+}
+
+.pm-confirm-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 22px;
+}

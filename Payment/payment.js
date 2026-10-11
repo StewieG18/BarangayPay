@@ -1,6 +1,8 @@
-/* BarangayPay - PayMongo payment SIMULATION.
-   No real payment is made and no real PayMongo API is called.
-   The result depends only on the test card / test buttons used here. */
+/* BarangayPay - PayMongo payment (test mode).
+   The browser never decides that a payment succeeded.
+   PayMongo calls the paymongo-webhook function, which marks the request as
+   paid in the database. This page only starts the checkout and then waits
+   for the database to show the result. */
 document.addEventListener("DOMContentLoaded", async () => {
     "use strict";
 
@@ -13,23 +15,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         "business-clearance": "Barangay Business Clearance"
     };
 
-    const METHODS = {
-        gcash:   { label: "GCash",    chip: "G",  css: "pm-gcash", wallet: true },
-        maya:    { label: "Maya",     chip: "M",  css: "pm-maya",  wallet: true },
-        grabpay: { label: "GrabPay",  chip: "GP", css: "pm-grab",  wallet: true },
-        card:    { label: "Credit / debit card", wallet: false }
-    };
+    const POLL_INTERVAL_MS = 2000;
+    const POLL_MAX_TRIES = 15; // about 30 seconds
 
-    // Only these card numbers are accepted by the simulation.
-    const TEST_CARD_SUCCESS = ["4343434343434345"];
-    const TEST_CARD_FAIL    = ["4571736000000003"];
-
-    const PROCESSING_MS = 1800;
-    const VIEWS = ["viewLoading", "viewCheckout", "viewWallet", "viewReceipt"];
+    const VIEWS = ["viewLoading", "viewCheckout", "viewConfirming", "viewReceipt"];
 
     let user = null;
     let request = null;
-    let walletMethod = null;
 
     /* ---------- helpers ---------- */
 
@@ -42,13 +34,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }).format(Number(value) || 0);
 
     const shortId = (id) => String(id).slice(0, 8).toUpperCase();
-
-    const makeReference = () =>
-        "PMS-" +
-        Array.from(crypto.getRandomValues(new Uint8Array(5)))
-            .map((b) => b.toString(16).padStart(2, "0"))
-            .join("")
-            .toUpperCase();
 
     const formatDateTime = (iso) => {
         const d = new Date(iso);
@@ -68,14 +53,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         return status.charAt(0).toUpperCase() + status.slice(1);
     };
 
+    const isSettled = (r) =>
+        ["paid", "not_required"].includes(r.payment_status);
+
     function show(viewId) {
         VIEWS.forEach((id) => { $(id).hidden = id !== viewId; });
         window.scrollTo({ top: 0 });
     }
 
-    function showBanner(message) {
+    function showBanner(message, type = "error") {
         const banner = $("pmBanner");
         banner.textContent = message;
+        banner.className = type === "info" ? "pm-banner pm-banner-info" : "pm-banner";
         banner.hidden = false;
     }
 
@@ -98,14 +87,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         show("viewLoading");
     }
 
-    function setPayError(message) {
-        const el = $("payError");
-        el.textContent = message || "";
-        el.hidden = !message;
-    }
+    async function fetchRequest(id) {
+        const { data, error } = await supabaseClient
+            .from("service_requests")
+            .select("*")
+            .eq("id", id)
+            .eq("resident_id", user.id)
+            .maybeSingle();
 
-    const getMethod = () =>
-        document.querySelector('input[name="method"]:checked').value;
+        if (error) throw error;
+        return data;
+    }
 
     /* ---------- checkout view ---------- */
 
@@ -116,212 +108,100 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         $("sumService").textContent =
             SERVICE_NAMES[request.service] || request.service;
-        $("sumRef").textContent = shortId(request.id);
+        $("sumRef").textContent = request.request_code || shortId(request.id);
         $("sumName").textContent = name || "-";
         $("sumAmount").textContent = money(request.amount);
         $("payButton").textContent = `Pay ${money(request.amount)}`;
 
-        updateMethodUI();
         show("viewCheckout");
     }
 
-    function updateMethodUI() {
-        const isCard = getMethod() === "card";
-
-        $("cardForm").hidden = !isCard;
-        $("walletNote").hidden = isCard;
-        setPayError("");
-    }
-
-    document.querySelectorAll('input[name="method"]').forEach((radio) =>
-        radio.addEventListener("change", updateMethodUI)
-    );
-
-    /* ---------- card input formatting ---------- */
-
-    $("cardNumber").addEventListener("input", (e) => {
-        const digits = e.target.value.replace(/\D/g, "").slice(0, 16);
-        e.target.value = digits.replace(/(.{4})/g, "$1 ").trim();
-    });
-
-    $("cardExpiry").addEventListener("input", (e) => {
-        const digits = e.target.value.replace(/\D/g, "").slice(0, 4);
-        e.target.value =
-            digits.length >= 3 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
-    });
-
-    $("cardCvc").addEventListener("input", (e) => {
-        e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
-    });
-
-    ["cardNumber", "cardExpiry", "cardCvc", "cardName"].forEach((id) =>
-        $(id).addEventListener("input", () => {
-            $(id).classList.remove("pm-invalid");
-            setPayError("");
-        })
-    );
-
-    function invalid(id, message) {
-        $(id).classList.add("pm-invalid");
-        $(id).focus();
-        setPayError(message);
-        return false;
-    }
-
-    function validateCard() {
-        const digits = $("cardNumber").value.replace(/\D/g, "");
-
-        if (digits.length !== 16) {
-            return invalid("cardNumber", "Enter a 16-digit card number.");
-        }
-
-        if (![...TEST_CARD_SUCCESS, ...TEST_CARD_FAIL].includes(digits)) {
-            return invalid(
-                "cardNumber",
-                "This simulation only accepts the test cards listed below."
-            );
-        }
-
-        const match = /^(\d{2})\/(\d{2})$/.exec($("cardExpiry").value);
-        if (!match) {
-            return invalid("cardExpiry", "Enter the expiry date as MM/YY.");
-        }
-
-        const month = Number(match[1]);
-        const year = 2000 + Number(match[2]);
-        const now = new Date();
-
-        if (month < 1 || month > 12) {
-            return invalid("cardExpiry", "Enter a valid expiry month (01-12).");
-        }
-
-        if (
-            year < now.getFullYear() ||
-            (year === now.getFullYear() && month < now.getMonth() + 1)
-        ) {
-            return invalid("cardExpiry", "This card has expired. Use a future date.");
-        }
-
-        if (!/^\d{3}$/.test($("cardCvc").value)) {
-            return invalid("cardCvc", "Enter the 3-digit CVC.");
-        }
-
-        if ($("cardName").value.trim().length < 2) {
-            return invalid("cardName", "Enter the name on the card.");
-        }
-
-        return true;
-    }
-
-    /* ---------- payment actions ---------- */
-
+    // Ask the create-checkout function for a PayMongo checkout link, then go there.
     $("payButton").addEventListener("click", async () => {
         clearBanner();
-        setPayError("");
-
-        const method = getMethod();
-
-        if (method === "card") {
-            if (!validateCard()) return;
-
-            const digits = $("cardNumber").value.replace(/\D/g, "");
-            await runPayment(
-                TEST_CARD_SUCCESS.includes(digits),
-                "card",
-                "Your card was declined. Try another payment method or card."
-            );
-            return;
-        }
-
-        openWallet(method);
-    });
-
-    function openWallet(method) {
-        const info = METHODS[method];
-        walletMethod = method;
-
-        const chip = $("walletChip");
-        chip.className = `pm-chip pm-chip-lg ${info.css}`;
-        chip.textContent = info.chip;
-
-        $("walletTitle").textContent = `Authorize ${info.label} payment`;
-        $("walletText").textContent =
-            `Test payment of ${money(request.amount)} to BarangayPay. ` +
-            `No real ${info.label} account is charged.`;
-
-        show("viewWallet");
-    }
-
-    $("walletAuthorize").addEventListener("click", () =>
-        runPayment(true, walletMethod)
-    );
-
-    $("walletFail").addEventListener("click", () =>
-        runPayment(
-            false,
-            walletMethod,
-            `The ${METHODS[walletMethod].label} payment was not authorized. You can try again.`
-        )
-    );
-
-    $("walletCancel").addEventListener("click", () => {
-        clearBanner();
-        show("viewCheckout");
-    });
-
-    async function runPayment(success, method, failMessage) {
+        $("payButton").disabled = true;
         $("processing").hidden = false;
 
         try {
-            await sleep(PROCESSING_MS);
+            const { data, error } = await supabaseClient.functions.invoke(
+                "create-checkout",
+                {
+                    body: {
+                        requestId: request.id,
+                        origin: window.location.origin
+                    }
+                }
+            );
 
-            if (success) {
-                await markPaid(method);
-                clearBanner();
-                renderReceipt();
-            } else {
-                await markFailed();
-                show("viewCheckout");
-                showBanner(failMessage || "The payment failed. Please try again.");
+            if (error) {
+                let message = error.message;
+
+                try {
+                    const body = await error.context.json();
+                    if (body && body.error) message = body.error;
+                } catch (_) {
+                    /* keep the default message */
+                }
+
+                throw new Error(message);
             }
+
+            if (!data || !data.checkout_url) {
+                throw new Error("PayMongo did not return a checkout link.");
+            }
+
+            window.location.href = data.checkout_url;
         } catch (error) {
-            console.error("Could not record the payment:", error);
-            show("viewCheckout");
-            showBanner(`Could not record your payment: ${error.message}`);
-        } finally {
+            console.error("Could not start the payment:", error);
             $("processing").hidden = true;
+            $("payButton").disabled = false;
+            showBanner(`Could not start the payment: ${error.message}`);
         }
+    });
+
+    // If the user presses Back from PayMongo, reset the button.
+    window.addEventListener("pageshow", (event) => {
+        if (event.persisted) {
+            $("processing").hidden = true;
+            $("payButton").disabled = false;
+        }
+    });
+
+    /* ---------- confirming view ---------- */
+
+    async function confirmPayment() {
+        $("confirmTitle").textContent = "Confirming your payment";
+        $("confirmText").textContent =
+            "Please wait while PayMongo confirms your payment. Do not close this page.";
+        $("confirmSpinner").hidden = false;
+        $("confirmActions").hidden = true;
+        show("viewConfirming");
+
+        for (let i = 0; i < POLL_MAX_TRIES; i++) {
+            try {
+                const latest = await fetchRequest(request.id);
+                if (latest) request = latest;
+
+                if (isSettled(request)) {
+                    renderReceipt();
+                    return;
+                }
+            } catch (error) {
+                console.warn("Payment status check failed:", error);
+            }
+
+            await sleep(POLL_INTERVAL_MS);
+        }
+
+        $("confirmTitle").textContent = "Still waiting for confirmation";
+        $("confirmText").textContent =
+            "We have not received the confirmation yet. This can take a minute. " +
+            "Your request is saved, so you will not lose it.";
+        $("confirmSpinner").hidden = true;
+        $("confirmActions").hidden = false;
     }
 
-    async function markPaid(method) {
-        const { data, error } = await supabaseClient
-            .from("service_requests")
-            .update({
-                payment_status: "paid",
-                payment_method: METHODS[method].label,
-                payment_reference: makeReference(),
-                paid_at: new Date().toISOString()
-            })
-            .eq("id", request.id)
-            .eq("resident_id", user.id)
-            .select()
-            .single();
-
-        if (error) throw error;
-        request = data;
-    }
-
-    async function markFailed() {
-        // Best effort: a failed attempt should never block a retry.
-        const { error } = await supabaseClient
-            .from("service_requests")
-            .update({ payment_status: "failed" })
-            .eq("id", request.id)
-            .eq("resident_id", user.id);
-
-        if (error) console.warn("Could not record failed attempt:", error);
-        request.payment_status = "failed";
-    }
+    $("confirmRetry").addEventListener("click", confirmPayment);
 
     /* ---------- receipt view ---------- */
 
@@ -334,10 +214,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         $("receiptText").textContent = free
             ? "This service is free. Your request has been sent to the barangay."
-            : "Your payment was received and your request has been sent to the barangay.";
+            : "Your payment was confirmed and your request has been sent to the barangay.";
 
         $("rcRef").textContent = request.payment_reference || "No payment needed";
-        $("rcRequest").textContent = shortId(request.id);
+        $("rcRequest").textContent = request.request_code || shortId(request.id);
         $("rcService").textContent =
             SERVICE_NAMES[request.service] || request.service;
         $("rcAmount").textContent = free ? "Free" : money(request.amount);
@@ -349,6 +229,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
         $("rcStatus").textContent = statusLabel(request.status);
 
+        // Drop "?status=success" so a refresh does not re-run the confirmation.
+        history.replaceState(
+            null,
+            "",
+            `${window.location.pathname}?request=${encodeURIComponent(request.id)}`
+        );
+
+        clearBanner();
         show("viewReceipt");
     }
 
@@ -373,35 +261,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         user = sessionData.session.user;
 
-        const requestId = new URLSearchParams(window.location.search).get("request");
+        const params = new URLSearchParams(window.location.search);
+        const requestId = params.get("request");
+        const returnStatus = params.get("status");
 
         if (!requestId) {
             showFatal("No request was selected for payment.");
             return;
         }
 
-        const { data, error } = await supabaseClient
-            .from("service_requests")
-            .select("*")
-            .eq("id", requestId)
-            .eq("resident_id", user.id)
-            .maybeSingle();
+        request = await fetchRequest(requestId);
 
-        if (error) throw error;
-
-        if (!data) {
+        if (!request) {
             showFatal("We could not find this request in your account.");
             return;
         }
 
-        request = data;
-
-        const settled = ["paid", "not_required"].includes(request.payment_status);
-
-        if (settled) {
+        if (isSettled(request)) {
             renderReceipt();
+        } else if (returnStatus === "success") {
+            await confirmPayment();
         } else {
             renderCheckout();
+
+            if (returnStatus === "cancelled") {
+                showBanner(
+                    "The payment was cancelled. You can try again whenever you are ready.",
+                    "info"
+                );
+            }
         }
     } catch (error) {
         console.error("Payment page failed to load:", error);
