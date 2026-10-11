@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Profile | BarangayPay</title>
+
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="staff-profile.css">
+</head>
+
+<body>
+    <div class="profile-app">
+        <!-- SIDEBAR -->
+    <aside class="staff-sidebar" id="staffSidebar">
+
+        <div class="staff-brand">
+
+            <div class="staff-brand-logo">
+                BP
+            </div>
+
+            <div>
+                <h1>BarangayPay</h1>
+                <span>Staff Portal</span>
+            </div>
+
+        </div>
+
+
+        <nav class="staff-navigation">
+
+            <!-- MAIN -->
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    MAIN
+                </span>
+
+                <a href="../StaffPage/staff.html" class="staff-nav-link">
+                    <span class="nav-icon">▦</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="../StaffRequests/requests.html" class="staff-nav-link">
+                    <span class="nav-icon">▤</span>
+                    <span>Service Requests</span>
+                </a>
+
+            </div>
+
+
+            <!-- MANAGEMENT -->
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    MANAGEMENT
+                </span>
+
+                <a href="../StaffDocuments/documents.html" class="staff-nav-link">
+                    <span class="nav-icon">▧</span>
+                    <span>Documents</span>
+                </a>
+
+            </div>
+
+
+            <!-- ACCOUNT -->
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    ACCOUNT
+                </span>
+
+                <a
+                    href="../StaffSettings/settings.html"
+                    class="staff-nav-link active"
+                >
+                    <span class="nav-icon">⚙</span>
+                    <span>Settings</span>
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <div class="staff-sidebar-bottom">
+
+            <a
+                href="/login/login.html"
+                class="staff-signout"
+            >
+
+                <span class="nav-icon">↪</span>
+
+                <span>
+                    Sign Out
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+        <main class="profile-main">
+            <header class="profile-topbar">
+                <span class="profile-topbar-label">Staff Account</span>
+                <a href="requests.html">Manage Requests →</a>
+            </header>
+
+            <div class="profile-content">
+                <div class="profile-page-heading">
+                    <span class="profile-eyebrow">STAFF ACCOUNT</span>
+                    <h1>My Profile</h1>
+                    <p>View and manage your BarangayPay staff information.</p>
+                </div>
+
+                <section class="profile-card profile-summary">
+                    <div class="profile-avatar" id="profileAvatar">--</div>
+
+                    <div class="profile-summary-details">
+                        <h2 id="staffName">Loading...</h2>
+                        <p>Email: <strong id="staffEmail">Loading...</strong></p>
+                        <p>Role: <strong id="staffRole">Staff</strong></p>
+                    </div>
+
+                    <span class="profile-status" id="staffStatus">
+                        Loading...
+                    </span>
+                </section>
+
+                <section class="profile-card">
+                    <div class="profile-section-heading">
+                        <div>
+                            <h2>Personal Information</h2>
+                            <p>Your staff account and contact details.</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-details-grid">
+                        <div class="profile-detail">
+                            <span>Full Name</span>
+                            <strong id="detailName">Loading...</strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>Email Address</span>
+                            <strong id="detailEmail">Loading...</strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>Contact Number</span>
+                            <strong id="detailPhone">Loading...</strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>Account Role</span>
+                            <strong id="detailRole">Loading...</strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>Account Status</span>
+                            <strong id="detailStatus">Loading...</strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>Member Since</span>
+                            <strong id="detailCreated">Loading...</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="profile-card profile-actions">
+                    <div class="profile-section-heading">
+                        <div>
+                            <h2>Account Actions</h2>
+                            <p>Manage your profile and account access.</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-action-buttons">
+                        <button class="profile-button profile-button-primary"
+                                id="editProfileButton" type="button">
+                            Edit Profile
+                        </button>
+
+                        <button class="profile-button profile-button-secondary"
+                                id="changePasswordButton" type="button">
+                            Change Password
+                        </button>
+
+                        <button class="profile-button profile-button-danger"
+                                id="logoutButton2" type="button">
+                            Sign Out
+                        </button>
+                    </div>
+
+                    <p class="profile-edit-message"
+                       id="profileMessage" role="status" aria-live="polite"></p>
+                </section>
+
+                <footer class="profile-footer">
+                    © 2026 BarangayPay
+                    <span>Staff Portal</span>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+
+    ```html
+<div class="profile-modal-overlay" id="editProfileModal" hidden>
+    <section class="profile-modal" role="dialog"
+             aria-modal="true" aria-labelledby="editProfileTitle">
+
+        <div class="profile-section-heading">
+            <div>
+                <h2 id="editProfileTitle">Edit Profile</h2>
+                <p>Update your personal and contact information.</p>
+            </div>
+            <button type="button" id="closeProfileModal"
+                    class="profile-button profile-button-secondary">
+                ✕
+            </button>
+        </div>
+
+        <form id="editProfileForm">
+            <label for="editFullName">Full Name</label>
+            <input id="editFullName" name="full_name"
+                   type="text" maxlength="150" required>
+
+            <label for="editPhone">Contact Number</label>
+            <input id="editPhone" name="phone"
+                   type="tel" maxlength="30">
+
+            <label for="editStreet">House / Street</label>
+            <input id="editStreet" name="house_street"
+                   type="text" maxlength="200">
+
+            <label for="editBarangay">Barangay</label>
+            <input id="editBarangay" name="barangay"
+                   type="text" maxlength="100">
+
+            <label for="editCity">City / Municipality</label>
+            <input id="editCity" name="city"
+                   type="text" maxlength="100">
+
+            <label for="editProvince">Province</label>
+            <input id="editProvince" name="province"
+                   type="text" maxlength="100">
+
+            <p id="editFormMessage" class="profile-edit-message"
+               role="status" aria-live="polite"></p>
+
+            <div class="profile-action-buttons">
+                <button type="submit" id="saveProfileButton"
+                        class="profile-button profile-button-primary">
+                    Save Changes
+                </button>
+
+                <button type="button" id="cancelProfileEdit"
+                        class="profile-button profile-button-secondary">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </section>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase.js"></script>
+
+    <script>
+    const client = window.supabaseClient;
+
+    const setText = (id, value) => {
+        document.getElementById(id).textContent =
+            value === null || value === undefined || value === ""
+                ? "—"
+                : value;
+    };
+
+    const displayDate = value => {
+        if (!value) return "—";
+
+        const date = new Date(value);
+
+        return Number.isNaN(date.getTime())
+            ? "—"
+            : date.toLocaleDateString("en-PH", {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            });
+    };
+
+    async function loadStaffProfile() {
+        const message = document.getElementById("profileMessage");
+
+        try {
+            const {
+                data: { user },
+                error: authError
+            } = await client.auth.getUser();
+
+            if (authError) throw authError;
+
+            if (!user) {
+                window.location.href = "../../login/login.html";
+                return;
+            }
+
+            const { data: profile, error: profileError } = await client
+                .from("profiles")
+                .select("*")
+                .eq("id", user.id)
+                .single();
+
+            if (profileError) throw profileError;
+
+            // Do not allow resident accounts to use the staff profile page.
+            if (String(profile.role || "").toLowerCase() !== "staff") {
+                message.textContent =
+                    "This page is available to staff accounts only.";
+                return;
+            }
+
+            const name = profile.full_name || user.email || "Staff Member";
+            const status = profile.status || "Unknown";
+
+            setText("staffName", name);
+            setText("staffEmail", user.email || profile.email);
+            setText("staffRole", profile.role);
+            setText("staffStatus", status);
+
+            setText("detailName", name);
+            setText("detailEmail", user.email || profile.email);
+            setText("detailPhone", profile.phone);
+            setText("detailRole", profile.role);
+            setText("detailStatus", status);
+            setText("detailCreated", displayDate(profile.created_at));
+
+            setText("detailStreet", profile.house_street);
+            setText("detailBarangay", profile.barangay);
+            setText("detailCity", profile.city);
+            setText("detailProvince", profile.province);
+
+            document.getElementById("profileAvatar").textContent =
+                name.split(/\s+/)
+                    .filter(Boolean)
+                    .slice(0, 2)
+                    .map(part => part[0].toUpperCase())
+                    .join("");
+
+            // Use the profile status as-is; do not assume every staff account is active.
+            document.getElementById("staffStatus").textContent = status;
+
+            const { data: requests, error: requestsError } = await client
+                .from("service_requests")
+                .select("status");
+
+            if (requestsError) throw requestsError;
+
+            const allRequests = requests || [];
+            const normalized = allRequests.map(request =>
+                String(request.status || "").toLowerCase()
+            );
+
+            setText("totalRequests", allRequests.length);
+            setText("pendingRequests",
+                normalized.filter(status => status === "pending").length);
+            setText("completedRequests",
+                normalized.filter(status => status === "completed").length);
+            setText("rejectedRequests",
+                normalized.filter(status => status === "rejected").length);
+
+        } catch (error) {
+            console.error("Staff profile failed to load:", error);
+            message.textContent =
+                "Unable to load your profile. Check your connection and permissions.";
+        }
+    }
+
+    async function signOut() {
+        const { error } = await client.auth.signOut();
+
+        if (error) {
+            console.error("Sign out failed:", error);
+            alert("Unable to sign out. Please try again.");
+            return;
+        }
+
+        window.location.href = "../../login/login.html";
+    }
+
+    document.getElementById("logoutButton")
+        .addEventListener("click", event => {
+            event.preventDefault();
+            signOut();
+        });
+
+    document.getElementById("logoutButton2")
+        .addEventListener("click", signOut);
+
+    document.getElementById("changePasswordButton")
+        .addEventListener("click", () => {
+            window.location.href = "Settings/settings.html";
+        });
+
+    document.getElementById("editProfileButton")
+        .addEventListener("click", () => {
+            document.getElementById("profileMessage").textContent =
+                "Profile editing is not enabled yet.";
+        });
+
+    loadStaffProfile();
+    </script>
+</body>
+</html>
