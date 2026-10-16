@@ -1,14 +1,13 @@
+/* Resident profile: show, edit and save profile details. */
 document.addEventListener("DOMContentLoaded", async () => {
+    "use strict";
+
     const editButton = document.getElementById("editProfileButton");
     const changePasswordButton = document.getElementById("changePasswordButton");
     const editMessage = document.getElementById("profileEditMessage");
     const logoutButton = document.getElementById("logoutButton");
 
-    const editableFields = [
-        ...document.querySelectorAll("[data-profile-key]")
-    ];
-
-    const profileKeys = {
+    const PROFILE_KEYS = {
         fullName: "full_name",
         birthdate: "birthdate",
         sex: "sex",
@@ -20,13 +19,28 @@ document.addEventListener("DOMContentLoaded", async () => {
         province: "province"
     };
 
+    const PHONE_RE = /^(09|\+639)\d{9}$/;
+    const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+    const SEXES = ["male", "female"];
+
+    const displayFields = [...document.querySelectorAll("[data-profile-key]")];
+
+    // Only one editable element per key, and never headings (the name is
+    // shown twice on the page; editing both made the result unpredictable).
+    const editableFields = displayFields.filter((field, index) => {
+        const key = field.dataset.profileKey;
+        if (!PROFILE_KEYS[key] || key === "email" || field.tagName === "H2") return false;
+        return displayFields.findIndex((other) =>
+            other.dataset.profileKey === key && other.tagName !== "H2") === index;
+    });
+
     let currentUser = null;
     let originalProfile = null;
     let isEditing = false;
+    let isSaving = false;
 
     function showMessage(message, isError = false) {
         if (!editMessage) return;
-
         editMessage.textContent = message;
         editMessage.style.color = isError ? "#b42318" : "";
     }
@@ -34,82 +48,48 @@ document.addEventListener("DOMContentLoaded", async () => {
     function showLoadError(message) {
         showMessage(message, true);
 
-        document.querySelectorAll("[data-profile-key]").forEach((el) => {
-            if (el.textContent.trim() === "Loading...") {
-                el.textContent = "Unavailable";
-            }
+        displayFields.forEach((el) => {
+            if (el.textContent.trim() === "Loading...") el.textContent = "Unavailable";
         });
 
         const status = document.getElementById("profileStatus");
-        if (status && status.textContent.trim() === "Loading...") {
-            status.textContent = "Unknown";
-        }
-
-        editMessage?.scrollIntoView({ behavior: "smooth", block: "center" });
+        if (status && status.textContent.trim() === "Loading...") status.textContent = "Unknown";
     }
 
     function displayValue(value, key) {
-        if (value === null || value === undefined || value === "") {
-            return "Not provided";
-        }
+        if (value === null || value === undefined || value === "") return "Not provided";
 
-        if (key === "sex") {
-            const text = String(value);
-            return text.charAt(0).toUpperCase() + text.slice(1);
-        }
+        if (key === "sex") return BP.capitalize(value);
 
         if (key === "birthdate") {
             const date = new Date(`${value}T00:00:00`);
-
             return Number.isNaN(date.getTime())
                 ? value
-                : date.toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric"
-                });
+                : date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
         }
 
         return String(value);
     }
 
     function renderProfile(profile) {
-        editableFields.forEach((field) => {
+        displayFields.forEach((field) => {
             const key = field.dataset.profileKey;
-            const column = profileKeys[key];
-
-            if (column) {
-                field.textContent = displayValue(profile[column], key);
-            }
+            const column = PROFILE_KEYS[key];
+            if (column) field.textContent = displayValue(profile[column], key);
         });
 
         const avatar = document.getElementById("profileAvatar");
-
-        if (avatar) {
-            const initials = (profile.full_name || "")
-                .trim()
-                .split(/\s+/)
-                .filter(Boolean)
-                .slice(0, 2)
-                .map(part => part[0].toUpperCase())
-                .join("");
-
-            avatar.textContent = initials || "--";
-        }
+        if (avatar) avatar.textContent = BP.initials(profile.full_name) || "--";
 
         const statusElement = document.getElementById("profileStatus");
-
         if (statusElement) {
-            statusElement.textContent =
-                profile.status === "active" ? "Active" :
-                profile.status === "pending" ? "Pending" :
-                profile.status === "inactive" ? "Inactive" :
-                "Unknown";
+            const labels = { active: "Active", pending: "Pending", inactive: "Inactive" };
+            statusElement.textContent = labels[profile.status] || "Unknown";
         }
     }
 
     async function loadRequestCounts() {
-        const { data, error } = await supabaseClient
+        const { data, error } = await BP.getClient()
             .from("service_requests")
             .select("status")
             .eq("resident_id", currentUser.id);
@@ -120,253 +100,141 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         const requests = data || [];
-
-        const setCount = (id, count) => {
+        const count = (status) => requests.filter((r) => r.status === status).length;
+        const setCount = (id, value) => {
             const element = document.getElementById(id);
-            if (element) element.textContent = count;
+            if (element) element.textContent = value;
         };
 
         setCount("totalRequests", requests.length);
-        setCount("pendingRequests",
-            requests.filter(r => r.status === "pending").length);
-        setCount("approvedRequests",
-            requests.filter(r => r.status === "completed").length);
-        setCount("rejectedRequests",
-            requests.filter(r => r.status === "rejected").length);
+        setCount("pendingRequests", count("pending"));
+        setCount("approvedRequests", count("completed"));
+        setCount("rejectedRequests", count("rejected"));
     }
 
-    // Wait for Supabase to restore the session before deciding to redirect.
-    async function getActiveSession() {
-        let { data, error } = await supabaseClient.auth.getSession();
-        if (error) throw error;
-        if (data.session) return data.session;
-
-        const restored = await new Promise((resolve) => {
-            let subscription = null;
-
-            const timeout = setTimeout(() => {
-                if (subscription) subscription.unsubscribe();
-                resolve(null);
-            }, 1500);
-
-            const result = supabaseClient.auth.onAuthStateChange(
-                (event, session) => {
-                    if (event === "INITIAL_SESSION" || event === "SIGNED_IN") {
-                        clearTimeout(timeout);
-                        if (subscription) subscription.unsubscribe();
-                        resolve(session);
-                    }
-                }
-            );
-
-            subscription = result.data.subscription;
-        });
-
-        if (restored) return restored;
-
-        ({ data, error } = await supabaseClient.auth.getSession());
-        if (error) throw error;
-        return data.session;
-    }
-
-    // Load session and profile.
-    try {
-        if (typeof supabaseClient === "undefined") {
-            throw new Error(
-                "Supabase client is not initialized. Check ../js/supabase.js."
-            );
-        }
-
-        const session = await getActiveSession();
-
-        if (!session) {
-            const keys = Object.keys(localStorage).filter(k => k.startsWith("sb-"));
-            const info =
-                "NO SESSION FOUND\n" +
-                "Page address: " + window.location.href + "\n" +
-                "Origin: " + window.location.origin + "\n" +
-                "Supabase keys in storage: " + (keys.length ? keys.join(", ") : "NONE");
-
-            console.warn(info);
-            alert(info);
-            // window.location.href = "../login/login.html";   // disabled for debugging
-            return;
-        }
-
-        currentUser = session.user;
-
-        const { data: profile, error: profileError } =
-            await supabaseClient
-                .from("profiles")
-                .select("*")
-                .eq("id", currentUser.id)
-                .maybeSingle();
-
-        if (profileError) {
-            console.error("Profile loading failed:", profileError);
-            showLoadError(`Could not load profile: ${profileError.message}`);
-            return;
-        }
-
-        if (!profile) {
-            console.warn("No profiles row found for user:", currentUser.id);
-            showLoadError(
-                "No profile found for this account, or access is blocked by database policies."
-            );
-            renderProfile({ email: currentUser.email });
-            return;
-        }
-
-        originalProfile = { ...profile, email: profile.email || currentUser.email };
-        renderProfile(originalProfile);
-
-        await loadRequestCounts();
-
-    } catch (error) {
-        console.error("Profile initialization failed:", error);
-        showLoadError(
-            "Unable to load your profile. Check your connection and Supabase configuration."
+    // Returns { updates } or { error } for the values typed into the page.
+    function collectUpdates() {
+        const updates = Object.fromEntries(
+            editableFields.map((field) => [
+                PROFILE_KEYS[field.dataset.profileKey],
+                field.textContent.trim() || null
+            ])
         );
-        return;
-    }
 
-    // Edit and save profile information.
-    editButton?.addEventListener("click", async () => {
-        if (!originalProfile || !currentUser) return;
-
-        if (!isEditing) {
-            editableFields.forEach((field) => {
-                const key = field.dataset.profileKey;
-
-                if (!profileKeys[key] || key === "email") return;
-
-                field.contentEditable = "true";
-                field.setAttribute("aria-label", `Edit ${key}`);
-                field.classList.add("profile-field-editing");
-
-                const value = originalProfile[profileKeys[key]];
-                field.textContent = value ?? "";
-            });
-
-            isEditing = true;
-            editButton.textContent = "Save Changes";
-
-            showMessage("Edit your details, then select Save Changes.");
-            return;
-        }
-
-        const updates = {};
-
-        editableFields.forEach((field) => {
-            const key = field.dataset.profileKey;
-            const column = profileKeys[key];
-
-            if (!column || key === "email") return;
-
-            const value = field.textContent.trim();
-            updates[column] = value || null;
-        });
-
-        if (
-            updates.sex &&
-            !["male", "female"].includes(updates.sex.toLowerCase())
-        ) {
-            showMessage("Sex must be Male or Female.", true);
-            return;
+        if (!updates.full_name || updates.full_name.length < 2) {
+            return { error: "Please enter your full name." };
         }
 
         if (updates.sex) {
-            updates.sex = updates.sex.toLowerCase();
+            const sex = updates.sex.toLowerCase();
+            if (!SEXES.includes(sex)) return { error: "Sex must be Male or Female." };
+            updates.sex = sex;
+        }
+
+        if (updates.phone) {
+            const phone = updates.phone.replace(/[\s-]/g, "");
+            if (!PHONE_RE.test(phone)) {
+                return { error: "Enter a valid mobile number, e.g. 09171234567." };
+            }
+            updates.phone = phone;
         }
 
         if (updates.birthdate) {
-            const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-
-            if (!datePattern.test(updates.birthdate)) {
-                showMessage(
-                    "Enter birthdate in YYYY-MM-DD format, for example 2002-03-15.",
-                    true
-                );
-                return;
+            if (!DATE_RE.test(updates.birthdate)) {
+                return { error: "Enter birthdate in YYYY-MM-DD format, for example 2002-03-15." };
             }
-
-            const date = new Date(`${updates.birthdate}T00:00:00`);
-
-            if (
-                Number.isNaN(date.getTime()) ||
-                date.toISOString().slice(0, 10) !== updates.birthdate
-            ) {
-                showMessage("Please enter a valid birthdate.", true);
-                return;
+            const date = new Date(`${updates.birthdate}T00:00:00Z`);
+            if (Number.isNaN(date.getTime()) ||
+                date.toISOString().slice(0, 10) !== updates.birthdate ||
+                date > new Date()) {
+                return { error: "Please enter a valid birthdate." };
             }
         }
 
-        const { data, error } = await supabaseClient
-            .from("profiles")
-            .update(updates)
-            .eq("id", currentUser.id)
-            .select()
-            .single();
+        return { updates };
+    }
 
-        if (error) {
-            console.error("Profile update failed:", error);
-            showMessage(`Could not save changes: ${error.message}`, true);
-            return;
-        }
-
-        originalProfile = { ...data, email: data.email || currentUser.email };
-        renderProfile(originalProfile);
+    function setEditing(editing) {
+        isEditing = editing;
 
         editableFields.forEach((field) => {
-            field.contentEditable = "false";
-            field.removeAttribute("aria-label");
-            field.classList.remove("profile-field-editing");
+            field.contentEditable = editing ? "true" : "false";
+            field.classList.toggle("profile-field-editing", editing);
+            if (editing) {
+                field.setAttribute("aria-label", `Edit ${field.dataset.profileKey}`);
+                field.textContent = originalProfile[PROFILE_KEYS[field.dataset.profileKey]] ?? "";
+            } else {
+                field.removeAttribute("aria-label");
+            }
         });
 
-        isEditing = false;
-        editButton.textContent = "Edit Profile";
+        editButton.textContent = editing ? "Save Changes" : "Edit Profile";
+    }
 
-        showMessage("Your profile has been saved to your account.");
+    async function saveProfile() {
+        const { updates, error: validationError } = collectUpdates();
+        if (validationError) {
+            showMessage(validationError, true);
+            return;
+        }
+
+        isSaving = true;
+        editButton.disabled = true;
+
+        try {
+            const { data, error } = await BP.getClient()
+                .from("profiles")
+                .update(updates)
+                .eq("id", currentUser.id)
+                .select()
+                .single();
+
+            if (error) throw error;
+
+            originalProfile = { ...data, email: data.email || currentUser.email };
+            setEditing(false);
+            renderProfile(originalProfile);
+            showMessage("Your profile has been saved to your account.");
+        } catch (error) {
+            console.error("Profile update failed:", error);
+            showMessage(`Could not save changes: ${error.message}`, true);
+        } finally {
+            isSaving = false;
+            editButton.disabled = false;
+        }
+    }
+
+    // Buttons that do not depend on the profile loading.
+    changePasswordButton?.addEventListener("click", () => {
+        BPPassword.openDialog(() => showMessage("Password updated successfully."));
     });
 
-    // Change account password.
-    changePasswordButton?.addEventListener("click", async () => {
-        const newPassword = window.prompt(
-            "Enter a new password (at least 8 characters):"
-        );
+    logoutButton?.addEventListener("click", () => BP.signOut());
 
-        if (newPassword === null) return;
+    try {
+        const auth = await BP.initPortal("resident");
+        if (!auth) return; // redirecting
 
-        if (newPassword.length < 8) {
-            window.alert("Your password must be at least 8 characters.");
+        currentUser = auth.user;
+        originalProfile = auth.profile;
+        renderProfile(originalProfile);
+
+        await loadRequestCounts();
+    } catch (error) {
+        console.error("Profile initialization failed:", error);
+        showLoadError("Unable to load your profile. Check your connection and try again.");
+        return;
+    }
+
+    editButton?.addEventListener("click", () => {
+        if (!originalProfile || isSaving) return;
+
+        if (!isEditing) {
+            setEditing(true);
+            showMessage("Edit your details, then select Save Changes. Birthdate uses YYYY-MM-DD.");
             return;
         }
 
-        const { error } = await supabaseClient.auth.updateUser({
-            password: newPassword
-        });
-
-        if (error) {
-            console.error("Password update failed:", error);
-            window.alert(`Could not update password: ${error.message}`);
-            return;
-        }
-
-        window.alert("Password updated successfully.");
-    });
-
-    // Log out.
-    logoutButton?.addEventListener("click", async (event) => {
-        event.preventDefault();
-
-        const { error } = await supabaseClient.auth.signOut();
-
-        if (error) {
-            console.error("Sign out failed:", error);
-            showMessage("Could not sign out. Please try again.", true);
-            return;
-        }
-
-        window.location.href = "../login/login.html";
+        saveProfile();
     });
 });

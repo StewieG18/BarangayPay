@@ -67,7 +67,7 @@
             </nav>
 
             <div class="sidebar-footer">
-                <a href="#" id="sidebarLogoutButton"
+                <a href="../login/login.html" id="sidebarLogoutButton"
                     class="navigation-item logout-item">
                     <span class="navigation-icon">↪</span>
                     <span class="navigation-label">Sign Out</span>
@@ -295,24 +295,9 @@
     <!-- Load Supabase before the profile logic -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/password.js"></script>
     <script src="profile.js"></script>
 
-    <!-- Sidebar sign-out uses the same Supabase session -->
-    <script>
-        document.getElementById("sidebarLogoutButton")
-            ?.addEventListener("click", async function (event) {
-                event.preventDefault();
-
-                const { error } = await supabaseClient.auth.signOut();
-
-                if (error) {
-                    console.error("Sign out failed:", error);
-                    alert("Unable to sign out. Please try again.");
-                    return;
-                }
-
-                window.location.href = "../login/login.html";
-            });
-    </script>
 </body>
 </html>

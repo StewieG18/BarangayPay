@@ -31,66 +31,46 @@
 
 
         <nav class="staff-navigation">
-
-            <!-- MAIN -->
             <div class="nav-section">
-
-                <span class="nav-section-title">
-                    MAIN
-                </span>
-
+                <span class="nav-section-title">MAIN</span>
                 <a href="../StaffPage/staff.html" class="staff-nav-link">
                     <span class="nav-icon">▦</span>
                     <span>Dashboard</span>
                 </a>
-
                 <a href="../StaffRequests/requests.html" class="staff-nav-link">
                     <span class="nav-icon">▤</span>
                     <span>Service Requests</span>
                 </a>
-
             </div>
-
-
-            <!-- MANAGEMENT -->
             <div class="nav-section">
-
-                <span class="nav-section-title">
-                    MANAGEMENT
-                </span>
-
+                <span class="nav-section-title">MANAGEMENT</span>
                 <a href="../StaffDocuments/documents.html" class="staff-nav-link">
                     <span class="nav-icon">▧</span>
                     <span>Documents</span>
                 </a>
-
+                <a href="../StaffReports/reports.html" class="staff-nav-link">
+                    <span class="nav-icon">▥</span>
+                    <span>Reports</span>
+                </a>
             </div>
-
-
-            <!-- ACCOUNT -->
             <div class="nav-section">
-
-                <span class="nav-section-title">
-                    ACCOUNT
-                </span>
-
-                <a
-                    href="../StaffSettings/settings.html"
-                    class="staff-nav-link active"
-                >
+                <span class="nav-section-title">ACCOUNT</span>
+                <a href="../StaffProfile/staff-profile.html" class="staff-nav-link">
+                    <span class="nav-icon">◯</span>
+                    <span>My Profile</span>
+                </a>
+                <a href="../StaffSettings/settings.html" class="staff-nav-link active">
                     <span class="nav-icon">⚙</span>
                     <span>Settings</span>
                 </a>
-
             </div>
-
         </nav>
 
 
         <div class="staff-sidebar-bottom">
 
             <a
-                href="../login/login.html"
+                href="../../login/login.html"
                 class="staff-signout"
             >
 
@@ -173,17 +153,17 @@
                     id="staffUserDropdown"
                 >
 
-                    <a href="staff-profile.html">
+                    <a href="../StaffProfile/staff-profile.html">
                         My Profile
                     </a>
 
-                    <a href="staff-settings.html">
+                    <a href="../StaffSettings/settings.html">
                         Settings
                     </a>
 
                     <div class="dropdown-divider"></div>
 
-                    <a href="../login/login.html">
+                    <a href="../../login/login.html">
                         Sign Out
                     </a>
 
@@ -324,7 +304,7 @@
                                     <input
                                         type="text"
                                         id="firstName"
-                                        value="Barangay"
+                                        value=""
                                     >
 
                                 </div>
@@ -339,7 +319,7 @@
                                     <input
                                         type="text"
                                         id="lastName"
-                                        value="Staff"
+                                        value=""
                                     >
 
                                 </div>
@@ -354,7 +334,8 @@
                                     <input
                                         type="email"
                                         id="email"
-                                        value="staff@barangaypay.gov.ph"
+                                        value=""
+                                        disabled
                                     >
 
                                 </div>
@@ -369,7 +350,8 @@
                                     <input
                                         type="text"
                                         id="mobile"
-                                        value="09XX XXX XXXX"
+                                        value=""
+                                        placeholder="09XX XXX XXXX"
                                     >
 
                                 </div>
@@ -874,252 +856,11 @@
 
 
 
-<script>
-
-    /* MOBILE SIDEBAR */
-
-    const staffMenuToggle =
-        document.getElementById("staffMenuToggle");
-
-    const staffSidebar =
-        document.getElementById("staffSidebar");
-
-
-    staffMenuToggle.addEventListener(
-        "click",
-        function () {
-
-            staffSidebar.classList.toggle("open");
-
-        }
-    );
-
-
-
-    /* USER DROPDOWN */
-
-    const staffUserButton =
-        document.getElementById("staffUserButton");
-
-    const staffUserDropdown =
-        document.getElementById("staffUserDropdown");
-
-
-    staffUserButton.addEventListener(
-        "click",
-        function (event) {
-
-            event.stopPropagation();
-
-            staffUserDropdown.classList.toggle("show");
-
-        }
-    );
-
-
-    document.addEventListener(
-        "click",
-        function () {
-
-            staffUserDropdown.classList.remove("show");
-
-        }
-    );
-
-
-
-    /* SETTINGS NAVIGATION */
-
-    const settingsButtons =
-        document.querySelectorAll(
-            ".settings-nav-button"
-        );
-
-    const settingsSections =
-        document.querySelectorAll(
-            ".settings-section"
-        );
-
-
-    settingsButtons.forEach(
-        function (button) {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    const sectionId =
-                        button.dataset.section;
-
-
-                    settingsButtons.forEach(
-                        function (item) {
-
-                            item.classList.remove(
-                                "active"
-                            );
-
-                        }
-                    );
-
-
-                    settingsSections.forEach(
-                        function (section) {
-
-                            section.classList.remove(
-                                "active"
-                            );
-
-                        }
-                    );
-
-
-                    button.classList.add("active");
-
-
-                    document
-                        .getElementById(sectionId)
-                        .classList.add("active");
-
-                }
-            );
-
-        }
-    );
-
-
-
-    /* ACCOUNT FORM */
-
-    document
-        .getElementById("accountForm")
-        .addEventListener(
-            "submit",
-            function (event) {
-
-                event.preventDefault();
-
-                alert(
-                    "Account information saved successfully."
-                );
-
-            }
-        );
-
-
-
-    /* PASSWORD */
-
-    document
-        .getElementById("passwordForm")
-        .addEventListener(
-            "submit",
-            function (event) {
-
-                event.preventDefault();
-
-
-                const newPassword =
-                    document.getElementById(
-                        "newPassword"
-                    ).value;
-
-                const confirmPassword =
-                    document.getElementById(
-                        "confirmPassword"
-                    ).value;
-
-
-                if (
-                    newPassword !==
-                    confirmPassword
-                ) {
-
-                    alert(
-                        "New passwords do not match."
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    newPassword.length < 8
-                ) {
-
-                    alert(
-                        "Password must contain at least 8 characters."
-                    );
-
-                    return;
-
-                }
-
-
-                alert(
-                    "Password updated successfully."
-                );
-
-            }
-        );
-
-
-
-    /* NOTIFICATIONS */
-
-    document
-        .getElementById("saveNotifications")
-        .addEventListener(
-            "click",
-            function () {
-
-                alert(
-                    "Notification preferences saved successfully."
-                );
-
-            }
-        );
-
-
-
-    /* SYSTEM */
-
-    document
-        .getElementById("saveSystem")
-        .addEventListener(
-            "click",
-            function () {
-
-                alert(
-                    "System preferences saved successfully."
-                );
-
-            }
-        );
-
-
-
-    /* TWO FACTOR */
-
-    document
-        .getElementById("twoFactor")
-        .addEventListener(
-            "change",
-            function () {
-
-                if (this.checked) {
-
-                    alert(
-                        "Two-factor authentication will be configured here."
-                    );
-
-                }
-
-            }
-        );
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/password.js"></script>
+<script src="settings.js"></script>
 
 </body>
 </html>

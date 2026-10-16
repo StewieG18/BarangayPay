@@ -125,95 +125,7 @@
 
 
     <div class="uploaded-files" id="uploadedFiles">
-
-        <!-- FILE 1 -->
-        <div class="uploaded-file">
-
-            <div class="file-icon">
-                PDF
-            </div>
-
-            <div class="file-information">
-
-                <strong>
-                    Valid_ID.pdf
-                </strong>
-
-                <span>
-                    PDF Document · 1.2 MB
-                </span>
-
-            </div>
-
-            <a
-                href="../uploads/Valid_ID.pdf"
-                target="_blank"
-                class="file-view-button"
-            >
-                Open
-            </a>
-
-        </div>
-
-
-        <!-- FILE 2 -->
-        <div class="uploaded-file">
-
-            <div class="file-icon image-file">
-                JPG
-            </div>
-
-            <div class="file-information">
-
-                <strong>
-                    Proof_of_Address.jpg
-                </strong>
-
-                <span>
-                    JPG Image · 2.4 MB
-                </span>
-
-            </div>
-
-            <a
-                href="../uploads/Proof_of_Address.jpg"
-                target="_blank"
-                class="file-view-button"
-            >
-                Open
-            </a>
-
-        </div>
-
-
-        <!-- FILE 3 -->
-        <div class="uploaded-file">
-
-            <div class="file-icon">
-                PDF
-            </div>
-
-            <div class="file-information">
-
-                <strong>
-                    Supporting_Document.pdf
-                </strong>
-
-                <span>
-                    PDF Document · 860 KB
-                </span>
-
-            </div>
-
-            <a
-                href="../uploads/Supporting_Document.pdf"
-                target="_blank"
-                class="file-view-button"
-            >
-                Open
-            </a>
-
-        </div>
+        <p>No uploaded files listed.</p>
 
     </div>
 
@@ -310,63 +222,46 @@
 
 
         <nav class="staff-navigation">
-
-            <!-- MAIN -->
             <div class="nav-section">
-
-                <span class="nav-section-title">
-                    MAIN
-                </span>
-
+                <span class="nav-section-title">MAIN</span>
                 <a href="../StaffPage/staff.html" class="staff-nav-link">
                     <span class="nav-icon">▦</span>
                     <span>Dashboard</span>
                 </a>
-
                 <a href="../StaffRequests/requests.html" class="staff-nav-link">
                     <span class="nav-icon">▤</span>
                     <span>Service Requests</span>
                 </a>
-
             </div>
-
-
-            <!-- MANAGEMENT -->
             <div class="nav-section">
-
-                <span class="nav-section-title">
-                    MANAGEMENT
-                </span>
-
+                <span class="nav-section-title">MANAGEMENT</span>
                 <a href="../StaffDocuments/documents.html" class="staff-nav-link active">
                     <span class="nav-icon">▧</span>
                     <span>Documents</span>
                 </a>
-
+                <a href="../StaffReports/reports.html" class="staff-nav-link">
+                    <span class="nav-icon">▥</span>
+                    <span>Reports</span>
+                </a>
             </div>
-
-
-            <!-- ACCOUNT -->
             <div class="nav-section">
-
-                <span class="nav-section-title">
-                    ACCOUNT
-                </span>
-
+                <span class="nav-section-title">ACCOUNT</span>
+                <a href="../StaffProfile/staff-profile.html" class="staff-nav-link">
+                    <span class="nav-icon">◯</span>
+                    <span>My Profile</span>
+                </a>
                 <a href="../StaffSettings/settings.html" class="staff-nav-link">
                     <span class="nav-icon">⚙</span>
                     <span>Settings</span>
                 </a>
-
             </div>
-
         </nav>
 
 
         <!-- SIGN OUT -->
         <div class="staff-sidebar-bottom">
 
-            <a href="/login/login.html" class="staff-signout">
+            <a href="../../login/login.html" class="staff-signout">
 
                 <span class="nav-icon">↪</span>
 
@@ -450,17 +345,17 @@
                     id="staffUserDropdown"
                 >
 
-                    <a href="staff-profile.html">
+                    <a href="../StaffProfile/staff-profile.html">
                         My Profile
                     </a>
 
-                    <a href="staff-settings.html">
+                    <a href="../StaffSettings/settings.html">
                         Settings
                     </a>
 
                     <div class="dropdown-divider"></div>
 
-                    <a href="/login/login.html">
+                    <a href="../../login/login.html">
                         Sign Out
                     </a>
 
@@ -789,6 +684,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../../js/supabase.js"></script>
+<script src="../../js/app.js"></script>
 
 
 <script>
@@ -1182,8 +1078,7 @@ function openDocument(doc) {
         if (items[3]) items[3].textContent = request.contact_number || "—";
     }
 
-    const uploadedFiles = document.getElementById("uploadedFiles");
-    uploadedFiles.innerHTML = "<p>No uploaded files listed.</p>";
+    renderUploadedFiles(request.document_paths);
 
     modalProcess.style.display =
         ["pending_generation", "ready_for_release"].includes(status)
@@ -1199,6 +1094,47 @@ function openDocument(doc) {
     document.body.classList.add("modal-open");
 
     void infoItems;
+}
+
+function renderUploadedFiles(paths) {
+    const container = document.getElementById("uploadedFiles");
+    const files = BP.parsePaths(paths);
+
+    container.replaceChildren();
+
+    if (!files.length) {
+        container.innerHTML = "<p>No uploaded files listed.</p>";
+        return;
+    }
+
+    files.forEach(path => {
+        const name = path.split("/").pop() || "Uploaded document";
+        const extension = name.split(".").pop().toUpperCase();
+
+        const row = document.createElement("div");
+        row.className = "uploaded-file";
+
+        const icon = document.createElement("div");
+        icon.className = extension === "PDF" ? "file-icon" : "file-icon image-file";
+        icon.textContent = extension.slice(0, 4);
+
+        const info = document.createElement("div");
+        info.className = "file-information";
+        const title = document.createElement("strong");
+        title.textContent = name;
+        const hint = document.createElement("span");
+        hint.textContent = extension === "PDF" ? "PDF Document" : `${extension} Image`;
+        info.append(title, hint);
+
+        const open = document.createElement("button");
+        open.type = "button";
+        open.className = "file-view-button";
+        open.textContent = "Open";
+        open.addEventListener("click", () => BP.openStoredFile(path));
+
+        row.append(icon, info, open);
+        container.append(row);
+    });
 }
 
 function closeDocument() {
@@ -1249,7 +1185,21 @@ async function processSelectedDocument() {
             return;
         }
 
-        alert("Document marked as released.");
+        // Releasing the document completes the resident's request.
+        const { error: requestError } = await client
+            .from("service_requests")
+            .update({
+                status: "completed",
+                updated_at: new Date().toISOString()
+            })
+            .eq("id", doc.request_id);
+
+        if (requestError) {
+            console.error(requestError);
+            alert("The document was released, but the request could not be marked completed. Please update it from Service Requests.");
+        } else {
+            alert("Document released and request marked as completed.");
+        }
     }
 
     closeDocument();
@@ -1357,7 +1307,15 @@ statusFilter.replaceChildren(
     new Option("Archived", "archived")
 );
 
-loadDocuments();
+BP.initPortal("staff")
+    .then(auth => {
+        if (auth) loadDocuments();
+    })
+    .catch(error => {
+        console.error("Could not start the documents page:", error);
+        tableBody.innerHTML =
+            '<tr><td colspan="7">Could not verify your staff account. Please sign in again.</td></tr>';
+    });
 </script>
 
 

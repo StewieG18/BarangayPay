@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const searchInput = document.getElementById("transactionSearch");
     const statusFilter = document.getElementById("statusFilter");
 
-    const supabaseClient = window.supabaseClient;
 
     let transactions = [];
 
@@ -41,26 +40,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         return String(value || "").toLowerCase().trim();
     }
 
-    function getServiceName(transaction) {
-        const service = transaction.service;
-
-        if (Array.isArray(service)) {
-            return service[0]?.name || "Unknown service";
-        }
-
-        return service?.name || "Unknown service";
+    function getServiceRecord(transaction) {
+        const service = transaction.service_info;
+        return Array.isArray(service) ? service[0] : service;
     }
 
-    function getServiceFee(transaction) {
-        const service = transaction.service;
+    function getServiceName(transaction) {
+        return getServiceRecord(transaction)?.name ||
+            transaction.service_name ||
+            "Unknown service";
+    }
 
-        const record = Array.isArray(service) ? service[0] : service;
-
-        if (record?.fee === null || record?.fee === undefined) {
-            return null;
+    // The amount saved on the request is what the resident pays;
+    // the catalogue fee is only a fallback for old rows.
+    function getAmount(transaction) {
+        if (transaction.amount !== null && transaction.amount !== undefined) {
+            return Number(transaction.amount);
         }
-
-        return Number(record.fee);
+        const fee = getServiceRecord(transaction)?.fee;
+        return fee === null || fee === undefined ? null : Number(fee);
     }
 
     function getStatusLabel(transaction) {
@@ -98,7 +96,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return status === "rejected";
 
             case "payment":
-                return payment === "unpaid";
+                return payment === "unpaid" || payment === "failed";
 
             case "paid":
                 return payment === "paid";
@@ -120,6 +118,29 @@ document.addEventListener("DOMContentLoaded", async () => {
             default:
                 return true;
         }
+    }
+
+    const PAYMENT_LABELS = {
+        paid: "Paid",
+        unpaid: "Unpaid",
+        failed: "Failed",
+        not_required: "Not required"
+    };
+
+    function paymentLabel(transaction) {
+        const payment = normalize(transaction.payment_status);
+        return PAYMENT_LABELS[payment] || BP.capitalize(payment) || "Unknown";
+    }
+
+    function needsPayment(transaction) {
+        const payment = normalize(transaction.payment_status);
+        const status = normalize(transaction.status);
+        return (payment === "unpaid" || payment === "failed") &&
+            !["rejected", "cancelled"].includes(status);
+    }
+
+    function paymentUrl(transaction) {
+        return `../Payment/payment.html?request=${encodeURIComponent(transaction.id)}`;
     }
 
     function createCell(text) {
@@ -185,7 +206,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             serviceName.textContent = getServiceName(transaction);
             serviceCell.appendChild(serviceName);
 
-            const fee = getServiceFee(transaction);
+            const fee = getAmount(transaction);
 
             if (fee !== null) {
                 const feeText = document.createElement("div");
@@ -218,9 +239,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             statusCell.appendChild(statusBadge);
 
             const paymentText = document.createElement("div");
-            paymentText.textContent =
-                "Payment: " +
-                (transaction.payment_status || "Unknown");
+            paymentText.textContent = "Payment: " + paymentLabel(transaction);
 
             paymentText.style.fontSize = "0.8em";
             paymentText.style.marginTop = "5px";
@@ -245,17 +264,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 window.alert(
                     `Transaction Details\n\n` +
-                    `Request Code: ${transaction.request_code}\n` +
+                    `Request Code: ${transaction.request_code || "—"}\n` +
                     `Service: ${getServiceName(transaction)}\n` +
                     `Service Fee: ${feeText}\n` +
                     `Date Submitted: ${formatDate(transaction.submitted_at)}\n` +
                     `Status: ${statusLabel}\n` +
-                    `Payment: ${transaction.payment_status || "Unknown"}\n` +
+                    `Payment: ${paymentLabel(transaction)}\n` +
                     `Remarks: ${transaction.remarks || "None"}`
                 );
             });
 
             actionCell.appendChild(viewButton);
+
+            if (needsPayment(transaction)) {
+                const payLink = document.createElement("a");
+                payLink.className = "primary-button";
+                payLink.href = paymentUrl(transaction);
+                payLink.textContent = "Pay";
+                payLink.style.marginLeft = "6px";
+                actionCell.appendChild(payLink);
+            }
             row.appendChild(actionCell);
 
             tableBody.appendChild(row);
@@ -263,48 +291,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     async function loadTransactions() {
-        if (!supabaseClient) {
-            console.error("Supabase client was not found.");
-
-            showMessage(
-                "Supabase is not initialized. Check the script paths and configuration.",
-                true
-            );
-            return;
-        }
-
         try {
-            // Verify that a resident is logged in.
-            const { data: authData, error: authError } =
-                await supabaseClient.auth.getUser();
+            const auth = await BP.initPortal("resident");
+            if (!auth) return; // redirecting
 
-            if (authError) {
-                console.error("Authentication error:", authError);
-                showMessage("Unable to verify your login.", true);
-                return;
-            }
-
-            if (!authData.user) {
-                window.location.href = "../login/login.html";
-                return;
-            }
-
-            const currentUser = authData.user;
+            const currentUser = auth.user;
 
             // Load only the current resident's requests.
-            const { data, error } = await supabaseClient
+            const { data, error } = await BP.getClient()
                 .from("service_requests")
                 .select(`
                     id,
                     request_code,
                     resident_id,
                     service_id,
+                    service_name:service,
+                    amount,
                     status,
                     payment_status,
                     remarks,
                     submitted_at,
                     updated_at,
-                    service:services (
+                    service_info:services (
                         name,
                         fee
                     )

@@ -5,5 +5,3 @@ window.supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
 );
-
-console.log("BarangayPay connected to Supabase.");

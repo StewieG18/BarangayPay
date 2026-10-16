@@ -83,6 +83,15 @@
     })[character]);
   }
 
+  function todayISO() {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 10);
+  }
+
+  const preferredDateInput = document.getElementById('preferredDate');
+  if (preferredDateInput) preferredDateInput.min = todayISO();
+
   function getValue(id) {
     return document.getElementById(id)?.value?.trim() || '';
   }
@@ -141,6 +150,10 @@
 
     if (!details.purpose) {
       errors.push('Please select the purpose of your request.');
+    }
+
+    if (details.preferredDate && details.preferredDate < todayISO()) {
+      errors.push('The preferred date cannot be in the past.');
     }
 
     const confirmation = document.getElementById('confirmInformation');
@@ -380,6 +393,23 @@
     openModal(details);
   });
 
+  // The admin can change fees in the services table; fall back to the
+  // built-in fee if that table cannot be read.
+  async function getServiceFee(client, serviceValue) {
+    const { data, error } = await client
+      .from('services')
+      .select('fee')
+      .eq('id', SERVICE_IDS[serviceValue])
+      .maybeSingle();
+
+    if (error || !data || data.fee === null || data.fee === undefined) {
+      if (error) console.warn('Could not read the service fee:', error);
+      return FEES[serviceValue] ?? 0;
+    }
+
+    return Number(data.fee) || 0;
+  }
+
   function safeFileName(name) {
     return name.replace(/[^A-Za-z0-9._-]/g, '_');
   }
@@ -408,7 +438,7 @@
         throw new Error('Supabase is not initialized. Check the script tags in service.html and your js/supabase.js file.');
       }
 
-      const client = supabaseClient;;
+      const client = supabaseClient;
 
       const { data: sessionData, error: sessionError } = await client.auth.getSession();
       if (sessionError) throw sessionError;
@@ -420,7 +450,7 @@
       }
 
       const serviceValue = getSelectedService();
-      const amount = FEES[serviceValue] ?? 0;
+      const amount = await getServiceFee(client, serviceValue);
 
       // Upload documents first: <user id>/<random folder>/<file>
       const folder = `${user.id}/${window.crypto.randomUUID()}`;
@@ -480,5 +510,32 @@
       confirmButton.textContent = 'Confirm & Submit';
     }
   });
+
+  // Guard the page and pre-fill the applicant details from the profile.
+  function prefill(id, value) {
+    const input = document.getElementById(id);
+    if (input && !input.value && value) input.value = value;
+  }
+
+  BP.initPortal('resident')
+    .then(auth => {
+      if (!auth) return;
+
+      const profile = auth.profile;
+      const parts = String(profile.full_name || '').trim().split(/\s+/).filter(Boolean);
+
+      if (parts.length > 1) {
+        prefill('firstName', parts.slice(0, -1).join(' '));
+        prefill('lastName', parts[parts.length - 1]);
+      }
+      prefill('contactNumber', profile.phone);
+      prefill('address', profile.address ||
+        [profile.house_street, profile.barangay, profile.city, profile.province]
+          .filter(Boolean).join(', '));
+    })
+    .catch(error => {
+      console.error('Could not start the request page:', error);
+      setStatus('error', 'Could not verify your account. Please refresh the page.');
+    });
 
 })();

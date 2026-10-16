@@ -25,43 +25,43 @@
         </div>
 
         <nav class="staff-navigation">
-
             <div class="nav-section">
                 <span class="nav-section-title">MAIN</span>
-
                 <a href="../StaffPage/staff.html" class="staff-nav-link">
                     <span class="nav-icon">▦</span>
                     <span>Dashboard</span>
                 </a>
-
                 <a href="../StaffRequests/requests.html" class="staff-nav-link active">
                     <span class="nav-icon">▤</span>
                     <span>Service Requests</span>
                 </a>
             </div>
-
             <div class="nav-section">
                 <span class="nav-section-title">MANAGEMENT</span>
-
                 <a href="../StaffDocuments/documents.html" class="staff-nav-link">
                     <span class="nav-icon">▧</span>
                     <span>Documents</span>
                 </a>
+                <a href="../StaffReports/reports.html" class="staff-nav-link">
+                    <span class="nav-icon">▥</span>
+                    <span>Reports</span>
+                </a>
             </div>
-
             <div class="nav-section">
                 <span class="nav-section-title">ACCOUNT</span>
-
+                <a href="../StaffProfile/staff-profile.html" class="staff-nav-link">
+                    <span class="nav-icon">◯</span>
+                    <span>My Profile</span>
+                </a>
                 <a href="../StaffSettings/settings.html" class="staff-nav-link">
                     <span class="nav-icon">⚙</span>
                     <span>Settings</span>
                 </a>
             </div>
-
         </nav>
 
         <div class="staff-sidebar-bottom">
-            <a href="/login/login.html" class="staff-signout">
+            <a href="../../login/login.html" class="staff-signout">
                 <span class="nav-icon">↪</span>
                 <span>Sign Out</span>
             </a>
@@ -107,10 +107,10 @@
                 </button>
 
                 <div class="staff-user-dropdown" id="staffUserDropdown">
-                    <a href="staff-profile.html">My Profile</a>
+                    <a href="../StaffProfile/staff-profile.html">My Profile</a>
                     <a href="../StaffSettings/settings.html">Settings</a>
                     <div class="dropdown-divider"></div>
-                    <a href="../login/login.html">Sign Out</a>
+                    <a href="../../login/login.html">Sign Out</a>
                 </div>
 
             </div>
@@ -522,8 +522,8 @@
                         <strong id="modalResident">Juan Dela Cruz</strong>
                     </div>
                     <div class="detail-item">
-                        <span>Email</span>
-                        <strong id="modalEmail">juan.delacruz@email.com</strong>
+                        <span>Contact Number</span>
+                        <strong id="modalEmail">—</strong>
                     </div>
                     <div class="detail-item">
                         <span>Date Submitted</span>
@@ -629,6 +629,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../../js/supabase.js"></script>
+<script src="../../js/app.js"></script>
 
 <script>
 /* =========================================================
@@ -726,17 +727,13 @@ function getResidentName(request) {
 }
 
 function getServiceName(request) {
-    const service = request.service;
+    const service = Array.isArray(request.service_info)
+        ? request.service_info[0]
+        : request.service_info;
 
-    if (Array.isArray(service) && service.length > 0) {
-        return service[0].name || `Service #${request.service_id}`;
-    }
-
-    if (service && typeof service === "object") {
-        return service.name || `Service #${request.service_id}`;
-    }
-
-    return `Service #${request.service_id ?? "Unknown"}`;
+    return service?.name ||
+        request.service_name ||
+        `Service #${request.service_id ?? "Unknown"}`;
 }
 
 function getPaymentStatus(request) {
@@ -751,23 +748,6 @@ function statusClass(status) {
 }
 
 /* =========================================================
-   SIDEBAR AND DROPDOWN
-========================================================= */
-
-staffMenuToggle?.addEventListener("click", () => {
-    staffSidebar.classList.toggle("open");
-});
-
-staffUserButton?.addEventListener("click", event => {
-    event.stopPropagation();
-    staffUserDropdown.classList.toggle("show");
-});
-
-document.addEventListener("click", () => {
-    staffUserDropdown?.classList.remove("show");
-});
-
-/* =========================================================
    LOAD REAL REQUESTS
 ========================================================= */
 
@@ -777,37 +757,12 @@ async function loadRequests() {
         return;
     }
 
-    requestTableBody.innerHTML =
-        '<tr><td colspan="7">Loading service requests...</td></tr>';
+    if (!allRequests.length) {
+        requestTableBody.innerHTML =
+            '<tr><td colspan="7">Loading service requests...</td></tr>';
+    }
 
     try {
-        const { data: sessionData, error: sessionError } =
-            await client.auth.getSession();
-
-        if (sessionError) throw sessionError;
-
-        if (!sessionData.session) {
-            showLoadError("Please log in using your staff account.");
-            return;
-        }
-
-        const { data: profile, error: profileError } = await client
-            .from("profiles")
-            .select("role, status")
-            .eq("id", sessionData.session.user.id)
-            .single();
-
-        if (profileError) throw profileError;
-
-        if (
-            String(profile.role).toLowerCase().trim() !== "staff" ||
-            String(profile.status).toLowerCase().trim() !== "active"
-        ) {
-            showLoadError("Access denied. An active staff account is required.");
-            return;
-        }
-
-        
             const { data, error } = await client
                 .from("service_requests")
                 .select(`
@@ -815,7 +770,8 @@ async function loadRequests() {
                     request_code,
                     resident_id,
                     service_id,
-                    service:services!service_requests_service_id_fkey (
+                    service_name:service,
+                    service_info:services!service_requests_service_id_fkey (
                         id,
                         name
                     ),
@@ -1017,35 +973,17 @@ function renderUploadedFiles(paths) {
     const list = document.querySelector(".document-list");
     if (!list) return;
 
-    list.innerHTML = "";
+    list.replaceChildren();
 
-    let files = paths;
-
-    if (typeof files === "string") {
-        try {
-            files = JSON.parse(files);
-        } catch {
-            files = files ? [files] : [];
-        }
-    }
-
-    if (!Array.isArray(files)) {
-        files = files ? [files] : [];
-    }
+    const files = BP.parsePaths(paths);
 
     if (!files.length) {
         list.innerHTML = "<p>No uploaded files recorded for this request.</p>";
         return;
     }
 
-    files.forEach(file => {
-        const path = typeof file === "string"
-            ? file
-            : file.path || file.name || file.url || "";
-
-        const label = typeof file === "string"
-            ? file.split("/").pop()
-            : file.name || file.path?.split("/").pop() || "Uploaded document";
+    files.forEach(path => {
+        const label = path.split("/").pop() || "Uploaded document";
 
         const item = document.createElement("div");
         item.className = "document-item";
@@ -1066,39 +1004,18 @@ function renderUploadedFiles(paths) {
 
         textContainer.append(title, hint);
         info.append(icon, textContainer);
-        item.append(info);
 
-        if (path) {
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = "document-btn";
-            button.textContent = "Open";
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "document-btn";
+        button.textContent = "Open";
+        button.addEventListener("click", () => BP.openStoredFile(path));
 
-            button.addEventListener("click", async () => {
-                if (/^https?:\/\//i.test(path)) {
-                    window.open(path, "_blank", "noopener,noreferrer");
-                    return;
-                }
+        const actions = document.createElement("div");
+        actions.className = "document-actions";
+        actions.append(button);
 
-                const { data, error } = await client.storage
-                    .from("request-documents")
-                    .createSignedUrl(path, 60);
-
-                if (error || !data?.signedUrl) {
-                    alert("Unable to open this file. Check the storage bucket and file path.");
-                    console.error(error);
-                    return;
-                }
-
-                window.open(data.signedUrl, "_blank", "noopener,noreferrer");
-            });
-
-            const actions = document.createElement("div");
-            actions.className = "document-actions";
-            actions.append(button);
-            item.append(actions);
-        }
-
+        item.append(info, actions);
         list.append(item);
     });
 }
@@ -1126,7 +1043,10 @@ function openRequestModal(request) {
     modalPreviewTitle.textContent = service.toUpperCase();
     modalPreviewResident.textContent = name;
 
-    staffNotes.value = request.remarks || request.notes || "";
+    staffNotes.value = request.remarks || "";
+    staffNotes.placeholder = request.notes
+        ? `Resident notes: ${request.notes}`
+        : "Add remarks for the resident (required when rejecting).";
 
     renderUploadedFiles(request.document_paths);
 
@@ -1179,6 +1099,8 @@ requestTableBody.addEventListener("click", event => {
 async function updateRequestStatus(newStatus) {
     if (!selectedRequest || isUpdating) return;
 
+    const remarks = staffNotes.value.trim();
+
     isUpdating = true;
 
     modalProcessButton.disabled = true;
@@ -1191,17 +1113,24 @@ async function updateRequestStatus(newStatus) {
             throw new Error("Your session has expired. Please log in again.");
         }
 
+        const changes = {
+            status: newStatus,
+            remarks: remarks || null,
+            updated_at: new Date().toISOString()
+        };
+
         const { error } = await client
             .from("service_requests")
-            .update({
-                status: newStatus,
-                updated_at: new Date().toISOString()
-            })
+            .update(changes)
             .eq("id", selectedRequest.id);
 
         if (error) throw error;
 
-        selectedRequest.status = newStatus;
+        const updated = { ...selectedRequest, ...changes };
+        allRequests = allRequests.map(item =>
+            item.id === updated.id ? updated : item
+        );
+        selectedRequest = updated;
 
         alert(
             `Request ${selectedRequest.request_code || selectedRequest.id} ` +
@@ -1231,6 +1160,15 @@ modalProcessButton.addEventListener("click", () => {
     const current = normalizeStatus(selectedRequest.status);
 
     if (current === "pending") {
+        const payment = getPaymentStatus(selectedRequest);
+        const unpaid = payment === "unpaid" || payment === "failed";
+
+        if (unpaid && !confirm(
+            "This request has not been paid yet. Accept it anyway?"
+        )) {
+            return;
+        }
+
         updateRequestStatus("processing");
     } else if (current === "processing") {
         updateRequestStatus("completed");
@@ -1242,6 +1180,12 @@ modalRejectButton.addEventListener("click", () => {
 
     const code = selectedRequest.request_code || selectedRequest.id;
 
+    if (!staffNotes.value.trim()) {
+        alert("Please enter the reason for rejection in the remarks box.");
+        staffNotes.focus();
+        return;
+    }
+
     if (confirm(`Are you sure you want to reject ${code}?`)) {
         updateRequestStatus("rejected");
     }
@@ -1251,9 +1195,23 @@ modalRejectButton.addEventListener("click", () => {
    INITIAL LOAD AND REFRESH
 ========================================================= */
 
-loadRequests();
+const REFRESH_INTERVAL_MS = 30000;
 
-setInterval(loadRequests, 30000);
+BP.initPortal("staff")
+    .then(auth => {
+        if (!auth) return; // redirecting
+
+        loadRequests();
+
+        // Skip background refreshes while a request is open.
+        setInterval(() => {
+            if (!selectedRequest) loadRequests();
+        }, REFRESH_INTERVAL_MS);
+    })
+    .catch(error => {
+        console.error("Could not start the requests page:", error);
+        showLoadError("Could not verify your staff account. Please sign in again.");
+    });
 
 </script>
 

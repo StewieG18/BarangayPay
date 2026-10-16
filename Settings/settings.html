@@ -43,7 +43,7 @@
                 <div class="navigation-section">
                     <span class="navigation-title">MAIN</span>
 
-                    <a href="../index.html" class="navigation-item active">
+                    <a href="../index.html" class="navigation-item">
                         <span class="navigation-icon">⌂</span>
                         <span class="navigation-label">Dashboard</span>
                     </a>
@@ -68,13 +68,23 @@
                         <span class="navigation-label">Profile</span>
                     </a>
 
-                    <a href="settings.html" class="navigation-item">
+                    <a href="settings.html" class="navigation-item active">
                         <span class="navigation-icon">⚙</span>
                         <span class="navigation-label">Settings</span>
                     </a>
                 </div>
 
             </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+
+                <a href="../login/login.html" class="navigation-item logout-item">
+                    <span class="navigation-icon">↪</span>
+                    <span class="navigation-label">Sign Out</span>
+                </a>
+
+            </div>
 
         </aside>
 
@@ -128,7 +138,7 @@
 
                     <!-- User Profile -->
                     <a
-                        href="Profile/profile.html"
+                        href="../Profile/profile.html"
                         class="user-menu"
                         id="userMenu"
                         aria-label="Open user menu">
@@ -236,6 +246,7 @@
                                 <a
                                     href="#"
                                     class="settings-action"
+                                    id="changePasswordLink"
                                 >
                                     Change Password
                                 </a>
@@ -540,7 +551,7 @@
                                 be managed from your Profile page.
                             </p>
 
-                            <a href="profile.html">
+                            <a href="../Profile/profile.html">
                                 Go to Profile
                             </a>
 
@@ -582,11 +593,13 @@
     </div>
 
 
-    <!-- Main UI JavaScript -->
-    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/password.js"></script>
 
     <!-- Settings JavaScript -->
-    <script src="js/settings.js"></script>
+    <script src="settings.js"></script>
 
 </body>
 </html>

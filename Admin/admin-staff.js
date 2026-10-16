@@ -128,7 +128,7 @@
 
         const { data: me, error: meError } = await supabaseClient
             .from("profiles")
-            .select("full_name, role, status")
+            .select("id, full_name, email, phone, role, status")
             .eq("id", session.user.id)
             .maybeSingle();
 
@@ -517,6 +517,9 @@
             buildStaffUi();
             wireSignOut();
             showPage();
+
+            // admin-data.js fills the other sections once the admin is confirmed.
+            document.dispatchEvent(new CustomEvent("bp:admin-ready", { detail: me }));
 
             await loadStaff();
         } catch (error) {

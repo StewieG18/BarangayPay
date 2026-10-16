@@ -8,6 +8,33 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    const HOME_BY_ROLE = {
+        resident: "../index.html",
+        staff: "../Staff/StaffPage/staff.html",
+        admin: "../Admin/admin.html"
+    };
+
+    // Already signed in with an active account: go straight to that portal.
+    (async () => {
+        try {
+            const { data } = await supabaseClient.auth.getSession();
+            const user = data?.session?.user;
+            if (!user) return;
+
+            const { data: profile } = await supabaseClient
+                .from("profiles")
+                .select("role, status")
+                .eq("id", user.id)
+                .maybeSingle();
+
+            if (profile?.status === "active" && HOME_BY_ROLE[profile.role]) {
+                window.location.replace(HOME_BY_ROLE[profile.role]);
+            }
+        } catch (sessionError) {
+            console.warn("Could not check the existing session:", sessionError);
+        }
+    })();
+
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
@@ -51,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     .single();
 
             if (profileError || !profile) {
+                await supabaseClient.auth.signOut();
                 throw new Error(
                     "Your profile was not found. Please contact the administrator."
                 );
@@ -61,23 +89,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error("Your account is inactive. Please contact the administrator.");
             }
 
-            switch (profile.role) {
-                case "resident":
-                    window.location.href = "../index.html";
-                    break;
+            const home = HOME_BY_ROLE[profile.role];
 
-                case "staff":
-                    window.location.href = "../Staff/StaffPage/staff.html";
-                    break;
-
-                case "admin":
-                    window.location.href = "../Admin/admin.html";
-                    break;
-
-                default:
-                    await supabaseClient.auth.signOut();
-                    throw new Error("Your account has an unrecognized role.");
+            if (!home) {
+                await supabaseClient.auth.signOut();
+                throw new Error("Your account has an unrecognized role.");
             }
+
+            window.location.href = home;
         } catch (error) {
             console.error("Login error:", error);
 

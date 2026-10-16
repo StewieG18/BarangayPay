@@ -82,7 +82,7 @@
 
                 <p class="nav-label">ACCOUNT</p>
 
-                <a href="#" class="nav-item" onclick="openModal('accountModal')">
+                <a href="#" class="nav-item" data-open-account>
                     <span class="nav-icon">◎</span>
                     <span>Admin Account</span>
                 </a>
@@ -156,7 +156,7 @@
 
                     <div class="user-dropdown" id="userDropdown">
 
-                        <a href="#" onclick="openModal('accountModal')">
+                        <a href="#" data-open-account>
                             Admin Account
                         </a>
 
@@ -221,7 +221,7 @@
 
                         <div>
                             <span>Total Service Requests</span>
-                            <strong>71</strong>
+                            <strong>—</strong>
                         </div>
 
                     </div>
@@ -235,7 +235,7 @@
 
                         <div>
                             <span>Pending Requests</span>
-                            <strong>12</strong>
+                            <strong>—</strong>
                         </div>
 
                     </div>
@@ -249,7 +249,7 @@
 
                         <div>
                             <span>Total Payments</span>
-                            <strong>₱24,850</strong>
+                            <strong>—</strong>
                         </div>
 
                     </div>
@@ -263,7 +263,7 @@
 
                         <div>
                             <span>Available Services</span>
-                            <strong>4</strong>
+                            <strong>—</strong>
                         </div>
 
                     </div>
@@ -277,7 +277,7 @@
 
                         <div>
                             <span>Active Staff</span>
-                            <strong>6</strong>
+                            <strong>—</strong>
                         </div>
 
                     </div>
@@ -325,114 +325,7 @@
 
 
                             <tbody>
-
-                                <tr>
-
-                                    <td>
-                                        <strong>BP-2026-00124</strong>
-                                    </td>
-
-                                    <td>
-                                        Juan Dela Cruz
-                                    </td>
-
-                                    <td>
-                                        Barangay Clearance
-                                    </td>
-
-                                    <td>
-                                        Oct 4, 2026
-                                    </td>
-
-                                    <td>
-                                        <span class="status pending">
-                                            Pending
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <button
-                                            class="table-button"
-                                            onclick="openRequestModal('BP-2026-00124')"
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <strong>BP-2026-00123</strong>
-                                    </td>
-
-                                    <td>
-                                        Maria Santos
-                                    </td>
-
-                                    <td>
-                                        Certificate of Residency
-                                    </td>
-
-                                    <td>
-                                        Oct 4, 2026
-                                    </td>
-
-                                    <td>
-                                        <span class="status processing">
-                                            Processing
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <button
-                                            class="table-button"
-                                            onclick="openRequestModal('BP-2026-00123')"
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <strong>BP-2026-00122</strong>
-                                    </td>
-
-                                    <td>
-                                        Pedro Reyes
-                                    </td>
-
-                                    <td>
-                                        Certificate of Indigency
-                                    </td>
-
-                                    <td>
-                                        Oct 3, 2026
-                                    </td>
-
-                                    <td>
-                                        <span class="status completed">
-                                            Completed
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <button
-                                            class="table-button"
-                                            onclick="openRequestModal('BP-2026-00122')"
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-
-                                </tr>
-
+                                <tr><td colspan="6" class="sm-empty">Loading requests...</td></tr>
                             </tbody>
 
                         </table>
@@ -478,27 +371,27 @@
 
                     <div class="mini-summary">
                         <span>All Requests</span>
-                        <strong>71</strong>
+                        <strong>—</strong>
                     </div>
 
                     <div class="mini-summary">
                         <span>Pending</span>
-                        <strong>12</strong>
+                        <strong>—</strong>
                     </div>
 
                     <div class="mini-summary">
                         <span>Processing</span>
-                        <strong>8</strong>
+                        <strong>—</strong>
                     </div>
 
                     <div class="mini-summary">
                         <span>Completed</span>
-                        <strong>47</strong>
+                        <strong>—</strong>
                     </div>
 
                     <div class="mini-summary">
                         <span>Rejected</span>
-                        <strong>4</strong>
+                        <strong>—</strong>
                     </div>
 
                 </div>
@@ -560,118 +453,7 @@
 
 
                             <tbody>
-
-                                <tr>
-
-                                    <td><strong>BP-2026-00124</strong></td>
-                                    <td>Juan Dela Cruz</td>
-                                    <td>Barangay Clearance</td>
-                                    <td>Oct 4, 2026</td>
-                                    <td>
-                                        <span class="payment paid">
-                                            Paid
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="status pending">
-                                            Pending
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button
-                                            class="table-button"
-                                            onclick="openRequestModal('BP-2026-00124')"
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td><strong>BP-2026-00123</strong></td>
-                                    <td>Maria Santos</td>
-                                    <td>Certificate of Residency</td>
-                                    <td>Oct 4, 2026</td>
-                                    <td>
-                                        <span class="payment paid">
-                                            Paid
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="status processing">
-                                            Processing
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button
-                                            class="table-button"
-                                            onclick="openRequestModal('BP-2026-00123')"
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td><strong>BP-2026-00122</strong></td>
-                                    <td>Pedro Reyes</td>
-                                    <td>Certificate of Indigency</td>
-                                    <td>Oct 3, 2026</td>
-                                    <td>
-                                        <span class="payment paid">
-                                            Paid
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="status completed">
-                                            Completed
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button
-                                            class="table-button"
-                                            onclick="openRequestModal('BP-2026-00122')"
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td><strong>BP-2026-00121</strong></td>
-                                    <td>Ana Garcia</td>
-                                    <td>Business Clearance</td>
-                                    <td>Oct 3, 2026</td>
-                                    <td>
-                                        <span class="payment unpaid">
-                                            Unpaid
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="status pending">
-                                            Pending
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button
-                                            class="table-button"
-                                            onclick="openRequestModal('BP-2026-00121')"
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-
-                                </tr>
-
+                                <tr><td colspan="7" class="sm-empty">Loading requests...</td></tr>
                             </tbody>
 
                         </table>
@@ -721,7 +503,7 @@
 
                         <div>
                             <span>Total Collected</span>
-                            <strong>₱24,850</strong>
+                            <strong>—</strong>
                         </div>
 
                     </div>
@@ -735,7 +517,7 @@
 
                         <div>
                             <span>Paid Transactions</span>
-                            <strong>63</strong>
+                            <strong>—</strong>
                         </div>
 
                     </div>
@@ -749,7 +531,7 @@
 
                         <div>
                             <span>Unpaid Transactions</span>
-                            <strong>8</strong>
+                            <strong>—</strong>
                         </div>
 
                     </div>
@@ -763,7 +545,7 @@
 
                         <div>
                             <span>Average Payment</span>
-                            <strong>₱350</strong>
+                            <strong>—</strong>
                         </div>
 
                     </div>
@@ -807,99 +589,7 @@
 
 
                             <tbody>
-
-                                <tr>
-
-                                    <td>
-                                        <strong>PAY-2026-00124</strong>
-                                    </td>
-
-                                    <td>
-                                        Juan Dela Cruz
-                                    </td>
-
-                                    <td>
-                                        Barangay Clearance
-                                    </td>
-
-                                    <td>
-                                        ₱350.00
-                                    </td>
-
-                                    <td>
-                                        Oct 4, 2026
-                                    </td>
-
-                                    <td>
-                                        <span class="payment paid">
-                                            Paid
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <strong>PAY-2026-00123</strong>
-                                    </td>
-
-                                    <td>
-                                        Maria Santos
-                                    </td>
-
-                                    <td>
-                                        Certificate of Residency
-                                    </td>
-
-                                    <td>
-                                        ₱200.00
-                                    </td>
-
-                                    <td>
-                                        Oct 4, 2026
-                                    </td>
-
-                                    <td>
-                                        <span class="payment paid">
-                                            Paid
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <strong>PAY-2026-00122</strong>
-                                    </td>
-
-                                    <td>
-                                        Pedro Reyes
-                                    </td>
-
-                                    <td>
-                                        Certificate of Indigency
-                                    </td>
-
-                                    <td>
-                                        ₱0.00
-                                    </td>
-
-                                    <td>
-                                        Oct 3, 2026
-                                    </td>
-
-                                    <td>
-                                        <span class="payment paid">
-                                            Paid
-                                        </span>
-                                    </td>
-
-                                </tr>
-
+                                <tr><td colspan="6" class="sm-empty">Loading payments...</td></tr>
                             </tbody>
 
                         </table>
@@ -937,12 +627,7 @@
                     </div>
 
 
-                    <button
-                        class="primary-button"
-                        onclick="openModal('serviceModal')"
-                    >
-                        + Add Service
-                    </button>
+
 
                 </div>
 
@@ -967,142 +652,7 @@
 
 
                             <tbody>
-
-                                <tr>
-
-                                    <td>
-                                        <strong>Barangay Clearance</strong>
-                                    </td>
-
-                                    <td>
-                                        ₱350.00
-                                    </td>
-
-                                    <td>
-                                        1–2 Days
-                                    </td>
-
-                                    <td>
-                                        <span class="status active">
-                                            Active
-                                        </span>
-                                    </td>
-
-                                    <td>
-
-                                        <button
-                                            class="table-button"
-                                            onclick="openEditService('Barangay Clearance')"
-                                        >
-                                            Edit
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <strong>Certificate of Residency</strong>
-                                    </td>
-
-                                    <td>
-                                        ₱200.00
-                                    </td>
-
-                                    <td>
-                                        1 Day
-                                    </td>
-
-                                    <td>
-                                        <span class="status active">
-                                            Active
-                                        </span>
-                                    </td>
-
-                                    <td>
-
-                                        <button
-                                            class="table-button"
-                                            onclick="openEditService('Certificate of Residency')"
-                                        >
-                                            Edit
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <strong>Certificate of Indigency</strong>
-                                    </td>
-
-                                    <td>
-                                        ₱0.00
-                                    </td>
-
-                                    <td>
-                                        1 Day
-                                    </td>
-
-                                    <td>
-                                        <span class="status active">
-                                            Active
-                                        </span>
-                                    </td>
-
-                                    <td>
-
-                                        <button
-                                            class="table-button"
-                                            onclick="openEditService('Certificate of Indigency')"
-                                        >
-                                            Edit
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <strong>Business Clearance</strong>
-                                    </td>
-
-                                    <td>
-                                        ₱500.00
-                                    </td>
-
-                                    <td>
-                                        2–3 Days
-                                    </td>
-
-                                    <td>
-                                        <span class="status active">
-                                            Active
-                                        </span>
-                                    </td>
-
-                                    <td>
-
-                                        <button
-                                            class="table-button"
-                                            onclick="openEditService('Business Clearance')"
-                                        >
-                                            Edit
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
+                                <tr><td colspan="5" class="sm-empty">Loading services...</td></tr>
                             </tbody>
 
                         </table>
@@ -1170,108 +720,7 @@
 
 
                             <tbody>
-
-                                <tr>
-
-                                    <td>
-                                        <strong>Juan Staff</strong>
-                                    </td>
-
-                                    <td>
-                                        staff1@barangaypay.gov.ph
-                                    </td>
-
-                                    <td>
-                                        Staff
-                                    </td>
-
-                                    <td>
-                                        <span class="status active">
-                                            Active
-                                        </span>
-                                    </td>
-
-                                    <td>
-
-                                        <button
-                                            class="table-button"
-                                            onclick="openEditStaff('Juan Staff')"
-                                        >
-                                            Edit
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <strong>Maria Staff</strong>
-                                    </td>
-
-                                    <td>
-                                        staff2@barangaypay.gov.ph
-                                    </td>
-
-                                    <td>
-                                        Staff
-                                    </td>
-
-                                    <td>
-                                        <span class="status active">
-                                            Active
-                                        </span>
-                                    </td>
-
-                                    <td>
-
-                                        <button
-                                            class="table-button"
-                                            onclick="openEditStaff('Maria Staff')"
-                                        >
-                                            Edit
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <strong>Pedro Staff</strong>
-                                    </td>
-
-                                    <td>
-                                        staff3@barangaypay.gov.ph
-                                    </td>
-
-                                    <td>
-                                        Staff
-                                    </td>
-
-                                    <td>
-                                        <span class="status inactive">
-                                            Inactive
-                                        </span>
-                                    </td>
-
-                                    <td>
-
-                                        <button
-                                            class="table-button"
-                                            onclick="openEditStaff('Pedro Staff')"
-                                        >
-                                            Edit
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
+                                <tr><td colspan="5" class="sm-empty">Loading staff...</td></tr>
                             </tbody>
 
                         </table>
@@ -1320,9 +769,7 @@
                         SERVICE REQUEST
                     </p>
 
-                    <h2 id="modalRequestId">
-                        BP-2026-00124
-                    </h2>
+                    <h2 id="modalRequestId">—</h2>
 
                 </div>
 
@@ -1336,174 +783,7 @@
             </div>
 
 
-            <div class="modal-body">
-
-                <div class="modal-request-heading">
-
-                    <div>
-
-                        <h3 id="modalService">
-                            Barangay Clearance
-                        </h3>
-
-                        <p id="modalResident">
-                            Juan Dela Cruz
-                        </p>
-
-                    </div>
-
-                    <span class="status pending" id="modalStatus">
-                        Pending
-                    </span>
-
-                </div>
-
-
-                <div class="modal-section">
-
-                    <h3>
-                        Request Details
-                    </h3>
-
-                    <div class="details-grid">
-
-                        <div class="detail-item">
-                            <span>Request ID</span>
-                            <strong>BP-2026-00124</strong>
-                        </div>
-
-                        <div class="detail-item">
-                            <span>Service</span>
-                            <strong>Barangay Clearance</strong>
-                        </div>
-
-                        <div class="detail-item">
-                            <span>Date Submitted</span>
-                            <strong>Oct 4, 2026</strong>
-                        </div>
-
-                        <div class="detail-item">
-                            <span>Payment</span>
-                            <strong class="paid-text">Paid</strong>
-                        </div>
-
-                        <div class="detail-item">
-                            <span>Service Fee</span>
-                            <strong>₱350.00</strong>
-                        </div>
-
-                        <div class="detail-item">
-                            <span>Assigned Staff</span>
-                            <strong>Juan Staff</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="modal-section">
-
-                    <h3>
-                        Resident Information
-                    </h3>
-
-                    <div class="details-grid">
-
-                        <div class="detail-item">
-                            <span>Full Name</span>
-                            <strong>Juan Dela Cruz</strong>
-                        </div>
-
-                        <div class="detail-item">
-                            <span>Mobile Number</span>
-                            <strong>0917 123 4567</strong>
-                        </div>
-
-                        <div class="detail-item">
-                            <span>Email</span>
-                            <strong>juan.delacruz@email.com</strong>
-                        </div>
-
-                        <div class="detail-item full-width">
-                            <span>Address</span>
-                            <strong>
-                                Brgy. Poblacion, Mandaue City, Cebu
-                            </strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="modal-section">
-
-                    <h3>
-                        Supporting Documents
-                    </h3>
-
-                    <div class="document-list">
-
-                        <div class="document-item">
-
-                            <div class="document-info">
-
-                                <div class="document-icon">
-                                    PDF
-                                </div>
-
-                                <div>
-                                    <strong>
-                                        Valid-ID.pdf
-                                    </strong>
-
-                                    <span>
-                                        PDF • 1.2 MB
-                                    </span>
-                                </div>
-
-                            </div>
-
-                            <button class="document-button">
-                                View
-                            </button>
-
-                        </div>
-
-
-                        <div class="document-item">
-
-                            <div class="document-info">
-
-                                <div class="document-icon">
-                                    PDF
-                                </div>
-
-                                <div>
-                                    <strong>
-                                        Proof-of-Residency.pdf
-                                    </strong>
-
-                                    <span>
-                                        PDF • 856 KB
-                                    </span>
-                                </div>
-
-                            </div>
-
-                            <button class="document-button">
-                                View
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+            <div class="modal-body" id="requestModalBody"></div>
 
             <div class="modal-footer">
 
@@ -1526,136 +806,7 @@
          SERVICE MODAL
     =========================================== -->
 
-    <div class="modal-overlay" id="serviceModal">
-
-        <div class="modal">
-
-            <div class="modal-header">
-
-                <div>
-
-                    <p class="eyebrow">
-                        SERVICE MANAGEMENT
-                    </p>
-
-                    <h2>
-                        Add Service
-                    </h2>
-
-                </div>
-
-                <button
-                    class="modal-close"
-                    onclick="closeModal('serviceModal')"
-                >
-                    ×
-                </button>
-
-            </div>
-
-
-            <div class="modal-body">
-
-                <div class="form-group">
-
-                    <label>
-                        Service Name
-                    </label>
-
-                    <input
-                        type="text"
-                        placeholder="Enter service name"
-                    >
-
-                </div>
-
-
-                <div class="form-row">
-
-                    <div class="form-group">
-
-                        <label>
-                            Service Fee
-                        </label>
-
-                        <input
-                            type="number"
-                            placeholder="0.00"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Processing Time
-                        </label>
-
-                        <input
-                            type="text"
-                            placeholder="e.g. 1–2 Days"
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Requirements
-                    </label>
-
-                    <textarea
-                        placeholder="Enter service requirements..."
-                    ></textarea>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Status
-                    </label>
-
-                    <select>
-
-                        <option>
-                            Active
-                        </option>
-
-                        <option>
-                            Inactive
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </div>
-
-
-            <div class="modal-footer">
-
-                <button
-                    class="secondary-button"
-                    onclick="closeModal('serviceModal')"
-                >
-                    Cancel
-                </button>
-
-                <button class="primary-button">
-                    Add Service
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
+    
 
 
 
@@ -1818,130 +969,7 @@
          ADMIN ACCOUNT MODAL
     =========================================== -->
 
-    <div class="modal-overlay" id="accountModal">
-
-        <div class="modal">
-
-            <div class="modal-header">
-
-                <div>
-
-                    <p class="eyebrow">
-                        ACCOUNT
-                    </p>
-
-                    <h2>
-                        Admin Account
-                    </h2>
-
-                </div>
-
-                <button
-                    class="modal-close"
-                    onclick="closeModal('accountModal')"
-                >
-                    ×
-                </button>
-
-            </div>
-
-
-            <div class="modal-body">
-
-                <div class="form-row">
-
-                    <div class="form-group">
-
-                        <label>
-                            First Name
-                        </label>
-
-                        <input
-                            type="text"
-                            value="Barangay"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Last Name
-                        </label>
-
-                        <input
-                            type="text"
-                            value="Administrator"
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Email Address
-                    </label>
-
-                    <input
-                        type="email"
-                        value="admin@barangaypay.gov.ph"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Mobile Number
-                    </label>
-
-                    <input
-                        type="text"
-                        value="09XX XXX XXXX"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        New Password
-                    </label>
-
-                    <input
-                        type="password"
-                        placeholder="Leave blank to keep current password"
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="modal-footer">
-
-                <button
-                    class="secondary-button"
-                    onclick="closeModal('accountModal')"
-                >
-                    Cancel
-                </button>
-
-                <button class="primary-button">
-                    Save Changes
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
+    
 
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -2039,155 +1067,6 @@
 
 
         /* ==============================
-           REQUEST MODAL
-        ============================== */
-
-        function openRequestModal(requestId) {
-
-            const requestModal =
-                document.getElementById("requestModal");
-
-
-            document.getElementById("modalRequestId")
-                .textContent = requestId;
-
-
-            if (requestId === "BP-2026-00123") {
-
-                document.getElementById("modalService")
-                    .textContent =
-                    "Certificate of Residency";
-
-                document.getElementById("modalResident")
-                    .textContent =
-                    "Maria Santos";
-
-                document.getElementById("modalStatus")
-                    .textContent =
-                    "Processing";
-
-                document.getElementById("modalStatus")
-                    .className =
-                    "status processing";
-
-            }
-
-            else if (requestId === "BP-2026-00122") {
-
-                document.getElementById("modalService")
-                    .textContent =
-                    "Certificate of Indigency";
-
-                document.getElementById("modalResident")
-                    .textContent =
-                    "Pedro Reyes";
-
-                document.getElementById("modalStatus")
-                    .textContent =
-                    "Completed";
-
-                document.getElementById("modalStatus")
-                    .className =
-                    "status completed";
-
-            }
-
-            else {
-
-                document.getElementById("modalService")
-                    .textContent =
-                    "Barangay Clearance";
-
-                document.getElementById("modalResident")
-                    .textContent =
-                    "Juan Dela Cruz";
-
-                document.getElementById("modalStatus")
-                    .textContent =
-                    "Pending";
-
-                document.getElementById("modalStatus")
-                    .className =
-                    "status pending";
-
-            }
-
-
-            requestModal.classList.add("show");
-
-            document.body.classList.add("modal-open");
-
-        }
-
-
-
-        /* ==============================
-           EDIT SERVICE
-        ============================== */
-
-        function openEditService(serviceName) {
-
-            openModal("serviceModal");
-
-            document.querySelector(
-                "#serviceModal h2"
-            ).textContent = "Edit Service";
-
-            document.querySelector(
-                "#serviceModal .primary-button"
-            ).textContent = "Save Changes";
-
-            const nameInput =
-                document.querySelector(
-                    "#serviceModal input[type='text']"
-                );
-
-            nameInput.value = serviceName;
-
-        }
-
-
-
-        /* ==============================
-           EDIT STAFF
-        ============================== */
-
-        function openEditStaff(staffName) {
-
-            openModal("staffModal");
-
-            document.querySelector(
-                "#staffModal h2"
-            ).textContent = "Edit Staff";
-
-            document.querySelector(
-                "#staffModal .primary-button"
-            ).textContent = "Save Changes";
-
-            const nameParts =
-                staffName.split(" ");
-
-            const firstName =
-                document.querySelector(
-                    "#staffModal input[placeholder='First name']"
-                );
-
-            const lastName =
-                document.querySelector(
-                    "#staffModal input[placeholder='Last name']"
-                );
-
-            firstName.value =
-                nameParts[0] || "";
-
-            lastName.value =
-                nameParts.slice(1).join(" ") || "";
-
-        }
-
-
-
-        /* ==============================
            CLOSE MODALS
         ============================== */
 
@@ -2272,7 +1151,10 @@
 
     </script>
 
+    <script src="../js/app.js"></script>
+    <script src="../js/password.js"></script>
     <script src="admin-staff.js"></script>
+    <script src="admin-data.js"></script>
 
 </body>
 </html>

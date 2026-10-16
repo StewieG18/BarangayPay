@@ -1,10 +1,19 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 // Site addresses allowed to receive the customer back after payment.
-// Add your own if Live Server uses a different port.
-const ALLOWED_ORIGINS = [
+// Add more (e.g. your deployed site) with the ALLOWED_ORIGINS secret,
+// a comma-separated list: supabase secrets set ALLOWED_ORIGINS=https://example.com
+const DEFAULT_ORIGINS = [
   "http://127.0.0.1:5500",
   "http://localhost:5500",
+];
+
+const ALLOWED_ORIGINS = [
+  ...DEFAULT_ORIGINS,
+  ...(Deno.env.get("ALLOWED_ORIGINS") ?? "")
+    .split(",")
+    .map((origin) => origin.trim().replace(/\/+$/, ""))
+    .filter(Boolean),
 ];
 
 // Methods shown on PayMongo's page. They must be enabled in your PayMongo dashboard.
@@ -118,7 +127,9 @@ Deno.serve(async (req: Request) => {
           attributes: {
             line_items: [
               {
-                name: SERVICE_NAMES[row.service] ?? "Barangay service",
+                // service_requests.service holds the display name already;
+                // older rows may hold the slug.
+                name: SERVICE_NAMES[row.service] ?? row.service ?? "Barangay service",
                 amount: centavos,
                 currency: "PHP",
                 quantity: 1,

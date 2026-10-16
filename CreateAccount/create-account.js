@@ -26,6 +26,19 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        const normalizedMobile = mobile.replace(/[\s-]/g, "");
+
+        if (!/^(09|\+639)\d{9}$/.test(normalizedMobile)) {
+            errorMessage.textContent =
+                "Enter a valid mobile number, e.g. 09171234567.";
+            return;
+        }
+
+        if (new Date(`${birthdate}T00:00:00`) > new Date()) {
+            errorMessage.textContent = "Birthdate cannot be in the future.";
+            return;
+        }
+
         const strongPassword =
             password.length >= 8 &&
             /[A-Z]/.test(password) &&
@@ -60,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 options: {
                     data: {
                         full_name: fullName,
-                        phone: mobile,
+                        phone: normalizedMobile,
                         birthdate: birthdate,
                         sex: sex,
                         house_street: houseStreet,
@@ -78,8 +91,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            console.log("Account created:", data);
-            console.log("User metadata:", data.user?.user_metadata);
+            // Supabase hides duplicate sign-ups behind a user with no identities.
+            if (data.user && Array.isArray(data.user.identities) &&
+                data.user.identities.length === 0) {
+                errorMessage.textContent =
+                    "An account with this email already exists. Please sign in instead.";
+                return;
+            }
+
+            // If email confirmation is off, signUp starts a session; end it so
+            // the resident signs in through the normal login flow.
+            if (data.session) {
+                await supabaseClient.auth.signOut();
+            }
 
             alert(
                 "Account created successfully! Please check your email to verify your account."

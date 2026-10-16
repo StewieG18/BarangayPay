@@ -29,66 +29,46 @@
 
 
         <nav class="staff-navigation">
-
-            <!-- MAIN -->
             <div class="nav-section">
-
-                <span class="nav-section-title">
-                    MAIN
-                </span>
-
+                <span class="nav-section-title">MAIN</span>
                 <a href="../StaffPage/staff.html" class="staff-nav-link">
                     <span class="nav-icon">▦</span>
                     <span>Dashboard</span>
                 </a>
-
                 <a href="../StaffRequests/requests.html" class="staff-nav-link">
                     <span class="nav-icon">▤</span>
                     <span>Service Requests</span>
                 </a>
-
             </div>
-
-
-            <!-- MANAGEMENT -->
             <div class="nav-section">
-
-                <span class="nav-section-title">
-                    MANAGEMENT
-                </span>
-
+                <span class="nav-section-title">MANAGEMENT</span>
                 <a href="../StaffDocuments/documents.html" class="staff-nav-link">
                     <span class="nav-icon">▧</span>
                     <span>Documents</span>
                 </a>
-
+                <a href="../StaffReports/reports.html" class="staff-nav-link">
+                    <span class="nav-icon">▥</span>
+                    <span>Reports</span>
+                </a>
             </div>
-
-
-            <!-- ACCOUNT -->
             <div class="nav-section">
-
-                <span class="nav-section-title">
-                    ACCOUNT
-                </span>
-
-                <a
-                    href="../StaffSettings/settings.html"
-                    class="staff-nav-link active"
-                >
+                <span class="nav-section-title">ACCOUNT</span>
+                <a href="../StaffProfile/staff-profile.html" class="staff-nav-link active">
+                    <span class="nav-icon">◯</span>
+                    <span>My Profile</span>
+                </a>
+                <a href="../StaffSettings/settings.html" class="staff-nav-link">
                     <span class="nav-icon">⚙</span>
                     <span>Settings</span>
                 </a>
-
             </div>
-
         </nav>
 
 
         <div class="staff-sidebar-bottom">
 
             <a
-                href="/login/login.html"
+                href="../../login/login.html"
                 class="staff-signout"
             >
 
@@ -107,7 +87,7 @@
         <main class="profile-main">
             <header class="profile-topbar">
                 <span class="profile-topbar-label">Staff Account</span>
-                <a href="requests.html">Manage Requests →</a>
+                <a href="../StaffRequests/requests.html">Manage Requests →</a>
             </header>
 
             <div class="profile-content">
@@ -210,7 +190,6 @@
     </div>
 
 
-    ```html
 <div class="profile-modal-overlay" id="editProfileModal" hidden>
     <section class="profile-modal" role="dialog"
              aria-modal="true" aria-labelledby="editProfileTitle">
@@ -271,152 +250,175 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="/js/supabase.js"></script>
+    <script src="../../js/supabase.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/password.js"></script>
 
     <script>
-    const client = window.supabaseClient;
+    (() => {
+        "use strict";
 
-    const setText = (id, value) => {
-        document.getElementById(id).textContent =
-            value === null || value === undefined || value === ""
-                ? "—"
-                : value;
-    };
-
-    const displayDate = value => {
-        if (!value) return "—";
-
-        const date = new Date(value);
-
-        return Number.isNaN(date.getTime())
-            ? "—"
-            : date.toLocaleDateString("en-PH", {
-                year: "numeric",
-                month: "short",
-                day: "numeric"
-            });
-    };
-
-    async function loadStaffProfile() {
         const message = document.getElementById("profileMessage");
 
-        try {
-            const {
-                data: { user },
-                error: authError
-            } = await client.auth.getUser();
+        const setText = (id, value) => {
+            const element = document.getElementById(id);
+            if (!element) return;
+            element.textContent =
+                value === null || value === undefined || value === "" ? "—" : value;
+        };
 
-            if (authError) throw authError;
+        async function loadRequestCounts() {
+            const { data, error } = await BP.getClient()
+                .from("service_requests")
+                .select("status");
 
-            if (!user) {
-                window.location.href = "../../login/login.html";
-                return;
-            }
+            if (error) throw error;
 
-            const { data: profile, error: profileError } = await client
-                .from("profiles")
-                .select("*")
-                .eq("id", user.id)
-                .single();
+            const statuses = (data || []).map(request =>
+                String(request.status || "").toLowerCase());
+            const count = status => statuses.filter(value => value === status).length;
 
-            if (profileError) throw profileError;
+            setText("totalRequests", statuses.length);
+            setText("pendingRequests", count("pending"));
+            setText("completedRequests", count("completed"));
+            setText("rejectedRequests", count("rejected"));
+        }
 
-            // Do not allow resident accounts to use the staff profile page.
-            if (String(profile.role || "").toLowerCase() !== "staff") {
-                message.textContent =
-                    "This page is available to staff accounts only.";
-                return;
-            }
-
-            const name = profile.full_name || user.email || "Staff Member";
-            const status = profile.status || "Unknown";
+        function renderProfile(profile) {
+            const name = profile.full_name || profile.email || "Staff Member";
+            const role = BP.capitalize(profile.role);
+            const status = BP.capitalize(profile.status || "unknown");
 
             setText("staffName", name);
-            setText("staffEmail", user.email || profile.email);
-            setText("staffRole", profile.role);
+            setText("staffEmail", profile.email);
+            setText("staffRole", role);
             setText("staffStatus", status);
-
             setText("detailName", name);
-            setText("detailEmail", user.email || profile.email);
+            setText("detailEmail", profile.email);
             setText("detailPhone", profile.phone);
-            setText("detailRole", profile.role);
+            setText("detailRole", role);
             setText("detailStatus", status);
-            setText("detailCreated", displayDate(profile.created_at));
-
+            setText("detailCreated", BP.formatDate(profile.created_at));
             setText("detailStreet", profile.house_street);
             setText("detailBarangay", profile.barangay);
             setText("detailCity", profile.city);
             setText("detailProvince", profile.province);
+            setText("profileAvatar", BP.initials(name));
+        }
 
-            document.getElementById("profileAvatar").textContent =
-                name.split(/\s+/)
-                    .filter(Boolean)
-                    .slice(0, 2)
-                    .map(part => part[0].toUpperCase())
-                    .join("");
+        document.getElementById("logoutButton2")
+            ?.addEventListener("click", () => BP.signOut());
 
-            // Use the profile status as-is; do not assume every staff account is active.
-            document.getElementById("staffStatus").textContent = status;
+        document.getElementById("changePasswordButton")
+            ?.addEventListener("click", () => {
+                BPPassword.openDialog(() => {
+                    message.textContent = "Your password has been updated.";
+                });
+            });
 
-            const { data: requests, error: requestsError } = await client
-                .from("service_requests")
-                .select("status");
+        /* ---------- edit profile modal ---------- */
 
-            if (requestsError) throw requestsError;
+        const PHONE_RE = /^(09|\+639)\d{9}$/;
+        const EDIT_FIELDS = {
+            editFullName: "full_name",
+            editPhone: "phone",
+            editStreet: "house_street",
+            editBarangay: "barangay",
+            editCity: "city",
+            editProvince: "province"
+        };
 
-            const allRequests = requests || [];
-            const normalized = allRequests.map(request =>
-                String(request.status || "").toLowerCase()
+        const editModal = document.getElementById("editProfileModal");
+        const editForm = document.getElementById("editProfileForm");
+        const editMessage = document.getElementById("editFormMessage");
+        let profile = null;
+
+        const closeEdit = () => { editModal.hidden = true; };
+
+        document.getElementById("editProfileButton")
+            ?.addEventListener("click", () => {
+                if (!profile) return;
+                Object.entries(EDIT_FIELDS).forEach(([id, column]) => {
+                    document.getElementById(id).value = profile[column] || "";
+                });
+                editMessage.textContent = "";
+                editModal.hidden = false;
+                document.getElementById("editFullName").focus();
+            });
+
+        document.getElementById("closeProfileModal")?.addEventListener("click", closeEdit);
+        document.getElementById("cancelProfileEdit")?.addEventListener("click", closeEdit);
+        editModal?.addEventListener("click", event => {
+            if (event.target === editModal) closeEdit();
+        });
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape" && editModal && !editModal.hidden) closeEdit();
+        });
+
+        editForm?.addEventListener("submit", async event => {
+            event.preventDefault();
+
+            const updates = Object.fromEntries(
+                Object.entries(EDIT_FIELDS).map(([id, column]) => [
+                    column,
+                    document.getElementById(id).value.trim() || null
+                ])
             );
 
-            setText("totalRequests", allRequests.length);
-            setText("pendingRequests",
-                normalized.filter(status => status === "pending").length);
-            setText("completedRequests",
-                normalized.filter(status => status === "completed").length);
-            setText("rejectedRequests",
-                normalized.filter(status => status === "rejected").length);
+            if (!updates.full_name || updates.full_name.length < 2) {
+                editMessage.textContent = "Please enter your full name.";
+                return;
+            }
 
-        } catch (error) {
-            console.error("Staff profile failed to load:", error);
-            message.textContent =
-                "Unable to load your profile. Check your connection and permissions.";
-        }
-    }
+            if (updates.phone) {
+                updates.phone = updates.phone.replace(/[\s-]/g, "");
+                if (!PHONE_RE.test(updates.phone)) {
+                    editMessage.textContent = "Enter a valid mobile number, e.g. 09171234567.";
+                    return;
+                }
+            }
 
-    async function signOut() {
-        const { error } = await client.auth.signOut();
+            const saveButton = document.getElementById("saveProfileButton");
+            saveButton.disabled = true;
 
-        if (error) {
-            console.error("Sign out failed:", error);
-            alert("Unable to sign out. Please try again.");
-            return;
-        }
+            try {
+                const { data, error } = await BP.getClient()
+                    .from("profiles")
+                    .update(updates)
+                    .eq("id", profile.id)
+                    .select()
+                    .single();
 
-        window.location.href = "../../login/login.html";
-    }
+                if (error) throw error;
 
-    document.getElementById("logoutButton")
-        .addEventListener("click", event => {
-            event.preventDefault();
-            signOut();
+                profile = { ...profile, ...data, email: data.email || profile.email };
+                renderProfile(profile);
+                document.querySelectorAll(".staff-user-info strong, .staff-user-information strong")
+                    .forEach(el => { el.textContent = profile.full_name; });
+                closeEdit();
+                message.textContent = "Your profile has been updated.";
+            } catch (error) {
+                console.error("Profile update failed:", error);
+                editMessage.textContent = `Could not save changes: ${error.message}`;
+            } finally {
+                saveButton.disabled = false;
+            }
         });
 
-    document.getElementById("logoutButton2")
-        .addEventListener("click", signOut);
+        BP.initPortal("staff")
+            .then(async auth => {
+                if (!auth) return; // redirecting
 
-    document.getElementById("changePasswordButton")
-        .addEventListener("click", () => {
-            window.location.href = "Settings/settings.html";
-        });
-
-    document.getElementById("editProfileButton")
-        .addEventListener("click", () => {
-            document.getElementById("profileMessage").textContent =
-                "Profile editing is not enabled yet.";
-        });
-
-    loadStaffProfile();
+                profile = auth.profile;
+                renderProfile(profile);
+                await loadRequestCounts();
+            })
+            .catch(error => {
+                console.error("Staff profile failed to load:", error);
+                message.textContent =
+                    "Unable to load your profile. Check your connection and permissions.";
+            });
+    })();
     </script>
 </body>
 </html>

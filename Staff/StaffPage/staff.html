@@ -51,107 +51,40 @@
             <!-- NAVIGATION -->
 
             <nav class="staff-navigation">
-
-
-                <!-- MAIN -->
-
-                <div class="staff-navigation-section">
-
-                    <span class="staff-navigation-title">
-                        MAIN
-                    </span>
-
-
-                    <a
-                        href="../StaffPage/staff.html"
-                        class="staff-navigation-item active"
-                    >
-
-                        <span class="staff-navigation-icon">
-                            ▦
-                        </span>
-
-                        <span>
-                            Dashboard
-                        </span>
-
-                    </a>
-
-
-                    <a
-                        href="../StaffRequests/requests.html"
-                        class="staff-navigation-item"
-                    >
-
-                        <span class="staff-navigation-icon">
-                            ▤
-                        </span>
-
-                        <span>
-                            Service Requests
-                        </span>
-
-                    </a>
-
-                </div>
-
-
-                <!-- MANAGEMENT -->
-
-                <div class="staff-navigation-section">
-
-                    <span class="staff-navigation-title">
-                        MANAGEMENT
-                    </span>
-
-
-                    <a
-                        href="../StaffDocuments/documents.html"
-                        class="staff-navigation-item"
-                    >
-
-                        <span class="staff-navigation-icon">
-                            ▧
-                        </span>
-
-                        <span>
-                            Documents
-                        </span>
-
-                    </a>
-
-
-                </div>
-
-
-                <!-- ACCOUNT -->
-
-                <div class="staff-navigation-section">
-
-                    <span class="staff-navigation-title">
-                        ACCOUNT
-                    </span>
-
-
-                    <a
-                        href="../StaffSettings/
-                        settings.html"
-                        class="staff-navigation-item"
-                    >
-
-                        <span class="staff-navigation-icon">
-                            ⚙
-                        </span>
-
-                        <span>
-                            Settings
-                        </span>
-
-                    </a>
-
-                </div>
-
-            </nav>
+            <div class="staff-navigation-section">
+                <span class="staff-navigation-title">MAIN</span>
+                <a href="../StaffPage/staff.html" class="staff-navigation-item active">
+                    <span class="staff-navigation-icon">▦</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../StaffRequests/requests.html" class="staff-navigation-item">
+                    <span class="staff-navigation-icon">▤</span>
+                    <span>Service Requests</span>
+                </a>
+            </div>
+            <div class="staff-navigation-section">
+                <span class="staff-navigation-title">MANAGEMENT</span>
+                <a href="../StaffDocuments/documents.html" class="staff-navigation-item">
+                    <span class="staff-navigation-icon">▧</span>
+                    <span>Documents</span>
+                </a>
+                <a href="../StaffReports/reports.html" class="staff-navigation-item">
+                    <span class="staff-navigation-icon">▥</span>
+                    <span>Reports</span>
+                </a>
+            </div>
+            <div class="staff-navigation-section">
+                <span class="staff-navigation-title">ACCOUNT</span>
+                <a href="../StaffProfile/staff-profile.html" class="staff-navigation-item">
+                    <span class="staff-navigation-icon">◯</span>
+                    <span>My Profile</span>
+                </a>
+                <a href="../StaffSettings/settings.html" class="staff-navigation-item">
+                    <span class="staff-navigation-icon">⚙</span>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </nav>
 
 
             <!-- SIDEBAR BOTTOM -->
@@ -262,11 +195,11 @@
 
                     <div class="staff-user-dropdown">
 
-                        <a href="/Profile/profile.html">
+                        <a href="../StaffProfile/staff-profile.html">
                             Profile
                         </a>
 
-                        <a href="staff-settings.html">
+                        <a href="../StaffSettings/settings.html">
                             Settings
                         </a>
 
@@ -633,74 +566,11 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="/js/supabase.js"></script>
+    <script src="../../js/supabase.js"></script>
+<script src="../../js/app.js"></script>
 
 
     <script>
-
-        /* =========================================
-           MOBILE SIDEBAR
-           ========================================= */
-
-        const staffMenuToggle =
-            document.getElementById("staffMenuToggle");
-
-        const staffSidebar =
-            document.getElementById("staffSidebar");
-
-
-        if (staffMenuToggle && staffSidebar) {
-
-            staffMenuToggle.addEventListener(
-                "click",
-                function () {
-
-                    staffSidebar.classList.toggle("open");
-
-                }
-            );
-
-        }
-
-
-
-        /* =========================================
-           STAFF USER MENU
-           ========================================= */
-
-        const staffUserButton =
-            document.getElementById("staffUserButton");
-
-        const staffUserMenu =
-            document.getElementById("staffUserMenu");
-
-
-        if (staffUserButton && staffUserMenu) {
-
-            staffUserButton.addEventListener(
-                "click",
-                function (event) {
-
-                    event.stopPropagation();
-
-                    staffUserMenu.classList.toggle("open");
-
-                }
-            );
-
-
-            document.addEventListener(
-                "click",
-                function () {
-
-                    staffUserMenu.classList.remove("open");
-
-                }
-            );
-
-        }
-
-
 
         /* =========================================
            CURRENT DATE
@@ -937,10 +807,19 @@ async function loadServiceRequests() {
             }
         }
 
-        loadServiceRequests();
+        const REFRESH_INTERVAL_MS = 30000;
 
-        // Refresh the dashboard every 30 seconds.
-        setInterval(loadServiceRequests, 30000);
+        BP.initPortal("staff")
+            .then(auth => {
+                if (!auth) return; // redirecting
+
+                loadServiceRequests();
+                setInterval(loadServiceRequests, REFRESH_INTERVAL_MS);
+            })
+            .catch(error => {
+                console.error("Could not start the staff dashboard:", error);
+                showRequestMessage("Could not verify your staff account. Please sign in again.");
+            });
 
 
     </script>

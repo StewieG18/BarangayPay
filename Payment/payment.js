@@ -243,23 +243,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     /* ---------- load request ---------- */
 
     try {
-        if (typeof supabaseClient === "undefined") {
-            throw new Error(
-                "Supabase client is not initialized. Check ../js/supabase.js."
-            );
-        }
+        const auth = await BP.initPortal("resident");
+        if (!auth) return; // redirecting
 
-        const { data: sessionData, error: sessionError } =
-            await supabaseClient.auth.getSession();
-
-        if (sessionError) throw sessionError;
-
-        if (!sessionData.session) {
-            window.location.href = "../login/login.html";
-            return;
-        }
-
-        user = sessionData.session.user;
+        user = auth.user;
 
         const params = new URLSearchParams(window.location.search);
         const requestId = params.get("request");

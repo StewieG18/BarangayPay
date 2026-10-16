@@ -136,7 +136,7 @@
 
                     <!-- User Profile -->
                     <a
-                        href="Profile/profile.html"
+                        href="../Profile/profile.html"
                         class="user-menu"
                         id="userMenu"
                         aria-label="Open user menu">
@@ -447,5 +447,13 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        BP.initPortal("resident").catch((error) => {
+            console.error("Could not start the page:", error);
+        });
+    </script>
 </body>
 </html>
