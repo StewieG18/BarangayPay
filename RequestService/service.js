@@ -21,6 +21,27 @@
     'business-clearance': 'Business Clearance'
   };
 
+  const SERVICE_REQUIREMENTS = {
+    'barangay-clearance': [
+      'Valid government-issued ID',
+      'Proof of residency, if requested by the barangay'
+    ],
+    'certificate-residency': [
+      'Valid government-issued ID',
+      'Proof of residency or address, if requested by the barangay'
+    ],
+    'certificate-indigency': [
+      'Valid government-issued ID',
+      'Proof of indigency or supporting barangay certification, if requested'
+    ],
+    'business-clearance': [
+      'Valid government-issued ID',
+      'DTI or SEC registration, when applicable',
+      'Proof of business address or occupancy',
+      'Other business permits or documents requested by the barangay'
+    ]
+  };
+
   const FEES = {
     'barangay-clearance': 50,
     'certificate-residency': 50,
@@ -32,6 +53,7 @@
   const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
 
   let isSubmitting = false;
+  let selectedFiles = [];
 
   // Create a status message area.
   let statusBox = document.getElementById('serviceRequestStatus');
@@ -101,11 +123,109 @@
     return selected ? selected.value : '';
   }
 
-  function getSelectedFiles() {
-    return Array.from(
-      document.getElementById('requirements')?.files || []
-    );
+  function updateServiceRequirements() {
+    const container = document.getElementById('serviceRequirements');
+    const list = document.getElementById('requirementsList');
+    const requirements = SERVICE_REQUIREMENTS[getSelectedService()];
+
+    if (!container || !list) return;
+
+    list.replaceChildren();
+    container.hidden = !requirements;
+
+    if (!requirements) return;
+
+    requirements.forEach(requirement => {
+      const item = document.createElement('li');
+      item.textContent = requirement;
+      list.appendChild(item);
+    });
   }
+
+  form.querySelectorAll('input[name="service"]').forEach(radio => {
+    radio.addEventListener('change', updateServiceRequirements);
+  });
+
+  updateServiceRequirements();
+
+  function getSelectedFiles() {
+    return [...selectedFiles];
+  }
+
+  function formatFileSize(bytes) {
+    if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+    return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+  }
+
+  function syncRequirementsInput() {
+    const dataTransfer = new DataTransfer();
+
+    selectedFiles.forEach(file => {
+      dataTransfer.items.add(file);
+    });
+
+    document.getElementById('requirements').files = dataTransfer.files;
+  }
+
+  function addSelectedFiles(fileList) {
+    Array.from(fileList).forEach(file => {
+      const alreadySelected = selectedFiles.some(existing =>
+        existing.name === file.name &&
+        existing.size === file.size &&
+        existing.lastModified === file.lastModified
+      );
+
+      if (!alreadySelected) {
+        selectedFiles.push(file);
+      }
+    });
+
+    syncRequirementsInput();
+
+    renderSelectedFiles();
+  }
+
+  function removeSelectedFile(index) {
+    selectedFiles.splice(index, 1);
+    syncRequirementsInput();
+    renderSelectedFiles();
+  }
+
+  function renderSelectedFiles() {
+    const container = document.getElementById('selectedFiles');
+    const list = document.getElementById('selectedFilesList');
+    const files = getSelectedFiles();
+
+    if (!container || !list) return;
+
+    list.replaceChildren();
+    container.hidden = files.length === 0;
+
+    files.forEach((file, index) => {
+      const item = document.createElement('li');
+
+      const fileDetails = document.createElement('span');
+      fileDetails.textContent = `${file.name} (${formatFileSize(file.size)})`;
+
+      const removeButton = document.createElement('button');
+      removeButton.type = 'button';
+      removeButton.className = 'remove-file-button';
+      removeButton.textContent = 'Remove';
+      removeButton.setAttribute('aria-label', `Remove ${file.name}`);
+
+      removeButton.addEventListener('click', () => {
+        removeSelectedFile(index);
+      });
+
+      item.append(fileDetails, removeButton);
+      list.appendChild(item);
+    });
+  }
+
+  document.getElementById('requirements')?.addEventListener('change', event => {
+    addSelectedFiles(event.target.files);
+  });
+  renderSelectedFiles();
 
   function getFormDetails() {
     const serviceValue = getSelectedService();

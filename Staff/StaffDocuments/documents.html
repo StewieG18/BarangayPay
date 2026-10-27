@@ -619,44 +619,8 @@
 
                 <!-- PAGINATION -->
                 <div class="documents-pagination">
-
-                    <span>
-                        Showing 1–6 of 156 documents
-                    </span>
-
-
-                    <div class="pagination-buttons">
-
-                        <button disabled>
-                            ‹
-                        </button>
-
-                        <button class="active">
-                            1
-                        </button>
-
-                        <button>
-                            2
-                        </button>
-
-                        <button>
-                            3
-                        </button>
-
-                        <span>
-                            ...
-                        </span>
-
-                        <button>
-                            26
-                        </button>
-
-                        <button>
-                            ›
-                        </button>
-
-                    </div>
-
+                    <span id="paginationInfo"></span>
+                    <div class="pagination-buttons" id="paginationButtons"></div>
                 </div>
 
             </div>
@@ -705,6 +669,8 @@ const modalProcess = document.getElementById("modalProcess");
 let documents = [];
 let processingRequests = [];
 let selectedDocument = null;
+let currentPage = 1;
+const PAGE_SIZE = 20;
 
 const STATUS_LABELS = {
     pending_generation: "Pending Generation",
@@ -956,6 +922,41 @@ function updateSummary() {
         documents.filter(doc => doc.status === "archived").length;
 }
 
+function getPageNumbers(current, total) {
+    if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
+
+    const pages = new Set([1, total, current - 1, current, current + 1]);
+    const sorted = [...pages].filter(p => p >= 1 && p <= total).sort((a, b) => a - b);
+
+    const result = [];
+    sorted.forEach((p, i) => {
+        if (i > 0 && p - sorted[i - 1] > 1) result.push("...");
+        result.push(p);
+    });
+    return result;
+}
+
+function renderPagination(totalItems) {
+    const info = document.getElementById("paginationInfo");
+    const buttons = document.getElementById("paginationButtons");
+    const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+
+    const start = totalItems ? (currentPage - 1) * PAGE_SIZE + 1 : 0;
+    const end = Math.min(currentPage * PAGE_SIZE, totalItems);
+
+    info.textContent = `Showing ${start}–${end} of ${totalItems} documents`;
+    buttons.style.display = totalPages > 1 ? "" : "none";
+
+    buttons.innerHTML =
+        `<button type="button" data-page="${currentPage - 1}" ${currentPage === 1 ? "disabled" : ""}>‹</button>` +
+        getPageNumbers(currentPage, totalPages).map(p =>
+            p === "..."
+                ? `<span>...</span>`
+                : `<button type="button" data-page="${p}" class="${p === currentPage ? "active" : ""}">${p}</button>`
+        ).join("") +
+        `<button type="button" data-page="${currentPage + 1}" ${currentPage === totalPages ? "disabled" : ""}>›</button>`;
+}
+
 function renderDocuments() {
     const search = documentSearch.value.trim().toLowerCase();
     const selectedType = typeFilter.value;
@@ -982,6 +983,11 @@ function renderDocuments() {
             (selectedStatus === "all" || doc.status === selectedStatus);
     });
 
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    renderPagination(filtered.length);
+
     if (!filtered.length) {
         tableBody.innerHTML =
             '<tr><td colspan="7">No documents found.</td></tr>';
@@ -989,7 +995,12 @@ function renderDocuments() {
         return;
     }
 
-    tableBody.innerHTML = filtered.map(doc => {
+    const pageItems = filtered.slice(
+        (currentPage - 1) * PAGE_SIZE,
+        currentPage * PAGE_SIZE
+    );
+
+    tableBody.innerHTML = pageItems.map(doc => {
         const request = doc.request || {};
         const name = residentName(request);
         const type = getDocumentType(doc);
@@ -1257,9 +1268,23 @@ tableBody.addEventListener("click", event => {
     if (doc) openDocument(doc);
 });
 
-documentSearch.addEventListener("input", renderDocuments);
-typeFilter.addEventListener("change", renderDocuments);
-statusFilter.addEventListener("change", renderDocuments);
+function resetAndRender() {
+    currentPage = 1;
+    renderDocuments();
+}
+
+documentSearch.addEventListener("input", resetAndRender);
+typeFilter.addEventListener("change", resetAndRender);
+statusFilter.addEventListener("change", resetAndRender);
+
+document.getElementById("paginationButtons").addEventListener("click", event => {
+    const button = event.target.closest("button[data-page]");
+    if (!button || button.disabled) return;
+
+    currentPage = Number(button.dataset.page);
+    renderDocuments();
+    tableBody.closest("table").scrollIntoView({ behavior: "smooth", block: "start" });
+});
 
 modalClose.addEventListener("click", closeDocument);
 modalCancel.addEventListener("click", closeDocument);

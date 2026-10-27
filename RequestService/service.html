@@ -658,7 +658,7 @@
 
                         </div>
 
-                        <div id="serviceRequirements" class="service-requirements-info">
+                        <div id="serviceRequirements" class="service-requirements-info" hidden aria-live="polite">
                             <p><strong>Required documents for your selected service:</strong></p>
                             <ul id="requirementsList"></ul>
                         </div>
@@ -713,6 +713,11 @@
                                 Accepted formats: PDF, JPG, JPEG, PNG<br>
                                 Maximum 5 MB per file · Up to 5 files
                             </span>
+
+                            <div id="selectedFiles" class="selected-files" hidden aria-live="polite">
+                                <strong>Selected files</strong>
+                                <ul id="selectedFilesList" class="file-list"></ul>
+                            </div>
 
                         </div>
 

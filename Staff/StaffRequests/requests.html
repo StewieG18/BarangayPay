@@ -671,6 +671,8 @@ const modalRejectButton = document.getElementById("modalRejectButton");
 let allRequests = [];
 let selectedRequest = null;
 let isUpdating = false;
+let currentPage = 1;
+const PAGE_SIZE = 20;   // rows per page, change as needed
 
 /* =========================================================
    HELPERS
@@ -849,6 +851,43 @@ function renderSummary() {
    RENDER REQUEST TABLE
 ========================================================= */
 
+function getPageNumbers(current, total) {
+    if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
+
+    const pages = new Set([1, total, current - 1, current, current + 1]);
+    const sorted = [...pages].filter(p => p >= 1 && p <= total).sort((a, b) => a - b);
+
+    const result = [];
+    sorted.forEach((p, i) => {
+        if (i > 0 && p - sorted[i - 1] > 1) result.push("...");
+        result.push(p);
+    });
+    return result;
+}
+
+function renderPagination(totalItems) {
+    const info = document.querySelector(".pagination-info");
+    const buttons = document.querySelector(".pagination-buttons");
+    const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+
+    const start = totalItems ? (currentPage - 1) * PAGE_SIZE + 1 : 0;
+    const end = Math.min(currentPage * PAGE_SIZE, totalItems);
+
+    if (info) info.textContent = `Showing ${start}–${end} of ${totalItems} requests`;
+    if (!buttons) return;
+
+    buttons.style.display = totalPages > 1 ? "" : "none";
+
+    buttons.innerHTML =
+        `<button type="button" data-page="${currentPage - 1}" ${currentPage === 1 ? "disabled" : ""}>‹</button>` +
+        getPageNumbers(currentPage, totalPages).map(p =>
+            p === "..."
+                ? `<span>...</span>`
+                : `<button type="button" data-page="${p}" class="${p === currentPage ? "active" : ""}">${p}</button>`
+        ).join("") +
+        `<button type="button" data-page="${currentPage + 1}" ${currentPage === totalPages ? "disabled" : ""}>›</button>`;
+}
+
 function renderRequests() {
     const search = requestSearch.value.trim().toLowerCase();
     const selectedService = serviceFilter.value;
@@ -881,13 +920,21 @@ function renderRequests() {
         return matchesSearch && matchesService && matchesStatus;
     });
 
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    const pageItems = filtered.slice(
+        (currentPage - 1) * PAGE_SIZE,
+        currentPage * PAGE_SIZE
+    );
+
     if (filtered.length === 0) {
         requestTableBody.innerHTML = "";
         noResults.style.display = "block";
     } else {
         noResults.style.display = "none";
 
-        requestTableBody.innerHTML = filtered.map(request => {
+        requestTableBody.innerHTML = pageItems.map(request => {
             const name = getResidentName(request);
             const service = getServiceName(request);
             const code = request.request_code || request.id;
@@ -937,28 +984,30 @@ function renderRequests() {
         }).join("");
     }
 
-    const paginationInfo = document.querySelector(".pagination-info");
-
-    if (paginationInfo) {
-        paginationInfo.textContent =
-            `Showing ${filtered.length ? 1 : 0}–${filtered.length} of ${filtered.length} matching requests`;
-    }
-
-    const paginationButtons =
-        document.querySelector(".pagination-buttons");
-
-    if (paginationButtons) {
-        paginationButtons.style.display = "none";
-    }
+    renderPagination(filtered.length);
 }
 
 /* =========================================================
    SEARCH AND FILTERS
 ========================================================= */
 
-requestSearch.addEventListener("input", renderRequests);
-serviceFilter.addEventListener("change", renderRequests);
-statusFilter.addEventListener("change", renderRequests);
+function resetAndRender() {
+    currentPage = 1;
+    renderRequests();
+}
+
+requestSearch.addEventListener("input", resetAndRender);
+serviceFilter.addEventListener("change", resetAndRender);
+statusFilter.addEventListener("change", resetAndRender);
+
+document.querySelector(".pagination-buttons").addEventListener("click", event => {
+    const button = event.target.closest("button[data-page]");
+    if (!button || button.disabled) return;
+
+    currentPage = Number(button.dataset.page);
+    renderRequests();
+    document.querySelector(".requests-table").scrollIntoView({ behavior: "smooth", block: "start" });
+});
 
 /* =========================================================
    MODAL
