@@ -446,6 +446,123 @@
 
 
 
+<!-- TRANSACTION DETAILS MODAL -->
+<div class="transaction-modal-overlay" id="transactionModal">
+
+    <div class="transaction-details-modal">
+
+        <!-- HEADER -->
+        <div class="transaction-modal-header">
+            <div>
+                <span class="page-eyebrow">TRANSACTION DETAILS</span>
+                <h2>Transaction Details</h2>
+            </div>
+
+            <button
+                type="button"
+                class="transaction-modal-close"
+                id="transactionModalClose"
+                aria-label="Close transaction details"
+            >×</button>
+        </div>
+
+        <!-- BODY -->
+        <div class="transaction-modal-body">
+
+            <div class="transaction-modal-heading">
+                <div>
+                    <h3 id="transactionModalService">Service Name</h3>
+                    <p id="transactionModalCode">Request Code</p>
+                </div>
+
+                <span
+                    class="modal-status-badge pending"
+                    id="transactionModalStatus"
+                >Pending Review</span>
+            </div>
+
+            <!-- REQUEST INFORMATION -->
+            <div class="transaction-modal-section">
+                <h3>Request Information</h3>
+
+                <div class="transaction-details-grid">
+
+                    <div class="detail-item">
+                        <span>Request ID</span>
+                        <strong id="transactionModalId">—</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Service Fee</span>
+                        <strong id="transactionModalAmount">—</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Date Submitted</span>
+                        <strong id="transactionModalDate">—</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Last Updated</span>
+                        <strong id="transactionModalUpdated">—</strong>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PAYMENT INFORMATION -->
+            <div class="transaction-modal-section">
+                <h3>Payment Information</h3>
+
+                <div class="transaction-details-grid">
+
+                    <div class="detail-item">
+                        <span>Payment Status</span>
+                        <strong
+                            id="transactionModalPayment"
+                            class="detail-value payment-value"
+                        >—</strong>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- REMARKS -->
+            <div class="transaction-modal-section">
+                <h3>Remarks</h3>
+
+                <div
+                    class="transaction-remarks"
+                    id="transactionModalRemarks"
+                >No remarks provided.</div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="transaction-modal-footer">
+
+            <button
+                type="button"
+                class="transaction-modal-secondary"
+                id="transactionModalCloseButton"
+            >Close</button>
+
+            <a
+                href="#"
+                class="transaction-modal-primary"
+                id="transactionModalPayButton"
+                style="display: none;"
+            >Pay Now</a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase.js"></script>
     <script src="../js/app.js"></script>
