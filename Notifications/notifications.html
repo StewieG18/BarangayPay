@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications | BarangayPay</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="/css/notifications-page.css">
+</head>
+<body>
+
+<div class="app-container">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-logo">BP</div>
+            <div class="brand-text">
+                <h1>BarangayPay</h1>
+                <span>Barangay Services</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-navigation">
+            <div class="navigation-section">
+                <span class="navigation-title">MAIN</span>
+                <a href="../index.html" class="navigation-item">
+                    <span class="navigation-icon">⌂</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../MyTransactions/transactions.html" class="navigation-item">
+                    <span class="navigation-icon">▤</span>
+                    <span>My Transactions</span>
+                </a>
+                <a href="../Services/services.html" class="navigation-item">
+                    <span class="navigation-icon">☷</span>
+                    <span>Services</span>
+                </a>
+            </div>
+
+            <div class="navigation-section">
+                <span class="navigation-title">ACCOUNT</span>
+                <a href="../Profile/profile.html" class="navigation-item">
+                    <span class="navigation-icon">◯</span>
+                    <span>Profile</span>
+                </a>
+                <a href="../Settings/settings.html" class="navigation-item">
+                    <span class="navigation-icon">⚙</span>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="../login/login.html" class="navigation-item logout-item">
+                <span class="navigation-icon">↪</span>
+                <span class="navigation-label">Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="top-header">
+            <div class="header-left">
+                <button type="button" class="menu-toggle" id="menuToggle"
+                    aria-label="Toggle navigation menu">☰</button>
+
+                <div class="page-heading">
+                    <span class="page-section">Resident Portal</span>
+                    <h2>Notifications</h2>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button type="button"
+                    class="header-button notification-button"
+                    aria-label="Notifications">
+                    <span class="header-icon">🔔</span>
+                    <span class="notification-indicator" aria-hidden="true"></span>
+                </button>
+
+                <a href="../Profile/profile.html"
+                    class="user-menu" id="userMenu"
+                    aria-label="Open user menu">
+                    <div class="user-avatar">U</div>
+                    <div class="user-information">
+                        <strong>Resident</strong>
+                        <span>Account</span>
+                    </div>
+                    <span class="user-menu-arrow">⌄</span>
+                </a>
+            </div>
+        </header>
+
+        <section class="dashboard-content notification-page"
+            data-portal="resident">
+
+            <div class="page-header">
+                <div class="page-header-text">
+                    <span class="page-eyebrow">ACCOUNT UPDATES</span>
+                    <h2>Notifications</h2>
+                    <p>Stay updated on your service requests and transactions.</p>
+                </div>
+            </div>
+
+            <div class="notification-summary">
+                <div>
+                    <span>Total Notifications</span>
+                    <strong id="totalNotifications">0</strong>
+                </div>
+                <div>
+                    <span>Unread Notifications</span>
+                    <strong id="unreadNotifications">0</strong>
+                </div>
+            </div>
+
+            <div class="notification-history-panel">
+
+                <div class="notification-history-toolbar">
+                    <div>
+                        <h3>Notification History</h3>
+                        <p>View updates and previous notifications.</p>
+                    </div>
+
+                    <button type="button"
+                        class="notification-mark-all"
+                        id="markAllNotifications">
+                        Mark All as Read
+                    </button>
+                </div>
+
+                <div class="notification-filters">
+                    <button type="button" class="notification-filter active"
+                        data-filter="all">All</button>
+                    <button type="button" class="notification-filter"
+                        data-filter="unread">Unread</button>
+                    <button type="button" class="notification-filter"
+                        data-filter="read">Read</button>
+                </div>
+
+                <div id="notificationHistoryList"
+                    class="notification-history-list"
+                    aria-live="polite">
+                    <div class="notification-page-loading">
+                        Loading notifications...
+                    </div>
+                </div>
+
+                <div class="notification-load-more-container">
+                    <button type="button" id="loadMoreNotifications"
+                        class="notification-load-more" hidden>
+                        Load More
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="main-footer">
+            <p>© 2026 BarangayPay. Barangay Services Portal.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </footer>
+
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/notifications-page.js"></script>
+
+</body>
+</html>

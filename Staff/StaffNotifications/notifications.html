@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications | BarangayPay Staff</title>
+
+    <link rel="stylesheet" href="../../css/notifications-page.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../css/notifications.css">
+</head>
+<body>
+
+<div class="staff-app">
+
+    <aside class="staff-sidebar" id="staffSidebar">
+
+        <div class="staff-brand">
+            <div class="staff-brand-logo">BP</div>
+            <div>
+                <h1>BarangayPay</h1>
+                <span>Staff Portal</span>
+            </div>
+        </div>
+
+        <nav class="staff-navigation">
+
+            <div class="nav-section">
+                <span class="nav-section-title">MAIN</span>
+
+                <a href="../StaffPage/staff.html" class="staff-nav-link">
+                    <span class="nav-icon">▦</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="../StaffRequests/requests.html" class="staff-nav-link">
+                    <span class="nav-icon">▤</span>
+                    <span>Service Requests</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">MANAGEMENT</span>
+
+                <a href="../StaffDocuments/documents.html" class="staff-nav-link">
+                    <span class="nav-icon">▧</span>
+                    <span>Documents</span>
+                </a>
+
+                <a href="../StaffReports/reports.html" class="staff-nav-link">
+                    <span class="nav-icon">▥</span>
+                    <span>Reports</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">ACCOUNT</span>
+
+                <a href="../StaffProfile/staff-profile.html" class="staff-nav-link">
+                    <span class="nav-icon">◯</span>
+                    <span>My Profile</span>
+                </a>
+
+                <a href="../StaffSettings/settings.html" class="staff-nav-link">
+                    <span class="nav-icon">⚙</span>
+                    <span>Settings</span>
+                </a>
+            </div>
+
+        </nav>
+
+        <div class="staff-sidebar-bottom">
+            <a href="../../login/login.html" class="staff-signout">
+                <span class="nav-icon">↪</span>
+                <span>Sign Out</span>
+            </a>
+        </div>
+
+    </aside>
+
+    <main class="staff-main">
+
+        <header class="staff-header">
+
+            <button class="staff-menu-toggle" id="staffMenuToggle"
+                type="button">☰</button>
+
+            <div class="staff-header-spacer"></div>
+
+            <button type="button"
+                class="staff-notification-button"
+                id="staffNotificationButton"
+                aria-label="Notifications">
+                🔔
+                <span class="staff-notification-indicator"></span>
+            </button>
+
+            <div class="staff-user-menu" id="staffUserMenu">
+
+                <button class="staff-user-button" id="staffUserButton"
+                    type="button">
+                    <div class="staff-avatar">S</div>
+                    <div class="staff-user-info">
+                        <strong>Barangay Staff</strong>
+                        <span>Staff Account</span>
+                    </div>
+                    <span class="dropdown-arrow">⌄</span>
+                </button>
+
+                <div class="staff-user-dropdown" id="staffUserDropdown">
+                    <a href="../StaffProfile/staff-profile.html">My Profile</a>
+                    <a href="../StaffSettings/settings.html">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="../../login/login.html">Sign Out</a>
+                </div>
+
+            </div>
+        </header>
+
+        <section class="staff-content notification-page"
+            data-portal="staff">
+
+            <div class="staff-page-header">
+                <div>
+                    <span class="page-eyebrow">STAFF PORTAL</span>
+                    <h2>Notifications</h2>
+                    <p>Stay updated on resident applications and service requests.</p>
+                </div>
+            </div>
+
+            <div class="notification-summary">
+                <div>
+                    <span>Total Notifications</span>
+                    <strong id="totalNotifications">0</strong>
+                </div>
+
+                <div>
+                    <span>Unread Notifications</span>
+                    <strong id="unreadNotifications">0</strong>
+                </div>
+            </div>
+
+            <div class="notification-history-panel">
+
+                <div class="notification-history-toolbar">
+                    <div>
+                        <h3>Notification History</h3>
+                        <p>View updates and previous notifications.</p>
+                    </div>
+
+                    <button type="button"
+                        class="notification-mark-all"
+                        id="markAllNotifications">
+                        Mark All as Read
+                    </button>
+                </div>
+
+                <div class="notification-filters">
+                    <button type="button" class="notification-filter active"
+                        data-filter="all">All</button>
+
+                    <button type="button" class="notification-filter"
+                        data-filter="unread">Unread</button>
+
+                    <button type="button" class="notification-filter"
+                        data-filter="read">Read</button>
+                </div>
+
+                <div id="notificationHistoryList"
+                    class="notification-history-list"
+                    aria-live="polite">
+                    <div class="notification-page-loading">
+                        Loading notifications...
+                    </div>
+                </div>
+
+                <div class="notification-load-more-container">
+                    <button type="button" id="loadMoreNotifications"
+                        class="notification-load-more" hidden>
+                        Load More
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer class="staff-footer">
+            <span>© 2026 BarangayPay</span>
+            <span>Barangay Staff Portal</span>
+        </footer>
+
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/notifications.js"></script>
+<script src="../../js/notifications-page.js"></script>
+
+</body>
+</html>
