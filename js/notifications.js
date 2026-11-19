@@ -5,13 +5,9 @@
     const client = window.supabaseClient;
     const BP = window.BP;
 
-    if (!client || !BP) {
-        console.error("Notifications: Supabase or BP is not initialized.");
-        return;
-    }
-
     const staffButton = document.getElementById("staffNotificationButton");
     const residentButton = document.querySelector(".notification-button");
+
     const button = staffButton || residentButton;
 
     if (!button) {
@@ -19,7 +15,10 @@
         return;
     }
 
-    const isStaff = Boolean(staffButton);
+    // Detect staff pages using the button or folder path.
+    const isStaff =
+        Boolean(staffButton) ||
+        /(^|\/)staff(\/|$)/i.test(window.location.pathname);
 
     const destination = isStaff
         ? BP.url("Staff/StaffRequests/requests.html")
