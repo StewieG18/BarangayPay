@@ -143,7 +143,26 @@
 
 
                     <!-- Login Form -->
-<form class="login-form" id="loginForm">
+<form class="login-form" id="loginForm" novalidate>
+
+    <!-- Inline alert (validation / auth feedback) -->
+    <div class="form-alert" id="formAlert" role="alert" aria-live="assertive" hidden>
+        <span class="form-alert-icon" aria-hidden="true">!</span>
+
+        <div class="form-alert-content">
+            <strong class="form-alert-title">Please check your details</strong>
+            <span class="form-alert-message"></span>
+        </div>
+
+        <button
+            type="button"
+            class="alert-dismiss"
+            data-dismiss-alert
+            aria-label="Dismiss notification"
+        >
+            ×
+        </button>
+    </div>
 
     <!-- Email -->
     <div class="form-group">
@@ -195,15 +214,11 @@
         </label>
     </div>
 
-    <!-- Login Message -->
-    <p class="login-message" id="loginMessage" aria-live="polite"></p>
-
-    <p id="errorMessage" role="alert"></p>
-    
     <!-- Login Button -->
-    <button type="submit" class="login-button">
-        <span>Sign In</span>
-        <span class="button-arrow">→</span>
+    <button type="submit" class="login-button" id="loginButton">
+        <span class="button-spinner" aria-hidden="true"></span>
+        <span class="button-label">Sign In</span>
+        <span class="button-arrow" aria-hidden="true">→</span>
     </button>
 </form>
 
@@ -259,11 +274,34 @@
         </div>
 
     </main>
-</body>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase.js"></script>
-<script src="login.js"></script>
+
+    <!-- =========================================
+         TOAST NOTIFICATION
+         ========================================= -->
+    <div class="login-toast" id="formToast" role="status" aria-live="polite" hidden>
+        <span class="toast-icon" aria-hidden="true">!</span>
+
+        <div class="toast-content">
+            <strong class="toast-title">Please check your details</strong>
+            <span class="toast-message"></span>
+        </div>
+
+        <button
+            type="button"
+            class="toast-close"
+            aria-label="Dismiss notification"
+        >
+            ×
+        </button>
+
+        <span class="toast-progress" aria-hidden="true"></span>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="login.js"></script>
 
 </body>
 </html>

@@ -355,7 +355,7 @@
    TABLET
    ===================================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
 
     .services-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -391,7 +391,7 @@
    MOBILE
    ===================================================== */
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
 
     .page-header {
         margin-bottom: 22px;
@@ -425,7 +425,7 @@
    SMALL MOBILE
    ===================================================== */
 
-@media (max-width: 430px) {
+@media (max-width: 480px) {
 
     .page-header h2 {
         font-size: 24px;

@@ -195,15 +195,103 @@
         });
     }
 
-    function wireToggle(buttonId, targetId, className) {
-        const button = document.getElementById(buttonId);
-        const target = document.getElementById(targetId);
-        if (!button || !target) return;
+    const wiredSidebars = new Set();
 
-        button.addEventListener("click", (event) => {
+    /* Shared mobile/tablet sidebar toggle. Runs independently of Supabase so
+       the menu still works if auth or the CDN is unavailable. */
+    function wirePortalSidebar(config) {
+        if (wiredSidebars.has(config.id)) return;
+
+        const sidebar = document.getElementById(config.id);
+        const toggle = document.querySelector(config.toggleSelector);
+        if (!sidebar || !toggle) return;
+
+        wiredSidebars.add(config.id);
+
+        let backdrop = document.querySelector(`.${config.backdropClass}`);
+        if (!backdrop) {
+            backdrop = document.createElement("div");
+            backdrop.className = config.backdropClass;
+            backdrop.setAttribute("aria-hidden", "true");
+            document.body.appendChild(backdrop);
+        }
+
+        let closeButton = sidebar.querySelector(`.${config.closeClass}`);
+        if (!closeButton) {
+            closeButton = document.createElement("button");
+            closeButton.type = "button";
+            closeButton.className = config.closeClass;
+            closeButton.setAttribute("aria-label", "Close navigation menu");
+            closeButton.textContent = "×";
+            sidebar.appendChild(closeButton);
+        }
+
+        toggle.setAttribute("aria-controls", config.id);
+        toggle.setAttribute("aria-expanded", "false");
+
+        const setOpen = (open) => {
+            sidebar.classList.toggle("open", open);
+            backdrop.classList.toggle("is-visible", open);
+            toggle.setAttribute("aria-expanded", String(open));
+        };
+
+        toggle.addEventListener("click", (event) => {
             event.stopPropagation();
-            target.classList.toggle(className);
+            setOpen(!sidebar.classList.contains("open"));
         });
+
+        closeButton.addEventListener("click", () => setOpen(false));
+        backdrop.addEventListener("click", () => setOpen(false));
+
+        sidebar.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => setOpen(false));
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && sidebar.classList.contains("open")) {
+                setOpen(false);
+                toggle.focus();
+            }
+        });
+
+        const desktop = window.matchMedia("(min-width: 1025px)");
+        const closeOnDesktop = (event) => {
+            if (event.matches) setOpen(false);
+        };
+
+        if (desktop.addEventListener) desktop.addEventListener("change", closeOnDesktop);
+        else if (desktop.addListener) desktop.addListener(closeOnDesktop);
+    }
+
+    function wireSidebar() {
+        wirePortalSidebar({
+            id: "sidebar",
+            toggleSelector: "#menuToggle, [data-sidebar-toggle]",
+            backdropClass: "sidebar-backdrop",
+            closeClass: "sidebar-close"
+        });
+    }
+
+    function wireStaffSidebar() {
+        wirePortalSidebar({
+            id: "staffSidebar",
+            toggleSelector: "#staffMenuToggle, [data-staff-sidebar-toggle]",
+            backdropClass: "staff-backdrop",
+            closeClass: "staff-sidebar-close"
+        });
+    }
+
+    function startSidebarToggle() {
+        const wireAll = () => {
+            wireSidebar();
+            wireStaffSidebar();
+        };
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", wireAll, { once: true });
+        } else {
+            wireAll();
+        }
     }
 
     // Staff pages use either #staffUserDropdown (.show) or #staffUserMenu (.open).
@@ -244,10 +332,10 @@
         wireSignOut();
 
         if (portal === "staff") {
-            wireToggle("staffMenuToggle", "staffSidebar", "open");
+            wireStaffSidebar();
             wireStaffDropdown();
         } else if (portal === "resident") {
-            wireToggle("menuToggle", "sidebar", "open");
+            wireSidebar();
         }
 
         const auth = await requireRole(roles);
@@ -284,4 +372,6 @@
         openStoredFile,
         signOut
     });
+
+    startSidebarToggle();
 })();

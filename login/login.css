@@ -31,6 +31,18 @@
 
     --success: #218739;
 
+    /* Notification states */
+    --danger: #c62828;
+    --danger-soft: #fdf0f0;
+    --danger-border: #f0c4c4;
+
+    --warning: #9a6700;
+    --warning-soft: #fff8e8;
+    --warning-border: #f0ddb0;
+
+    --success-soft: #eaf7ef;
+    --success-border: #bfe2ca;
+
 }
 
 
@@ -1035,28 +1047,316 @@ body {
 
 
 /* =====================================================
-   LOGIN MESSAGE
+   INLINE FORM ALERT
    ===================================================== */
 
-.login-message {
-    min-height: 18px;
+.form-alert {
+    display: flex;
 
-    margin: -8px 0 16px;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+
+    padding: 11px 12px;
+
+    border: 1px solid;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.form-alert[hidden],
+.login-toast[hidden] {
+    display: none !important;
+}
+
+.form-alert.error {
+    border-color: var(--danger-border);
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+.form-alert.warning {
+    border-color: var(--warning-border);
+    background: var(--warning-soft);
+    color: var(--warning);
+}
+
+.form-alert.success {
+    border-color: var(--success-border);
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.form-alert-icon,
+.toast-icon {
+    width: 20px;
+    height: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: currentColor;
+
+    color: var(--white);
+
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.form-alert-content,
+.toast-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.form-alert-title,
+.toast-title {
+    display: block;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.form-alert-message,
+.toast-message {
+    display: block;
+
+    margin-top: 2px;
 
     color: var(--text-medium);
 
     font-size: 12px;
-    line-height: 1.5;
-
-    text-align: left;
+    line-height: 1.45;
 }
 
-.login-message.error {
-    color: #c62828;
+.form-alert.error .form-alert-message { color: #9c3535; }
+.form-alert.warning .form-alert-message { color: #7c5a12; }
+.form-alert.success .form-alert-message { color: #2f6d42; }
+
+.alert-dismiss,
+.toast-close {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: none;
+    border-radius: 5px;
+
+    background: transparent;
+
+    color: currentColor;
+
+    font-family: inherit;
+    font-size: 17px;
+    line-height: 1;
+
+    opacity: 0.65;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.15s ease,
+        background 0.15s ease;
 }
 
-.login-message.success {
+.alert-dismiss:hover,
+.toast-close:hover {
+    background: rgba(0, 0, 0, 0.06);
+    opacity: 1;
+}
+
+.form-alert.shake,
+.input-wrapper.is-shaking {
+    animation: bp-shake 0.36s ease;
+}
+
+
+/* =====================================================
+   TOAST NOTIFICATION
+   ===================================================== */
+
+.login-toast {
+    position: fixed;
+
+    top: 24px;
+    right: 24px;
+
+    z-index: 2000;
+
+    width: min(360px, calc(100% - 32px));
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 11px;
+
+    padding: 13px 14px 15px;
+
+    overflow: hidden;
+
+    border: 1px solid;
+    border-radius: 9px;
+
+    box-shadow: 0 12px 30px rgba(6, 45, 80, 0.16);
+
+    opacity: 0;
+    transform: translateY(-12px);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.22s ease,
+        transform 0.22s ease;
+}
+
+.login-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.login-toast.error {
+    border-color: var(--danger-border);
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+.login-toast.warning {
+    border-color: var(--warning-border);
+    background: var(--warning-soft);
+    color: var(--warning);
+}
+
+.login-toast.success {
+    border-color: var(--success-border);
+    background: var(--success-soft);
     color: var(--success);
+}
+
+.toast-progress {
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    height: 2px;
+
+    width: 100%;
+
+    background: currentColor;
+
+    opacity: 0.45;
+
+    transform-origin: left center;
+}
+
+.login-toast.show .toast-progress {
+    animation: bp-toast-progress 4.5s linear forwards;
+}
+
+
+/* =====================================================
+   FIELD / BUTTON STATES
+   ===================================================== */
+
+.input-wrapper input.is-invalid {
+    border-color: var(--danger);
+    background: #fffafa;
+
+    box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.10);
+}
+
+.button-spinner {
+    display: none;
+
+    width: 15px;
+    height: 15px;
+
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    border-top-color: var(--white);
+    border-radius: 50%;
+
+    animation: bp-spin 0.7s linear infinite;
+}
+
+.login-button.is-loading {
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+.login-button.is-loading .button-spinner {
+    display: block;
+}
+
+.login-button.is-loading .button-arrow {
+    display: none;
+}
+
+
+/* =====================================================
+   ANIMATIONS
+   ===================================================== */
+
+@keyframes bp-shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+}
+
+@keyframes bp-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes bp-toast-progress {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 600px) {
+    .login-toast {
+        top: 12px;
+        left: 12px;
+        right: 12px;
+
+        width: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .form-alert.shake,
+    .input-wrapper.is-shaking,
+    .button-spinner,
+    .login-toast.show .toast-progress {
+        animation: none;
+    }
+
+    .login-toast {
+        transition: none;
+    }
 }
 
 

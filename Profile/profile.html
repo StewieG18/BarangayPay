@@ -9,14 +9,18 @@
 
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../Profile/profile.css">
+    <link rel="stylesheet" href="../css/notifications.css">
 </head>
 
 <body>
-    <div class="profile-app" style="display: flex; min-height: 100vh;">
+    <div class="app-container">
 
-        <!-- Sidebar -->
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
         <aside class="sidebar" id="sidebar">
 
+            <!-- Brand -->
             <div class="sidebar-brand">
                 <div class="brand-logo">BP</div>
 
@@ -26,6 +30,7 @@
                 </div>
             </div>
 
+            <!-- Navigation -->
             <nav class="sidebar-navigation" aria-label="Main Navigation">
 
                 <div class="navigation-section">
@@ -36,8 +41,7 @@
                         <span class="navigation-label">Dashboard</span>
                     </a>
 
-                    <a href="../MyTransactions/transactions.html"
-                        class="navigation-item">
+                    <a href="../MyTransactions/transactions.html" class="navigation-item">
                         <span class="navigation-icon">▤</span>
                         <span class="navigation-label">My Transactions</span>
                     </a>
@@ -51,9 +55,7 @@
                 <div class="navigation-section">
                     <span class="navigation-title">ACCOUNT</span>
 
-                    <a href="profile.html"
-                        class="navigation-item active"
-                        aria-current="page">
+                    <a href="profile.html" class="navigation-item active" aria-current="page">
                         <span class="navigation-icon">◯</span>
                         <span class="navigation-label">Profile</span>
                     </a>
@@ -65,24 +67,58 @@
                 </div>
             </nav>
 
+            <!-- Sidebar Footer -->
             <div class="sidebar-footer">
-                <a href="../login/login.html" id="sidebarLogoutButton"
-                    class="navigation-item logout-item">
+                <a href="../login/login.html" class="navigation-item logout-item">
                     <span class="navigation-icon">↪</span>
                     <span class="navigation-label">Sign Out</span>
                 </a>
             </div>
+
         </aside>
 
-        <!-- Main Content -->
-        <main class="profile-main" style="flex: 1; min-width: 0;">
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
+        <main class="main-content">
 
-            <header class="profile-topbar">
-                <span class="profile-topbar-label">Resident Account</span>
+            <!-- =========================
+                 TOP HEADER
+            ========================== -->
+            <header class="top-header">
 
-                <a href="../MyTransactions/transactions.html">
-                    My Requests <span aria-hidden="true">→</span>
-                </a>
+                <div class="header-left">
+                    <button type="button"
+                        class="menu-toggle"
+                        id="menuToggle" aria-controls="sidebar" aria-expanded="false"
+                        aria-label="Toggle navigation menu">
+                        ☰
+                    </button>
+
+                    <div class="page-heading">
+                        <span class="page-section">Resident Portal</span>
+                        <h2>Dashboard</h2>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <button type="button"
+                        class="header-button notification-button"
+                        aria-label="Notifications">
+                        <span class="header-icon">🔔</span>
+                        <span class="notification-indicator" aria-hidden="true"></span>
+                    </button>
+
+                    <a href="profile.html" class="user-menu" id="userMenu" aria-label="Open user menu">
+                        <div class="user-avatar">U</div>
+                        <div class="user-information">
+                            <strong>Resident</strong>
+                            <span>Account</span>
+                        </div>
+                        <span class="user-menu-arrow">⌄</span>
+                    </a>
+                </div>
+
             </header>
 
             <div class="profile-content">

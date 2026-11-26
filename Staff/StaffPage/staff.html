@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="staff.css">
     <link rel="stylesheet" href="../../css/notifications.css">
 
+    <link rel="stylesheet" href="../staff-shell.css">
 </head>
 
 
@@ -23,92 +24,59 @@
              SIDEBAR
              ========================================= -->
 
-        <aside class="staff-sidebar" id="staffSidebar">
-
-
-            <!-- BRAND -->
-
+                <aside class="staff-sidebar" id="staffSidebar">
             <div class="staff-brand">
-
-                <div class="staff-brand-logo">
-                    BP
-                </div>
-
+                <div class="staff-brand-logo">BP</div>
                 <div class="staff-brand-text">
+                    <strong>BarangayPay</strong>
+                    <span>Staff Portal</span>
+                </div>
+            </div>
 
-                    <strong>
-                        BarangayPay
-                    </strong>
-
-                    <span>
-                        Staff Portal
-                    </span>
-
+            <nav class="staff-navigation" aria-label="Staff navigation">
+                <div class="staff-navigation-section">
+                    <span class="staff-navigation-title">MAIN</span>
+                    <a href="../StaffPage/staff.html" class="staff-navigation-item active" aria-current="page">
+                        <span class="staff-navigation-icon">▦</span>
+                        <span class="staff-navigation-label">Dashboard</span>
+                    </a>
+                    <a href="../StaffRequests/requests.html" class="staff-navigation-item">
+                        <span class="staff-navigation-icon">▤</span>
+                        <span class="staff-navigation-label">Service Requests</span>
+                    </a>
                 </div>
 
-            </div>
+                <div class="staff-navigation-section">
+                    <span class="staff-navigation-title">MANAGEMENT</span>
+                    <a href="../StaffDocuments/documents.html" class="staff-navigation-item">
+                        <span class="staff-navigation-icon">▧</span>
+                        <span class="staff-navigation-label">Documents</span>
+                    </a>
+                    <a href="../StaffReports/reports.html" class="staff-navigation-item">
+                        <span class="staff-navigation-icon">▥</span>
+                        <span class="staff-navigation-label">Reports</span>
+                    </a>
+                </div>
 
-
-            <!-- NAVIGATION -->
-
-            <nav class="staff-navigation">
-            <div class="staff-navigation-section">
-                <span class="staff-navigation-title">MAIN</span>
-                <a href="../StaffPage/staff.html" class="staff-navigation-item active">
-                    <span class="staff-navigation-icon">▦</span>
-                    <span>Dashboard</span>
-                </a>
-                <a href="../StaffRequests/requests.html" class="staff-navigation-item">
-                    <span class="staff-navigation-icon">▤</span>
-                    <span>Service Requests</span>
-                </a>
-            </div>
-            <div class="staff-navigation-section">
-                <span class="staff-navigation-title">MANAGEMENT</span>
-                <a href="../StaffDocuments/documents.html" class="staff-navigation-item">
-                    <span class="staff-navigation-icon">▧</span>
-                    <span>Documents</span>
-                </a>
-                <a href="../StaffReports/reports.html" class="staff-navigation-item">
-                    <span class="staff-navigation-icon">▥</span>
-                    <span>Reports</span>
-                </a>
-            </div>
-            <div class="staff-navigation-section">
-                <span class="staff-navigation-title">ACCOUNT</span>
-                <a href="../StaffProfile/staff-profile.html" class="staff-navigation-item">
-                    <span class="staff-navigation-icon">◯</span>
-                    <span>My Profile</span>
-                </a>
-                <a href="../StaffSettings/settings.html" class="staff-navigation-item">
-                    <span class="staff-navigation-icon">⚙</span>
-                    <span>Settings</span>
-                </a>
-            </div>
-        </nav>
-
-
-            <!-- SIDEBAR BOTTOM -->
+                <div class="staff-navigation-section">
+                    <span class="staff-navigation-title">ACCOUNT</span>
+                    <a href="../StaffProfile/staff-profile.html" class="staff-navigation-item">
+                        <span class="staff-navigation-icon">◯</span>
+                        <span class="staff-navigation-label">My Profile</span>
+                    </a>
+                    <a href="../StaffSettings/settings.html" class="staff-navigation-item">
+                        <span class="staff-navigation-icon">⚙</span>
+                        <span class="staff-navigation-label">Settings</span>
+                    </a>
+                </div>
+            </nav>
 
             <div class="staff-sidebar-bottom">
-
-                <a
-                    href="../../login/login.html"
-                    class="staff-navigation-item staff-logout"
-                >
-
-                    <span class="staff-navigation-icon">
-                        ↪
-                    </span>
-
-                    <span>
-                        Sign Out
-                    </span>
-
+                <a href="../../login/login.html" class="staff-navigation-item staff-logout">
+                    <span class="staff-navigation-icon">↪</span>
+                    <span class="staff-navigation-label">Sign Out</span>
                 </a>
-
             </div>
-
         </aside>
 
 
@@ -124,23 +92,19 @@
                  TOP HEADER
                  ========================================= -->
 
-            <header class="staff-header">
-
-
+                        <header class="staff-header">
                 <button
                     type="button"
                     class="staff-menu-toggle"
                     id="staffMenuToggle"
                     aria-label="Open navigation menu"
+                    aria-controls="staffSidebar"
+                    aria-expanded="false"
                 >
                     ☰
                 </button>
 
-
                 <div class="staff-header-spacer"></div>
-
-
-                <!-- NOTIFICATIONS -->
 
                 <button
                     type="button"
@@ -148,70 +112,33 @@
                     id="staffNotificationButton"
                     aria-label="Notifications"
                 >
-
                     🔔
-
                     <span class="staff-notification-indicator"></span>
-
                 </button>
 
-
-                <!-- STAFF PROFILE -->
-
-                <div
-                    class="staff-user-menu"
-                    id="staffUserMenu"
-                >
-
+                <div class="staff-user-menu" id="staffUserMenu">
                     <button
                         type="button"
                         class="staff-user-button"
                         id="staffUserButton"
                     >
-
-                        <div class="staff-avatar">
-                            S
-                        </div>
-
+                        <div class="staff-avatar">S</div>
 
                         <div class="staff-user-information">
-
-                            <strong>
-                                Barangay Staff
-                            </strong>
-
-                            <span>
-                                Staff Account
-                            </span>
-
+                            <strong>Barangay Staff</strong>
+                            <span>Staff Account</span>
                         </div>
 
-
-                        <span class="staff-user-arrow">
-                            ▼
-                        </span>
-
+                        <span class="staff-user-arrow">▼</span>
                     </button>
 
-
-                    <div class="staff-user-dropdown">
-
-                        <a href="../StaffProfile/staff-profile.html">
-                            Profile
-                        </a>
-
-                        <a href="../StaffSettings/settings.html">
-                            Settings
-                        </a>
-
-                        <a href="../../login/login.html">
-                            Sign Out
-                        </a>
-
+                    <div class="staff-user-dropdown" id="staffUserDropdown">
+                        <a href="../StaffProfile/staff-profile.html">My Profile</a>
+                        <a href="../StaffSettings/settings.html">Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="../../login/login.html">Sign Out</a>
                     </div>
-
                 </div>
-
             </header>
 
 

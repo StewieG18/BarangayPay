@@ -7,7 +7,8 @@
     <title>Reports | BarangayPay Staff</title>
 
     <link rel="stylesheet" href="reports.css">
-    <link rel="stylesheet" href="/css/notifications.css">    
+    <link rel="stylesheet" href="../../css/notifications.css">    
+    <link rel="stylesheet" href="../staff-shell.css">
 </head>
 
 <body>
@@ -15,74 +16,60 @@
 <div class="staff-app">
 
     <!-- SIDEBAR -->
-    <aside class="staff-sidebar" id="staffSidebar">
-
-        <div class="staff-brand">
-
-            <div class="staff-brand-logo">
-                BP
+            <aside class="staff-sidebar" id="staffSidebar">
+            <div class="staff-brand">
+                <div class="staff-brand-logo">BP</div>
+                <div class="staff-brand-text">
+                    <strong>BarangayPay</strong>
+                    <span>Staff Portal</span>
+                </div>
             </div>
 
-            <div>
-                <h1>BarangayPay</h1>
-                <span>Staff Portal</span>
+            <nav class="staff-navigation" aria-label="Staff navigation">
+                <div class="staff-navigation-section">
+                    <span class="staff-navigation-title">MAIN</span>
+                    <a href="../StaffPage/staff.html" class="staff-navigation-item">
+                        <span class="staff-navigation-icon">▦</span>
+                        <span class="staff-navigation-label">Dashboard</span>
+                    </a>
+                    <a href="../StaffRequests/requests.html" class="staff-navigation-item">
+                        <span class="staff-navigation-icon">▤</span>
+                        <span class="staff-navigation-label">Service Requests</span>
+                    </a>
+                </div>
+
+                <div class="staff-navigation-section">
+                    <span class="staff-navigation-title">MANAGEMENT</span>
+                    <a href="../StaffDocuments/documents.html" class="staff-navigation-item">
+                        <span class="staff-navigation-icon">▧</span>
+                        <span class="staff-navigation-label">Documents</span>
+                    </a>
+                    <a href="../StaffReports/reports.html" class="staff-navigation-item active" aria-current="page">
+                        <span class="staff-navigation-icon">▥</span>
+                        <span class="staff-navigation-label">Reports</span>
+                    </a>
+                </div>
+
+                <div class="staff-navigation-section">
+                    <span class="staff-navigation-title">ACCOUNT</span>
+                    <a href="../StaffProfile/staff-profile.html" class="staff-navigation-item">
+                        <span class="staff-navigation-icon">◯</span>
+                        <span class="staff-navigation-label">My Profile</span>
+                    </a>
+                    <a href="../StaffSettings/settings.html" class="staff-navigation-item">
+                        <span class="staff-navigation-icon">⚙</span>
+                        <span class="staff-navigation-label">Settings</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="staff-sidebar-bottom">
+                <a href="../../login/login.html" class="staff-navigation-item staff-logout">
+                    <span class="staff-navigation-icon">↪</span>
+                    <span class="staff-navigation-label">Sign Out</span>
+                </a>
             </div>
-
-        </div>
-
-
-        <nav class="staff-navigation">
-            <div class="nav-section">
-                <span class="nav-section-title">MAIN</span>
-                <a href="../StaffPage/staff.html" class="staff-nav-link">
-                    <span class="nav-icon">▦</span>
-                    <span>Dashboard</span>
-                </a>
-                <a href="../StaffRequests/requests.html" class="staff-nav-link">
-                    <span class="nav-icon">▤</span>
-                    <span>Service Requests</span>
-                </a>
-            </div>
-            <div class="nav-section">
-                <span class="nav-section-title">MANAGEMENT</span>
-                <a href="../StaffDocuments/documents.html" class="staff-nav-link">
-                    <span class="nav-icon">▧</span>
-                    <span>Documents</span>
-                </a>
-                <a href="../StaffReports/reports.html" class="staff-nav-link active">
-                    <span class="nav-icon">▥</span>
-                    <span>Reports</span>
-                </a>
-            </div>
-            <div class="nav-section">
-                <span class="nav-section-title">ACCOUNT</span>
-                <a href="../StaffProfile/staff-profile.html" class="staff-nav-link">
-                    <span class="nav-icon">◯</span>
-                    <span>My Profile</span>
-                </a>
-                <a href="../StaffSettings/settings.html" class="staff-nav-link">
-                    <span class="nav-icon">⚙</span>
-                    <span>Settings</span>
-                </a>
-            </div>
-        </nav>
-
-
-        <div class="staff-sidebar-bottom">
-
-            <a href="../../login/login.html" class="staff-signout">
-
-                <span class="nav-icon">↪</span>
-
-                <span>
-                    Sign Out
-                </span>
-
-            </a>
-
-        </div>
-
-    </aside>
+        </aside>
 
 
     <!-- MAIN -->
@@ -90,81 +77,54 @@
 
 
         <!-- HEADER -->
-        <header class="staff-header">
-
-            <button
-                class="staff-menu-toggle"
-                id="staffMenuToggle"
-            >
-                ☰
-            </button>
-
-            <div class="staff-header-spacer"></div>
-
-
-            <button class="notification-button">
-
-                🔔
-
-                <span class="notification-dot"></span>
-
-            </button>
-
-
-            <div class="staff-user-menu">
-
+                    <header class="staff-header">
                 <button
-                    class="staff-user-button"
-                    id="staffUserButton"
+                    type="button"
+                    class="staff-menu-toggle"
+                    id="staffMenuToggle"
+                    aria-label="Open navigation menu"
+                    aria-controls="staffSidebar"
+                    aria-expanded="false"
                 >
-
-                    <div class="staff-avatar">
-                        S
-                    </div>
-
-                    <div class="staff-user-info">
-
-                        <strong>
-                            Barangay Staff
-                        </strong>
-
-                        <span>
-                            Staff Account
-                        </span>
-
-                    </div>
-
-                    <span class="dropdown-arrow">
-                        ⌄
-                    </span>
-
+                    ☰
                 </button>
 
+                <div class="staff-header-spacer"></div>
 
-                <div
-                    class="staff-user-dropdown"
-                    id="staffUserDropdown"
+                <button
+                    type="button"
+                    class="staff-notification-button"
+                    id="staffNotificationButton"
+                    aria-label="Notifications"
                 >
+                    🔔
+                    <span class="staff-notification-indicator"></span>
+                </button>
 
-                    <a href="../StaffProfile/staff-profile.html">
-                        My Profile
-                    </a>
+                <div class="staff-user-menu" id="staffUserMenu">
+                    <button
+                        type="button"
+                        class="staff-user-button"
+                        id="staffUserButton"
+                    >
+                        <div class="staff-avatar">S</div>
 
-                    <a href="../StaffSettings/settings.html">
-                        Settings
-                    </a>
+                        <div class="staff-user-information">
+                            <strong>Barangay Staff</strong>
+                            <span>Staff Account</span>
+                        </div>
 
-                    <div class="dropdown-divider"></div>
+                        <span class="staff-user-arrow">▼</span>
+                    </button>
 
-                    <a href="../../login/login.html">
-                        Sign Out
-                    </a>
-
+                    <div class="staff-user-dropdown" id="staffUserDropdown">
+                        <a href="../StaffProfile/staff-profile.html">My Profile</a>
+                        <a href="../StaffSettings/settings.html">Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="../../login/login.html">Sign Out</a>
+                    </div>
                 </div>
-
-            </div>
-
-        </header>
+            </header>
 
 
 
@@ -267,6 +227,8 @@
             </div>
 
 
+            <p class="report-status" id="reportStatus" role="status" aria-live="polite" hidden></p>
+
 
             <!-- SUMMARY -->
             <div class="report-summary">
@@ -285,7 +247,7 @@
                         </span>
 
                         <strong>
-                            71
+                            0
                         </strong>
 
                         <small>
@@ -310,7 +272,7 @@
                         </span>
 
                         <strong>
-                            ₱24,850
+                            ₱0.00
                         </strong>
 
                         <small>
@@ -335,7 +297,7 @@
                         </span>
 
                         <strong>
-                            47
+                            0
                         </strong>
 
                         <small>
@@ -360,7 +322,7 @@
                         </span>
 
                         <strong>
-                            1,241
+                            0
                         </strong>
 
                         <small>
@@ -403,113 +365,7 @@
                     </div>
 
 
-                    <div class="service-bars">
-
-
-                        <div class="service-bar-row">
-
-                            <div class="bar-label">
-
-                                <span>
-                                    Barangay Clearance
-                                </span>
-
-                                <strong>
-                                    28
-                                </strong>
-
-                            </div>
-
-                            <div class="bar-track">
-
-                                <div
-                                    class="bar-fill"
-                                    style="width: 78%;"
-                                ></div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="service-bar-row">
-
-                            <div class="bar-label">
-
-                                <span>
-                                    Certificate of Residency
-                                </span>
-
-                                <strong>
-                                    19
-                                </strong>
-
-                            </div>
-
-                            <div class="bar-track">
-
-                                <div
-                                    class="bar-fill"
-                                    style="width: 54%;"
-                                ></div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="service-bar-row">
-
-                            <div class="bar-label">
-
-                                <span>
-                                    Certificate of Indigency
-                                </span>
-
-                                <strong>
-                                    14
-                                </strong>
-
-                            </div>
-
-                            <div class="bar-track">
-
-                                <div
-                                    class="bar-fill"
-                                    style="width: 40%;"
-                                ></div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="service-bar-row">
-
-                            <div class="bar-label">
-
-                                <span>
-                                    Business Clearance
-                                </span>
-
-                                <strong>
-                                    10
-                                </strong>
-
-                            </div>
-
-                            <div class="bar-track">
-
-                                <div
-                                    class="bar-fill"
-                                    style="width: 29%;"
-                                ></div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <div class="service-bars" id="serviceBars"></div>
 
                 </div>
 
@@ -548,7 +404,7 @@
                             </span>
 
                             <strong>
-                                12
+                                0
                             </strong>
 
                         </div>
@@ -564,7 +420,7 @@
                             </span>
 
                             <strong>
-                                8
+                                0
                             </strong>
 
                         </div>
@@ -580,7 +436,7 @@
                             </span>
 
                             <strong>
-                                47
+                                0
                             </strong>
 
                         </div>
@@ -596,7 +452,7 @@
                             </span>
 
                             <strong>
-                                4
+                                0
                             </strong>
 
                         </div>
@@ -641,7 +497,7 @@
                             </span>
 
                             <strong>
-                                63
+                                0
                             </strong>
 
                         </div>
@@ -654,7 +510,7 @@
                             </span>
 
                             <strong>
-                                8
+                                0
                             </strong>
 
                         </div>
@@ -667,7 +523,7 @@
                             </span>
 
                             <strong>
-                                ₱24,850.00
+                                ₱0.00
                             </strong>
 
                         </div>
@@ -680,7 +536,7 @@
                             </span>
 
                             <strong>
-                                ₱350.00
+                                ₱0.00
                             </strong>
 
                         </div>
@@ -725,7 +581,7 @@
                             </span>
 
                             <strong>
-                                47
+                                0
                             </strong>
 
                         </div>
@@ -738,7 +594,7 @@
                             </span>
 
                             <strong>
-                                14
+                                0
                             </strong>
 
                         </div>
@@ -751,7 +607,7 @@
                             </span>
 
                             <strong>
-                                126
+                                0
                             </strong>
 
                         </div>
@@ -764,7 +620,7 @@
                             </span>
 
                             <strong>
-                                8
+                                0
                             </strong>
 
                         </div>
@@ -774,6 +630,33 @@
                 </div>
 
             </div>
+
+
+
+            <!-- GENERATED REPORT -->
+            <section class="generated-report" id="generatedReport" hidden>
+
+                <div class="report-panel generated-report-panel">
+
+                    <div class="panel-header generated-header">
+                        <div>
+                            <span class="generated-eyebrow">GENERATED REPORT</span>
+                            <h3 id="generatedReportTitle">Report</h3>
+                            <p id="generatedReportMeta"></p>
+                        </div>
+
+                        <div class="generated-actions">
+                            <button type="button" class="export-button" id="downloadReportPdf">PDF</button>
+                            <button type="button" class="export-button" id="downloadReportCsv">CSV</button>
+                            <button type="button" class="export-button" id="printReport">Print</button>
+                        </div>
+                    </div>
+
+                    <div class="generated-report-body" id="generatedReportBody"></div>
+
+                </div>
+
+            </section>
 
 
 
@@ -833,83 +716,7 @@
                         <tbody>
 
                             <tr>
-
-                                <td>
-                                    Service Requests Report
-                                </td>
-
-                                <td>
-                                    Oct 1 – Oct 4, 2026
-                                </td>
-
-                                <td>
-                                    Barangay Staff
-                                </td>
-
-                                <td>
-                                    Oct 4, 2026
-                                </td>
-
-                                <td>
-                                    <button class="view-report-button">
-                                        View
-                                    </button>
-                                </td>
-
-                            </tr>
-
-
-                            <tr>
-
-                                <td>
-                                    Payment Summary Report
-                                </td>
-
-                                <td>
-                                    Sep 1 – Sep 30, 2026
-                                </td>
-
-                                <td>
-                                    Barangay Staff
-                                </td>
-
-                                <td>
-                                    Oct 1, 2026
-                                </td>
-
-                                <td>
-                                    <button class="view-report-button">
-                                        View
-                                    </button>
-                                </td>
-
-                            </tr>
-
-
-                            <tr>
-
-                                <td>
-                                    Resident Activity Report
-                                </td>
-
-                                <td>
-                                    Sep 1 – Sep 30, 2026
-                                </td>
-
-                                <td>
-                                    Barangay Staff
-                                </td>
-
-                                <td>
-                                    Oct 1, 2026
-                                </td>
-
-                                <td>
-                                    <button class="view-report-button">
-                                        View
-                                    </button>
-                                </td>
-
+                                <td colspan="5">No reports generated yet in this browser.</td>
                             </tr>
 
                         </tbody>
@@ -947,7 +754,7 @@
 <script src="../../js/supabase.js"></script>
 <script src="../../js/app.js"></script>
 <script src="reports.js"></script>
-<script src="/js/notifications.js"></script>
+<script src="../../js/notifications.js"></script>
 
 </body>
 </html>
